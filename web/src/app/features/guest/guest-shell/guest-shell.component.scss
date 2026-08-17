@@ -1,0 +1,86 @@
+.state-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  gap: 8px;
+
+  h1 {
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+
+  p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+}
+
+.app-shell {
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--paper-raised);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  position: sticky;
+  top: 0;
+  background: var(--paper-raised);
+  z-index: 10;
+}
+
+.logo-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--brand-primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 15px;
+  flex: 1;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 4px;
+  background: var(--paper-sunk);
+  padding: 3px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.lang-pill {
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
+
+.app-body {
+  flex: 1;
+}

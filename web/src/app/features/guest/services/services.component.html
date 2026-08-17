@@ -1,0 +1,17 @@
+<app-sub-header titleKey="services_title" />
+
+@if (!loading() && services().length === 0) {
+  <p class="empty">{{ 'empty_state' | translate }}</p>
+}
+
+@for (item of services(); track item.id) {
+  <div class="list-row">
+    <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
+    <div>
+      <p class="t">{{ item | localize: 'title' }}</p>
+      @if ((item | localize: 'description'); as desc) {
+        <p class="d">{{ desc }}</p>
+      }
+    </div>
+  </div>
+}

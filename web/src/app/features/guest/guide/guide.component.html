@@ -1,0 +1,25 @@
+<app-sub-header titleKey="guide_title" />
+
+@if (!loading() && places().length === 0) {
+  <p class="empty">{{ 'empty_state' | translate }}</p>
+}
+
+@for (place of places(); track place.id) {
+  <div class="place-card">
+    @if (place.image_url) {
+      <img class="thumb" [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
+    }
+    <div class="body">
+      <p class="t">{{ place | localize: 'name' }}</p>
+      @if ((place | localize: 'description'); as desc) {
+        <p class="d">{{ desc }}</p>
+      }
+      @if (place.google_maps_url) {
+        <a class="maps-link" [href]="place.google_maps_url" target="_blank" rel="noopener">
+          <app-icon name="external-link" />
+          {{ 'guide_open_maps' | translate }}
+        </a>
+      }
+    </div>
+  </div>
+}
