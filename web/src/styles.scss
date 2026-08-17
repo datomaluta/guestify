@@ -1,0 +1,43 @@
+:root {
+  --paper: #f7f6f2;
+  --paper-raised: #ffffff;
+  --paper-sunk: #eeece5;
+  --ink: #201a1d;
+  --ink-soft: #6e6459;
+  --ink-faint: #9a9083;
+  --line: rgba(32, 26, 29, 0.12);
+  --line-soft: rgba(32, 26, 29, 0.07);
+
+  /* hotel-specific branding — HotelContextService აყენებს ამ ცვლადებს slug-ის ჩატვირთვისას */
+  --brand-primary: #96772f;
+  --brand-secondary: #7a2638;
+
+  --font-ui:
+    'Segoe UI', -apple-system, BlinkMacSystemFont, 'Noto Sans Georgian',
+    'BPG Mrgvlovani Caps GPL&GNU', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}

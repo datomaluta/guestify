@@ -1,0 +1,14 @@
+<section class="hero-greet">
+  <h2>{{ 'greet_title' | translate }}</h2>
+  <p>{{ 'greet_sub' | translate }}</p>
+</section>
+
+<div class="card-grid">
+  @for (card of cards; track card.route) {
+    <a class="nav-card" [routerLink]="card.route">
+      <div class="icn"><app-icon [name]="card.icon" /></div>
+      <div class="t">{{ card.titleKey | translate }}</div>
+      <div class="d">{{ card.descKey | translate }}</div>
+    </a>
+  }
+</div>

@@ -1,0 +1,21 @@
+<div class="login-screen">
+  <form class="login-card" (ngSubmit)="submit()">
+    <h1>{{ 'admin_login_title' | translate }}</h1>
+
+    <label>
+      <span>{{ 'admin_email_label' | translate }}</span>
+      <input type="email" name="email" [(ngModel)]="email" required autocomplete="username" />
+    </label>
+
+    <label>
+      <span>{{ 'admin_password_label' | translate }}</span>
+      <input type="password" name="password" [(ngModel)]="password" required autocomplete="current-password" />
+    </label>
+
+    @if (error()) {
+      <p class="error">{{ 'admin_login_error' | translate }}</p>
+    }
+
+    <button type="submit" [disabled]="submitting()">{{ 'admin_login_button' | translate }}</button>
+  </form>
+</div>

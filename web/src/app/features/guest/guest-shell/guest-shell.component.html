@@ -1,0 +1,33 @@
+@if (hotelContext.notFound()) {
+  <div class="state-screen">
+    <h1>{{ 'app_error_hotel_not_found_title' | translate }}</h1>
+    <p>{{ 'app_error_hotel_not_found_desc' | translate }}</p>
+  </div>
+} @else if (!hotelContext.hotel()) {
+  <div class="state-screen">
+    <p>{{ 'app_loading' | translate }}</p>
+  </div>
+} @else {
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="logo-badge">{{ logoInitial() }}</div>
+      <div class="brand-name">{{ hotelContext.hotel()!.name }}</div>
+      <div class="lang-switch">
+        @for (l of languages; track l.code) {
+          <button
+            type="button"
+            class="lang-pill"
+            [class.active]="language.lang() === l.code"
+            (click)="setLang(l.code)"
+          >
+            {{ l.label }}
+          </button>
+        }
+      </div>
+    </header>
+
+    <main class="app-body">
+      <router-outlet />
+    </main>
+  </div>
+}
