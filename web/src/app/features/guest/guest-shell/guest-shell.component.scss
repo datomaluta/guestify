@@ -95,8 +95,8 @@
   }
 
   &.active {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--brand-secondary);
+    color: #fff;
     box-shadow: var(--shadow-sm);
   }
 }
