@@ -29,7 +29,7 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   nav_services_desc: { ka: 'საუზმე, Spa და მეტი', en: 'Breakfast, spa & more', ru: 'Завтрак, спа и другое' },
   nav_menu: { ka: 'რესტორნის მენიუ', en: 'Restaurant Menu', ru: 'Меню ресторана' },
   nav_menu_desc: { ka: 'კერძები და ფასები', en: 'Dishes & prices', ru: 'Блюда и цены' },
-  nav_guide: { ka: 'ადგილობრივი გზამკვლევი', en: 'Local Guide', ru: 'Локальный гид' },
+  nav_guide: { ka: 'გზამკვლევი', en: 'Local Guide', ru: 'Локальный гид' },
   nav_guide_desc: { ka: 'რას ვნახოთ ახლომახლო', en: "What's nearby", ru: 'Что рядом' },
   nav_rules: { ka: 'წესები და კონტაქტი', en: 'Rules & Contact', ru: 'Правила и контакты' },
   nav_rules_desc: { ka: 'Check-in, Wi-Fi, დახმარება', en: 'Check-in, Wi-Fi, help', ru: 'Заселение, Wi-Fi, помощь' },
