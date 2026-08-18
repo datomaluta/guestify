@@ -75,6 +75,7 @@ body {
 
 button {
   font-family: inherit;
+  color: inherit; // native <button> default (ButtonText) არ ითვალისწინებს dark mode-ს — ცალკე რომ არ დამავიწყდეს ყოველ ღილაკზე
 }
 
 a {

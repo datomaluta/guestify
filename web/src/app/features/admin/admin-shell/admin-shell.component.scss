@@ -70,7 +70,14 @@
     border-radius: 8px;
     border: 1px solid var(--line);
     background: transparent;
+    color: var(--ink);
     cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
+    }
   }
 }
 
