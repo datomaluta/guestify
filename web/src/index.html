@@ -9,8 +9,56 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* პირველადი loader — Angular-ის ჩატვირთვამდეც ჩანს, JS/CSS bundle-ისა და hotel-resolver-ის დროს ცარიელი ეკრანის ნაცვლად. */
+    #initial-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f6f2;
+      transition: opacity 0.25s ease;
+    }
+
+    #initial-loader .badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans Georgian', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: #fff;
+      background: linear-gradient(155deg, #96772f, #7a2638);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      animation: initial-loader-pulse 1.4s ease-in-out infinite;
+    }
+
+    #initial-loader.done {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes initial-loader-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.92); opacity: 0.75; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #initial-loader { background: #171314; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #initial-loader .badge { animation: none; }
+    }
+  </style>
 </head>
 <body>
+  <div id="initial-loader"><div class="badge">G</div></div>
   <app-root></app-root>
 </body>
 </html>
