@@ -60,20 +60,28 @@
 .maps-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 7px;
+  padding: 7px 13px 7px 9px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--brand-secondary);
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  background: color-mix(in srgb, var(--brand-secondary) 10%, var(--paper-raised));
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
 
   &:hover {
-    opacity: 0.75;
+    border-color: var(--brand-secondary);
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 
   .maps-icon {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
   }
 }
