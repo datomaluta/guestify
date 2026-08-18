@@ -171,4 +171,10 @@ export class AdminContentService {
     const { data } = this.supabase.client.storage.from('hotel-assets').getPublicUrl(path);
     return `${data.publicUrl}?v=${Date.now()}`;
   }
+
+  /** Storage-დან შლის ფაილს — გამოსადეგია, როცა ადმინს ფოტოს მოხსნა უნდა, ახლის ატვირთვის გარეშე. */
+  async deleteEntityImage(hotelId: string, relativePath: string): Promise<void> {
+    const { error } = await this.supabase.client.storage.from('hotel-assets').remove([`${hotelId}/${relativePath}`]);
+    if (error) throw error;
+  }
 }

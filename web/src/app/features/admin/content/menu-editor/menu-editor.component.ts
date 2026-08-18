@@ -192,6 +192,23 @@ export class MenuEditorComponent {
     }
   }
 
+  async removeImage(): Promise<void> {
+    const id = this.editingItemId();
+    if (!id || !confirm('წავშალოთ ეს ფოტო?')) return;
+
+    this.uploadingImage.set(true);
+    try {
+      await this.content.deleteEntityImage(this.hotelId, `menu/${id}.webp`);
+      await this.content.saveMenuItem(id, { image_url: null });
+      this.editingItemImageUrl.set(null);
+      this.refresh();
+    } catch (e) {
+      this.itemError.set((e as Error).message);
+    } finally {
+      this.uploadingImage.set(false);
+    }
+  }
+
   async removeItem(id: string): Promise<void> {
     if (!confirm('წავშალოთ ეს კერძი?')) return;
     await this.content.deleteMenuItem(id);
