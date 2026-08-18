@@ -57,9 +57,9 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Правила и контакты',
   },
   nav_rules_desc: {
-    ka: 'Check-in, Wi-Fi, დახმარება',
-    en: 'Check-in, Wi-Fi, help',
-    ru: 'Заселение, Wi-Fi, помощь',
+    ka: 'Check-in, წესები, კონტაქტი',
+    en: 'Check-in, rules & contacts',
+    ru: 'Заезд, правила, контакты',
   },
 
   back: { ka: 'უკან', en: 'Back', ru: 'Назад' },
