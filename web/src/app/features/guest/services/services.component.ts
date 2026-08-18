@@ -3,11 +3,9 @@ import { HotelService as HotelServiceItem } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { SubHeaderComponent } from '../../../shared/sub-header/sub-header.component';
-import { IconComponent, IconName } from '../../../shared/icon/icon.component';
+import { IconComponent, IconName, ICON_NAMES } from '../../../shared/icon/icon.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
-
-const KNOWN_ICONS: IconName[] = ['concierge-bell', 'cutlery', 'map-pin', 'shield-check', 'cup', 'droplet', 'clock', 'wifi'];
 
 @Component({
   selector: 'app-services',
@@ -36,6 +34,6 @@ export class ServicesComponent {
   }
 
   iconFor(icon: string | null): IconName {
-    return KNOWN_ICONS.includes(icon as IconName) ? (icon as IconName) : 'concierge-bell';
+    return ICON_NAMES.includes(icon as IconName) ? (icon as IconName) : 'general';
   }
 }
