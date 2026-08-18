@@ -10,7 +10,11 @@
 } @else {
   <div class="app-shell">
     <header class="app-header">
-      <div class="logo-badge">{{ logoInitial() }}</div>
+      @if (hotelContext.hotel()!.logo_url) {
+        <img class="logo-badge" [src]="hotelContext.hotel()!.logo_url" [alt]="hotelContext.hotel()!.name" />
+      } @else {
+        <div class="logo-badge logo-fallback">{{ logoInitial() }}</div>
+      }
       <div class="brand-name">{{ hotelContext.hotel()!.name }}</div>
       <div class="lang-switch">
         @for (l of languages; track l.code) {
