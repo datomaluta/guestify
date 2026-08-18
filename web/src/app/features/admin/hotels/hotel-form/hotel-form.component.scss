@@ -221,6 +221,7 @@ select {
 
   input {
     flex: 1;
+    min-width: 0;
   }
 
   button {
@@ -237,5 +238,50 @@ select {
     &:disabled {
       opacity: 0.6;
     }
+  }
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  label.span-2 {
+    grid-column: span 1;
+  }
+
+  .header-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo-row {
+    flex-wrap: wrap;
+  }
+
+  .admin-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .admin-id {
+    word-break: break-all;
+  }
+
+  .link-inputs {
+    flex-direction: column;
+  }
+
+  .link-inputs button {
+    width: 100%;
+  }
+
+  input,
+  select {
+    font-size: 16px; // iOS Safari-ს ავტომატურ zoom-ს ეხსნება focus-ზე
   }
 }
