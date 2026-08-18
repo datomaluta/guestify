@@ -92,6 +92,22 @@ a {
   }
 }
 
+@keyframes guestify-shimmer {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+.skel {
+  background: linear-gradient(90deg, var(--paper-sunk) 25%, var(--paper-raised) 50%, var(--paper-sunk) 75%);
+  background-size: 200% 100%;
+  animation: guestify-shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
