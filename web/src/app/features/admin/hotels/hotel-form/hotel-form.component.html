@@ -102,6 +102,13 @@
       </div>
     </div>
 
+    <div class="panel qr-panel">
+      <h2>QR კოდი</h2>
+      <p class="hint">დაბეჭდეთ და დადეთ ოთახებში — სტუმარი სკანირებით პირდაპირ ამ სასტუმროს გვერდზე მოხვდება.</p>
+      <app-qr-code [value]="hotelUrl(form.slug)" [fileName]="form.slug + '-qr.png'" />
+      <p class="qr-url">{{ hotelUrl(form.slug) }}</p>
+    </div>
+
     <div class="panel">
       <h2>Hotel Admin-ები</h2>
 

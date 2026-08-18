@@ -8,4 +8,12 @@
     <p>მოგესალმებით! სასტუმროს კონტენტის სამართავად გადადით:</p>
     <a class="cta" routerLink="/admin/content">კონტენტის რედაქტორზე გადასვლა →</a>
   </div>
+
+  @if (!loadingHotel() && hotel(); as h) {
+    <div class="card qr-card">
+      <p>ეს არის თქვენი სასტუმროს QR კოდი — ჩამოტვირთეთ და დაბეჭდეთ ოთახებში დასადებად. სტუმარი მას სკანირებით პირდაპირ თქვენს გვერდზე მოხვდება.</p>
+      <app-qr-code [value]="hotelUrl(h.slug)" [fileName]="h.slug + '-qr.png'" />
+      <p class="url">{{ hotelUrl(h.slug) }}</p>
+    </div>
+  }
 }
