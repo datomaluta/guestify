@@ -21,3 +21,19 @@
   color: var(--brand-secondary);
   text-decoration: none;
 }
+
+.qr-card {
+  align-items: center;
+  text-align: center;
+
+  p {
+    max-width: 360px;
+  }
+}
+
+.url {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+  color: var(--ink-faint) !important;
+}

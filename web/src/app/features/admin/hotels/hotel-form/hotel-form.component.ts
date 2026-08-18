@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppLanguage, Hotel } from '../../../../core/models';
 import { AdminHotelService, HotelAdminProfile, HotelWritePayload } from '../../../../core/services/admin-hotel.service';
+import { QrCodeComponent } from '../../../../shared/qr-code/qr-code.component';
 
 type HotelFormModel = Omit<HotelWritePayload, 'is_active'> & { is_active: boolean };
 
@@ -23,7 +24,7 @@ const BLANK_FORM: HotelFormModel = {
 @Component({
   selector: 'app-hotel-form',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, QrCodeComponent],
   templateUrl: './hotel-form.component.html',
   styleUrl: './hotel-form.component.scss'
 })
@@ -185,6 +186,11 @@ export class HotelFormComponent {
     if (!id) return;
     await this.adminHotel.unlinkHotelAdmin(profileId);
     this.admins.set(await this.adminHotel.listHotelAdmins(id));
+  }
+
+  /** სტუმრის public URL, რომელზეც QR კოდი მიდის — მიმდინარე host-ზეა აგებული, deploy-ის დომენი არ აქვს მნიშვნელობა. */
+  hotelUrl(slug: string): string {
+    return `${window.location.origin}/hotel/${slug}`;
   }
 
   async deleteHotel(): Promise<void> {
