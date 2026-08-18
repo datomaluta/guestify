@@ -21,6 +21,7 @@ export class RulesComponent {
   protected readonly rules = signal<HotelRule[]>([]);
   protected readonly contacts = signal<HotelContact[]>([]);
   protected readonly loading = signal(true);
+  protected readonly skeletonRows = [0, 1, 2, 3, 4];
 
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;

@@ -20,6 +20,7 @@ export class GuideComponent {
 
   protected readonly places = signal<GuidePlace[]>([]);
   protected readonly loading = signal(true);
+  protected readonly skeletonRows = [0, 1, 2, 3];
 
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;

@@ -1,29 +1,44 @@
 <app-sub-header titleKey="guide_title" />
 
-@if (!loading() && places().length === 0) {
-  <p class="empty">{{ 'empty_state' | translate }}</p>
-}
-
-<div class="list">
-  @for (place of places(); track place.id; let i = $index) {
-    <div class="place-card" [style.--i]="i">
-      @if (place.image_url) {
-        <img class="thumb" [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
-      } @else {
-        <div class="thumb placeholder"></div>
-      }
-      <div class="body">
-        <p class="t">{{ place | localize: 'name' }}</p>
-        @if ((place | localize: 'description'); as desc) {
-          <p class="d">{{ desc }}</p>
-        }
-        @if (place.google_maps_url) {
-          <a class="maps-link" [href]="place.google_maps_url" target="_blank" rel="noopener">
-            <app-icon name="external-link" />
-            {{ 'guide_open_maps' | translate }}
-          </a>
-        }
+@if (loading()) {
+  <div class="list">
+    @for (i of skeletonRows; track i) {
+      <div class="place-card">
+        <div class="thumb skel"></div>
+        <div class="skel-lines">
+          <div class="skel skel-line" style="width: 60%"></div>
+          <div class="skel skel-line" style="width: 90%"></div>
+          <div class="skel skel-line" style="width: 40%"></div>
+        </div>
       </div>
-    </div>
+    }
+  </div>
+} @else {
+  @if (places().length === 0) {
+    <p class="empty">{{ 'empty_state' | translate }}</p>
   }
-</div>
+
+  <div class="list">
+    @for (place of places(); track place.id; let i = $index) {
+      <div class="place-card" [style.--i]="i">
+        @if (place.image_url) {
+          <img class="thumb" [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="body">
+          <p class="t">{{ place | localize: 'name' }}</p>
+          @if ((place | localize: 'description'); as desc) {
+            <p class="d">{{ desc }}</p>
+          }
+          @if (place.google_maps_url) {
+            <a class="maps-link" [href]="place.google_maps_url" target="_blank" rel="noopener">
+              <app-icon name="external-link" />
+              {{ 'guide_open_maps' | translate }}
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

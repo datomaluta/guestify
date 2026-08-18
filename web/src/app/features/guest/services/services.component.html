@@ -1,19 +1,33 @@
 <app-sub-header titleKey="services_title" />
 
-@if (!loading() && services().length === 0) {
-  <p class="empty">{{ 'empty_state' | translate }}</p>
-}
-
-<div class="list">
-  @for (item of services(); track item.id; let i = $index) {
-    <div class="list-row" [style.--i]="i">
-      <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
-      <div>
-        <p class="t">{{ item | localize: 'title' }}</p>
-        @if ((item | localize: 'description'); as desc) {
-          <p class="d">{{ desc }}</p>
-        }
+@if (loading()) {
+  <div class="list">
+    @for (i of skeletonRows; track i) {
+      <div class="list-row">
+        <div class="icn skel"></div>
+        <div class="skel-lines">
+          <div class="skel skel-line" style="width: 55%"></div>
+          <div class="skel skel-line" style="width: 85%"></div>
+        </div>
       </div>
-    </div>
+    }
+  </div>
+} @else {
+  @if (services().length === 0) {
+    <p class="empty">{{ 'empty_state' | translate }}</p>
   }
-</div>
+
+  <div class="list">
+    @for (item of services(); track item.id; let i = $index) {
+      <div class="list-row" [style.--i]="i">
+        <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
+        <div>
+          <p class="t">{{ item | localize: 'title' }}</p>
+          @if ((item | localize: 'description'); as desc) {
+            <p class="d">{{ desc }}</p>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -72,7 +72,8 @@
 .lang-switch {
   display: flex;
   gap: 4px;
-  background: var(--paper-sunk);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
   padding: 3px;
   border-radius: 999px;
   flex-shrink: 0;

@@ -21,6 +21,8 @@ export class MenuComponent {
   protected readonly items = signal<MenuItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly activeCategoryId = signal<string | null>(null);
+  protected readonly skeletonTabs = [0, 1, 2];
+  protected readonly skeletonRows = [0, 1, 2, 3, 4];
 
   protected readonly visibleItems = computed(() =>
     this.items().filter((item) => item.category_id === this.activeCategoryId())

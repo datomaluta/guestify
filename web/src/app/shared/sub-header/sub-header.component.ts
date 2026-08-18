@@ -31,7 +31,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
       padding: 7px;
       border-radius: 8px;
       border: 1px solid var(--line);
-      background: var(--paper-sunk);
+      background: var(--paper-raised);
       color: var(--ink);
       display: grid;
       place-items: center;

@@ -108,3 +108,15 @@
 .contact-row .d {
   font-variant-numeric: tabular-nums;
 }
+
+.skel-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 3px;
+}
+
+.skel-line {
+  height: 10px;
+}
