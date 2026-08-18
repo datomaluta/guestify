@@ -1,0 +1,21 @@
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">Guestify <span>Admin</span></div>
+
+    @if (auth.profile()?.role === 'superadmin') {
+      <nav class="nav">
+        <a routerLink="/admin/hotels" routerLinkActive="active">სასტუმროები</a>
+      </nav>
+    }
+
+    <div class="who">
+      <span class="name">{{ auth.profile()?.full_name || auth.session()?.user?.email }}</span>
+      <span class="role">{{ auth.profile()?.role }}</span>
+      <button type="button" (click)="signOut()">გასვლა</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

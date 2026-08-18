@@ -1,0 +1,134 @@
+<a class="back" routerLink="/admin/hotels">← სასტუმროები</a>
+
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  <div class="header-row">
+    <h1>{{ isNew() ? 'ახალი სასტუმრო' : form.name }}</h1>
+    @if (!isNew()) {
+      <button type="button" class="danger" (click)="deleteHotel()">სასტუმროს წაშლა</button>
+    }
+  </div>
+
+  @if (error()) {
+    <p class="error-banner">{{ error() }}</p>
+  }
+
+  <form class="panel" (ngSubmit)="submit()">
+    <div class="grid">
+      <label>
+        <span>Slug (URL) *</span>
+        <input name="slug" [(ngModel)]="form.slug" required pattern="[a-z0-9-]+" placeholder="aurahotel" />
+      </label>
+
+      <label>
+        <span>სახელი *</span>
+        <input name="name" [(ngModel)]="form.name" required placeholder="Aura Hotel Tbilisi" />
+      </label>
+
+      <label>
+        <span>ძირითადი ფერი</span>
+        <div class="color-input">
+          <input type="color" name="primary_color" [(ngModel)]="form.primary_color" />
+          <input type="text" [(ngModel)]="form.primary_color" name="primary_color_text" />
+        </div>
+      </label>
+
+      <label>
+        <span>დამატებითი ფერი</span>
+        <div class="color-input">
+          <input type="color" name="secondary_color" [(ngModel)]="form.secondary_color" />
+          <input type="text" [(ngModel)]="form.secondary_color" name="secondary_color_text" />
+        </div>
+      </label>
+
+      <label>
+        <span>ნაგულისხმევი ენა</span>
+        <select name="default_language" [(ngModel)]="form.default_language">
+          @for (l of languages; track l) {
+            <option [value]="l">{{ l }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="checkbox">
+        <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+        <span>აქტიურია (სტუმრები ხედავენ)</span>
+      </label>
+
+      <label class="span-2">
+        <span>მისამართი</span>
+        <input name="address" [(ngModel)]="form.address" />
+      </label>
+
+      <label>
+        <span>ტელეფონი</span>
+        <input name="phone" [(ngModel)]="form.phone" />
+      </label>
+
+      <label>
+        <span>WhatsApp</span>
+        <input name="whatsapp" [(ngModel)]="form.whatsapp" />
+      </label>
+
+      <label class="span-2">
+        <span>ელფოსტა</span>
+        <input type="email" name="email" [(ngModel)]="form.email" />
+      </label>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : 'შენახვა' }}</button>
+      @if (saved()) {
+        <span class="saved-flag">შენახულია ✓</span>
+      }
+    </div>
+  </form>
+
+  @if (!isNew()) {
+    <div class="panel">
+      <h2>ლოგო</h2>
+      <div class="logo-row">
+        @if (hotel()?.logo_url) {
+          <img class="logo-preview" [src]="hotel()!.logo_url" alt="ლოგო" />
+        }
+        <label class="upload-btn">
+          {{ uploadingLogo() ? 'იტვირთება…' : 'ფოტოს არჩევა' }}
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onLogoSelected($event)" [disabled]="uploadingLogo()" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Hotel Admin-ები</h2>
+
+      @if (admins().length === 0) {
+        <p class="empty">ჯერ არავინაა მიბმული</p>
+      }
+
+      @for (admin of admins(); track admin.id) {
+        <div class="admin-row">
+          <div>
+            <p class="admin-name">{{ admin.full_name || '—' }}</p>
+            <p class="admin-id">{{ admin.id }}</p>
+          </div>
+          <button type="button" class="danger-outline" (click)="unlinkAdmin(admin.id)">მოხსნა</button>
+        </div>
+      }
+
+      <div class="link-form">
+        <p class="hint">
+          ჯერ შექმენით user Supabase Dashboard → Authentication → Users-ში, დააკოპირეთ მისი User UID და
+          ჩასვით აქ.
+        </p>
+        <div class="link-inputs">
+          <input placeholder="User UID" [(ngModel)]="newAdminUserId" name="newAdminUserId" />
+          <input placeholder="სახელი გვარი" [(ngModel)]="newAdminName" name="newAdminName" />
+          <button type="button" (click)="linkAdmin()" [disabled]="linkingAdmin() || !newAdminUserId.trim()">
+            {{ linkingAdmin() ? '...' : 'მიბმა' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+}
