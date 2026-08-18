@@ -45,7 +45,7 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Dishes & prices',
     ru: 'Блюда и цены',
   },
-  nav_guide: { ka: 'გზამკვლევი', en: 'Local Guide', ru: 'Локальный гид' },
+  nav_guide: { ka: 'თქვენი გზამკვლევი', en: 'Local Guide', ru: 'Локальный гид' },
   nav_guide_desc: {
     ka: 'რას ვნახავთ ახლომახლო',
     en: "What's nearby",
