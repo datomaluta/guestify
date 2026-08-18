@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { hotelResolver } from './core/services/hotel.resolver';
 import { authGuard } from './core/services/auth.guard';
 import { superadminGuard } from './core/services/superadmin.guard';
+import { hotelAdminGuard } from './core/services/hotel-admin.guard';
 
 export const routes: Routes = [
   {
@@ -60,6 +61,44 @@ export const routes: Routes = [
         canActivate: [superadminGuard],
         loadComponent: () =>
           import('./features/admin/hotels/hotel-form/hotel-form.component').then((m) => m.HotelFormComponent)
+      },
+      {
+        path: 'content',
+        canActivate: [hotelAdminGuard],
+        loadComponent: () =>
+          import('./features/admin/content/content-shell/content-shell.component').then((m) => m.ContentShellComponent),
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'services' },
+          {
+            path: 'services',
+            loadComponent: () =>
+              import('./features/admin/content/services-editor/services-editor.component').then(
+                (m) => m.ServicesEditorComponent
+              )
+          },
+          {
+            path: 'menu',
+            loadComponent: () =>
+              import('./features/admin/content/menu-editor/menu-editor.component').then((m) => m.MenuEditorComponent)
+          },
+          {
+            path: 'guide',
+            loadComponent: () =>
+              import('./features/admin/content/guide-editor/guide-editor.component').then((m) => m.GuideEditorComponent)
+          },
+          {
+            path: 'rules',
+            loadComponent: () =>
+              import('./features/admin/content/rules-editor/rules-editor.component').then((m) => m.RulesEditorComponent)
+          },
+          {
+            path: 'contacts',
+            loadComponent: () =>
+              import('./features/admin/content/contacts-editor/contacts-editor.component').then(
+                (m) => m.ContactsEditorComponent
+              )
+          }
+        ]
       }
     ]
   },

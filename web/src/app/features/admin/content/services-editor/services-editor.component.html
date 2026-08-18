@@ -1,0 +1,85 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">სერვისები ჯერ არ დამატებულა</p>
+  }
+
+  @for (item of items(); track item.id) {
+    <div class="row" [class.editing]="editingId() === item.id">
+      <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
+      <div class="info">
+        <p class="t">{{ item.title_ka }}</p>
+        <p class="d">{{ item.description_ka }}</p>
+      </div>
+      @if (!item.is_active) {
+        <span class="status-off">გამორთული</span>
+      }
+      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
+    </div>
+  }
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'სერვისის რედაქტირება' : 'ახალი სერვისი' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <label>
+      <span>Icon</span>
+      <select name="icon" [(ngModel)]="form.icon">
+        @for (i of icons; track i) {
+          <option [value]="i">{{ i }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="lang-grid">
+      <label>
+        <span>სათაური (ქარ) *</span>
+        <input name="title_ka" [(ngModel)]="form.title_ka" required />
+      </label>
+      <label>
+        <span>Title (EN)</span>
+        <input name="title_en" [(ngModel)]="form.title_en" />
+      </label>
+      <label>
+        <span>Название (RU)</span>
+        <input name="title_ru" [(ngModel)]="form.title_ru" />
+      </label>
+
+      <label>
+        <span>აღწერა (ქარ)</span>
+        <input name="description_ka" [(ngModel)]="form.description_ka" />
+      </label>
+      <label>
+        <span>Description (EN)</span>
+        <input name="description_en" [(ngModel)]="form.description_en" />
+      </label>
+      <label>
+        <span>Описание (RU)</span>
+        <input name="description_ru" [(ngModel)]="form.description_ru" />
+      </label>
+    </div>
+
+    <div class="row-fields">
+      <label>
+        <span>რიგითობა</span>
+        <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+        <span>აქტიურია</span>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">გაუქმება</button>
+      }
+    </div>
+  </form>
+}

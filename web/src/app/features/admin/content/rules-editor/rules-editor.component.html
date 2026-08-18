@@ -1,0 +1,66 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">წესები ჯერ არ დამატებულა</p>
+  }
+
+  @for (item of items(); track item.id) {
+    <div class="row" [class.editing]="editingId() === item.id">
+      <div class="info">
+        <p class="t">{{ item.title_ka }}</p>
+        <p class="d">{{ item.content_ka }}</p>
+      </div>
+      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
+    </div>
+  }
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'წესის რედაქტირება' : 'ახალი წესი' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <div class="lang-grid">
+      <label>
+        <span>სათაური (ქარ) *</span>
+        <input name="title_ka" [(ngModel)]="form.title_ka" required />
+      </label>
+      <label>
+        <span>Title (EN)</span>
+        <input name="title_en" [(ngModel)]="form.title_en" />
+      </label>
+      <label>
+        <span>Название (RU)</span>
+        <input name="title_ru" [(ngModel)]="form.title_ru" />
+      </label>
+
+      <label>
+        <span>ტექსტი (ქარ)</span>
+        <textarea name="content_ka" [(ngModel)]="form.content_ka" rows="2"></textarea>
+      </label>
+      <label>
+        <span>Text (EN)</span>
+        <textarea name="content_en" [(ngModel)]="form.content_en" rows="2"></textarea>
+      </label>
+      <label>
+        <span>Текст (RU)</span>
+        <textarea name="content_ru" [(ngModel)]="form.content_ru" rows="2"></textarea>
+      </label>
+    </div>
+
+    <label class="sort">
+      <span>რიგითობა</span>
+      <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">გაუქმება</button>
+      }
+    </div>
+  </form>
+}

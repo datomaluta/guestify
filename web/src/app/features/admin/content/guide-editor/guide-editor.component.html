@@ -1,0 +1,98 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">გზამკვლევის ადგილები ჯერ არ დამატებულა</p>
+  }
+
+  @for (item of items(); track item.id) {
+    <div class="row" [class.editing]="editingId() === item.id">
+      @if (item.image_url) {
+        <img class="thumb" [src]="item.image_url" alt="" />
+      } @else {
+        <div class="thumb placeholder"></div>
+      }
+      <div class="info">
+        <p class="t">{{ item.name_ka }}</p>
+        <p class="d">{{ item.category }}</p>
+      </div>
+      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
+    </div>
+  }
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'ადგილის რედაქტირება' : 'ახალი ადგილი' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <label>
+      <span>კატეგორია</span>
+      <select name="category" [(ngModel)]="form.category">
+        @for (c of categories; track c) {
+          <option [value]="c">{{ c }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="lang-grid">
+      <label>
+        <span>სახელი (ქარ) *</span>
+        <input name="name_ka" [(ngModel)]="form.name_ka" required />
+      </label>
+      <label>
+        <span>Name (EN)</span>
+        <input name="name_en" [(ngModel)]="form.name_en" />
+      </label>
+      <label>
+        <span>Название (RU)</span>
+        <input name="name_ru" [(ngModel)]="form.name_ru" />
+      </label>
+
+      <label>
+        <span>აღწერა (ქარ)</span>
+        <input name="description_ka" [(ngModel)]="form.description_ka" />
+      </label>
+      <label>
+        <span>Description (EN)</span>
+        <input name="description_en" [(ngModel)]="form.description_en" />
+      </label>
+      <label>
+        <span>Описание (RU)</span>
+        <input name="description_ru" [(ngModel)]="form.description_ru" />
+      </label>
+    </div>
+
+    <div class="row-fields">
+      <label class="grow">
+        <span>Google Maps ბმული</span>
+        <input name="google_maps_url" [(ngModel)]="form.google_maps_url" placeholder="https://maps.google.com/?q=..." />
+      </label>
+      <label class="sort">
+        <span>რიგითობა</span>
+        <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+      </label>
+    </div>
+
+    @if (editingId()) {
+      <div class="image-row">
+        @if (editingImageUrl()) {
+          <img class="preview" [src]="editingImageUrl()" alt="" />
+        }
+        <label class="upload-btn">
+          {{ uploadingImage() ? 'იტვირთება…' : 'ფოტოს არჩევა' }}
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="uploadingImage()" hidden />
+        </label>
+      </div>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">დახურვა</button>
+      }
+    </div>
+  </form>
+}

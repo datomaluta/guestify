@@ -1,0 +1,168 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  <section class="block">
+    <h1>კატეგორიები</h1>
+
+    @if (categories().length === 0) {
+      <p class="empty">კატეგორია ჯერ არ დამატებულა</p>
+    }
+
+    @for (cat of categories(); track cat.id) {
+      <div class="row" [class.editing]="editingCategoryId() === cat.id">
+        <div class="info">
+          <p class="t">{{ cat.name_ka }}</p>
+          <p class="d">{{ (itemsByCategory().get(cat.id) ?? []).length }} კერძი</p>
+        </div>
+        <button type="button" class="link-btn" (click)="editCategory(cat)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="removeCategory(cat.id)">წაშლა</button>
+      </div>
+    }
+
+    <form class="panel" (ngSubmit)="submitCategory()">
+      <h2>{{ editingCategoryId() ? 'კატეგორიის რედაქტირება' : 'ახალი კატეგორია' }}</h2>
+
+      @if (categoryError()) {
+        <p class="error-banner">{{ categoryError() }}</p>
+      }
+
+      <div class="lang-grid">
+        <label>
+          <span>სახელი (ქარ) *</span>
+          <input name="cat_name_ka" [(ngModel)]="categoryForm.name_ka" required />
+        </label>
+        <label>
+          <span>Name (EN)</span>
+          <input name="cat_name_en" [(ngModel)]="categoryForm.name_en" />
+        </label>
+        <label>
+          <span>Название (RU)</span>
+          <input name="cat_name_ru" [(ngModel)]="categoryForm.name_ru" />
+        </label>
+      </div>
+
+      <label class="sort">
+        <span>რიგითობა</span>
+        <input type="number" name="cat_sort_order" [(ngModel)]="categoryForm.sort_order" />
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="savingCategory()">
+          {{ savingCategory() ? 'ინახება…' : editingCategoryId() ? 'განახლება' : 'დამატება' }}
+        </button>
+        @if (editingCategoryId()) {
+          <button type="button" class="ghost" (click)="cancelCategoryEdit()">გაუქმება</button>
+        }
+      </div>
+    </form>
+  </section>
+
+  <section class="block">
+    <h1>კერძები</h1>
+
+    @if (items().length === 0) {
+      <p class="empty">კერძი ჯერ არ დამატებულა</p>
+    }
+
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingItemId() === item.id">
+        @if (item.image_url) {
+          <img class="thumb" [src]="item.image_url" alt="" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="info">
+          <p class="t">{{ item.name_ka }}</p>
+          <p class="d">{{ item.price }} {{ item.currency }} @if (!item.is_available) { · გამორთული }</p>
+        </div>
+        <button type="button" class="link-btn" (click)="editItem(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="removeItem(item.id)">წაშლა</button>
+      </div>
+    }
+
+    <form class="panel" (ngSubmit)="submitItem()">
+      <h2>{{ editingItemId() ? 'კერძის რედაქტირება' : 'ახალი კერძი' }}</h2>
+
+      @if (itemError()) {
+        <p class="error-banner">{{ itemError() }}</p>
+      }
+
+      <label>
+        <span>კატეგორია *</span>
+        <select name="item_category_id" [(ngModel)]="itemForm.category_id" required>
+          @for (cat of categories(); track cat.id) {
+            <option [value]="cat.id">{{ cat.name_ka }}</option>
+          }
+        </select>
+      </label>
+
+      <div class="lang-grid">
+        <label>
+          <span>სახელი (ქარ) *</span>
+          <input name="item_name_ka" [(ngModel)]="itemForm.name_ka" required />
+        </label>
+        <label>
+          <span>Name (EN)</span>
+          <input name="item_name_en" [(ngModel)]="itemForm.name_en" />
+        </label>
+        <label>
+          <span>Название (RU)</span>
+          <input name="item_name_ru" [(ngModel)]="itemForm.name_ru" />
+        </label>
+
+        <label>
+          <span>აღწერა (ქარ)</span>
+          <input name="item_description_ka" [(ngModel)]="itemForm.description_ka" />
+        </label>
+        <label>
+          <span>Description (EN)</span>
+          <input name="item_description_en" [(ngModel)]="itemForm.description_en" />
+        </label>
+        <label>
+          <span>Описание (RU)</span>
+          <input name="item_description_ru" [(ngModel)]="itemForm.description_ru" />
+        </label>
+      </div>
+
+      <div class="row-fields">
+        <label class="sort">
+          <span>ფასი *</span>
+          <input type="number" step="0.01" name="item_price" [(ngModel)]="itemForm.price" required />
+        </label>
+        <label class="sort">
+          <span>ვალუტა</span>
+          <input name="item_currency" [(ngModel)]="itemForm.currency" />
+        </label>
+        <label class="sort">
+          <span>რიგითობა</span>
+          <input type="number" name="item_sort_order" [(ngModel)]="itemForm.sort_order" />
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="item_is_available" [(ngModel)]="itemForm.is_available" />
+          <span>ხელმისაწვდომია</span>
+        </label>
+      </div>
+
+      @if (editingItemId()) {
+        <div class="image-row">
+          @if (editingItemImageUrl()) {
+            <img class="preview" [src]="editingItemImageUrl()" alt="" />
+          }
+          <label class="upload-btn">
+            {{ uploadingImage() ? 'იტვირთება…' : 'ფოტოს არჩევა' }}
+            <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="uploadingImage()" hidden />
+          </label>
+        </div>
+      }
+
+      <div class="actions">
+        <button type="submit" [disabled]="savingItem()">
+          {{ savingItem() ? 'ინახება…' : editingItemId() ? 'განახლება' : 'დამატება' }}
+        </button>
+        @if (editingItemId()) {
+          <button type="button" class="ghost" (click)="cancelItemEdit()">დახურვა</button>
+        }
+      </div>
+    </form>
+  </section>
+}

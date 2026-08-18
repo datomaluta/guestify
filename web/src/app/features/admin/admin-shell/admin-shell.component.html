@@ -6,6 +6,10 @@
       <nav class="nav">
         <a routerLink="/admin/hotels" routerLinkActive="active">სასტუმროები</a>
       </nav>
+    } @else if (auth.profile()?.role === 'hotel_admin') {
+      <nav class="nav">
+        <a routerLink="/admin/content" routerLinkActive="active">ჩემი კონტენტი</a>
+      </nav>
     }
 
     <div class="who">
