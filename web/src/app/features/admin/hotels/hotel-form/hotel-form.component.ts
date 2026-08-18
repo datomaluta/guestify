@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppLanguage, Hotel } from '../../../../core/models';
@@ -50,17 +51,34 @@ export class HotelFormComponent {
 
   protected form: HotelFormModel = { ...BLANK_FORM };
 
-  constructor() {
-    const id = this.route.snapshot.paramMap.get('id');
+  /** route param-ს signal-ად ვცვლით — Angular ერთსა და იმავე component instance-ს იყენებს
+   * /admin/hotels/new → /admin/hotels/:id გადასვლისას (იგივე route config), ასე რომ constructor
+   * მხოლოდ ერთხელ გაეშვებოდა და "ახალი" რეჟიმში დარჩებოდა შექმნის შემდეგაც კი. */
+  private readonly idParam = toSignal(this.route.paramMap, { requireSync: true });
 
+  constructor() {
+    effect(() => {
+      const id = this.idParam().get('id');
+      this.initializeFor(id);
+    });
+  }
+
+  private initializeFor(id: string | null): void {
     if (!id || id === 'new') {
       this.isNew.set(true);
+      this.hotelId.set(null);
+      this.hotel.set(null);
+      this.form = { ...BLANK_FORM };
+      this.admins.set([]);
+      this.error.set(null);
+      this.saved.set(false);
       this.loading.set(false);
       return;
     }
 
     this.isNew.set(false);
     this.hotelId.set(id);
+    this.saved.set(false);
     this.loadHotel(id);
   }
 
