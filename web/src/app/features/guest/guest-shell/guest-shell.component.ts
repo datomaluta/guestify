@@ -2,19 +2,22 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { LanguageService } from '../../../core/i18n/language.service';
+import { ThemeService } from '../../../core/theme.service';
 import { AppLanguage } from '../../../core/models';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { IconComponent } from '../../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-guest-shell',
   standalone: true,
-  imports: [RouterOutlet, TranslatePipe],
+  imports: [RouterOutlet, TranslatePipe, IconComponent],
   templateUrl: './guest-shell.component.html',
   styleUrl: './guest-shell.component.scss'
 })
 export class GuestShellComponent {
   protected readonly hotelContext = inject(HotelContextService);
   protected readonly language = inject(LanguageService);
+  protected readonly theme = inject(ThemeService);
 
   protected readonly languages: { code: AppLanguage; label: string }[] = [
     { code: 'ka', label: 'ქარ' },

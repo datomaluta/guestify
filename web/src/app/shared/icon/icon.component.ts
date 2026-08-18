@@ -34,7 +34,9 @@ export type IconName =
   | 'luggage'
   | 'bike'
   | 'business-center'
-  | 'accessibility';
+  | 'accessibility'
+  | 'sun'
+  | 'moon';
 
 /** მსუბუქი ხაზოვანი icon-ების ნაკრები — ერთი კომპონენტი, ყველგან იგივე სტილი (stroke, currentColor). */
 @Component({
@@ -137,6 +139,12 @@ export type IconName =
       }
       @case ('accessibility') {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.5" cy="5" r="1.7"/><path d="M10.5 8h5l1 5h4.5"/><path d="M12 8v4l4.5 2"/><circle cx="9.5" cy="17" r="4"/></svg>
+      }
+      @case ('sun') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M3 12h2M19 12h2M4.6 19.4l1.4-1.4M18 6l1.4-1.4"/></svg>
+      }
+      @case ('moon') {
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5z"/></svg>
       }
     }
   `,
