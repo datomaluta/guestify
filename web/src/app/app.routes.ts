@@ -18,19 +18,23 @@ export const routes: Routes = [
       {
         path: 'services',
         loadComponent: () =>
-          import('./features/guest/services/services.component').then((m) => m.ServicesComponent)
+          import('./features/guest/services/services.component').then((m) => m.ServicesComponent),
+        data: { preload: true }
       },
       {
         path: 'menu',
-        loadComponent: () => import('./features/guest/menu/menu.component').then((m) => m.MenuComponent)
+        loadComponent: () => import('./features/guest/menu/menu.component').then((m) => m.MenuComponent),
+        data: { preload: true }
       },
       {
         path: 'guide',
-        loadComponent: () => import('./features/guest/guide/guide.component').then((m) => m.GuideComponent)
+        loadComponent: () => import('./features/guest/guide/guide.component').then((m) => m.GuideComponent),
+        data: { preload: true }
       },
       {
         path: 'rules',
-        loadComponent: () => import('./features/guest/rules/rules.component').then((m) => m.RulesComponent)
+        loadComponent: () => import('./features/guest/rules/rules.component').then((m) => m.RulesComponent),
+        data: { preload: true }
       }
     ]
   },
