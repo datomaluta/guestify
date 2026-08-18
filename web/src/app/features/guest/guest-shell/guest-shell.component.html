@@ -28,6 +28,9 @@
           </button>
         }
       </div>
+      <button type="button" class="theme-btn" (click)="theme.toggle()" aria-label="თემის გადართვა">
+        <app-icon [name]="theme.theme() === 'dark' ? 'moon' : 'sun'" />
+      </button>
     </header>
 
     <main class="app-body">
