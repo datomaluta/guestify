@@ -1,7 +1,6 @@
-// local development — შეავსეთ თქვენი Supabase პროექტის მონაცემებით
-// (Supabase Dashboard → Project Settings → API)
+// local development — Guestify-ის Supabase პროექტი
 export const environment = {
   production: false,
-  supabaseUrl: 'https://YOUR-PROJECT-REF.supabase.co',
-  supabaseAnonKey: 'YOUR-SUPABASE-ANON-KEY'
+  supabaseUrl: 'https://lrjkplclilntjhvrujze.supabase.co',
+  supabaseAnonKey: 'sb_publishable_lGRecPN1yl2sSkuTG2AYZg_AUNTgbOp'
 };

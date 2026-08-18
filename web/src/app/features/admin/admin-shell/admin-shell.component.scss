@@ -1,0 +1,83 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-raised);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 15px;
+
+  span {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+
+  a {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    &.active {
+      background: var(--paper-sunk);
+      color: var(--ink);
+    }
+  }
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  font-size: 12.5px;
+
+  .name {
+    font-weight: 600;
+  }
+
+  .role {
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    background: var(--paper-sunk);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  button {
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+  }
+}
+
+.content {
+  flex: 1;
+  padding: 24px;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}

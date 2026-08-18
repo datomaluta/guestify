@@ -1,0 +1,25 @@
+<div class="header-row">
+  <h1>სასტუმროები</h1>
+  <a class="new-btn" routerLink="/admin/hotels/new">+ ახალი სასტუმრო</a>
+</div>
+
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else if (hotels().length === 0) {
+  <p class="empty">სასტუმროები ჯერ არ დამატებულა</p>
+} @else {
+  <div class="table">
+    @for (hotel of hotels(); track hotel.id) {
+      <a class="row" [routerLink]="['/admin/hotels', hotel.id]">
+        <span class="swatch" [style.background]="hotel.primary_color || '#96772F'"></span>
+        <div class="info">
+          <p class="name">{{ hotel.name }}</p>
+          <p class="slug">/hotel/{{ hotel.slug }}</p>
+        </div>
+        <span class="status" [class.inactive]="!hotel.is_active">
+          {{ hotel.is_active ? 'აქტიური' : 'გამორთული' }}
+        </span>
+      </a>
+    }
+  </div>
+}

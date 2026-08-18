@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { hotelResolver } from './core/services/hotel.resolver';
 import { authGuard } from './core/services/auth.guard';
+import { superadminGuard } from './core/services/superadmin.guard';
 
 export const routes: Routes = [
   {
@@ -41,7 +42,26 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./features/admin/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent)
+      import('./features/admin/admin-shell/admin-shell.component').then((m) => m.AdminShellComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/admin/admin-home/admin-home.component').then((m) => m.AdminHomeComponent)
+      },
+      {
+        path: 'hotels',
+        canActivate: [superadminGuard],
+        loadComponent: () =>
+          import('./features/admin/hotels/hotel-list/hotel-list.component').then((m) => m.HotelListComponent)
+      },
+      {
+        path: 'hotels/:id',
+        canActivate: [superadminGuard],
+        loadComponent: () =>
+          import('./features/admin/hotels/hotel-form/hotel-form.component').then((m) => m.HotelFormComponent)
+      }
+    ]
   },
   { path: '', pathMatch: 'full', redirectTo: 'admin/login' },
   { path: '**', redirectTo: 'admin/login' }

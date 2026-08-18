@@ -10,7 +10,7 @@ import {
   HotelContact
 } from '../models';
 
-/** ყველა read-only query-ს ერთად აგროვებს — RLS თავად ზღუდავს რას xედავს anon/hotel_admin/superadmin. */
+/** ყველა read-only query-ს ერთად აგროვებს — RLS თავად ზღუდავს რას ხედავს anon/hotel_admin/superadmin. */
 @Injectable({ providedIn: 'root' })
 export class HotelService {
   private readonly supabase = inject(SupabaseService);

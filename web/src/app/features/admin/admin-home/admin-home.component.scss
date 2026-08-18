@@ -1,0 +1,23 @@
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+}
+
+.cta {
+  align-self: flex-start;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--brand-secondary);
+  text-decoration: none;
+}
