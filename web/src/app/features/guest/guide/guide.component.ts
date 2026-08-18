@@ -3,14 +3,13 @@ import { GuidePlace } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { SubHeaderComponent } from '../../../shared/sub-header/sub-header.component';
-import { IconComponent } from '../../../shared/icon/icon.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 
 @Component({
   selector: 'app-guide',
   standalone: true,
-  imports: [SubHeaderComponent, IconComponent, TranslatePipe, LocalizePipe],
+  imports: [SubHeaderComponent, TranslatePipe, LocalizePipe],
   templateUrl: './guide.component.html',
   styleUrl: './guide.component.scss'
 })
