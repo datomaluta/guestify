@@ -1,0 +1,16 @@
+<div class="icon-field">
+  <span class="icon-field-label">Icon — {{ labelFor(icon()) }}</span>
+  <div class="icon-grid">
+    @for (i of icons(); track i) {
+      <button
+        type="button"
+        class="icon-option"
+        [class.selected]="icon() === i"
+        [title]="labelFor(i)"
+        (click)="icon.set(i)"
+      >
+        <app-icon [name]="i" />
+      </button>
+    }
+  </div>
+</div>

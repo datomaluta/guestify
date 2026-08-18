@@ -19,6 +19,16 @@
   }
 }
 
+.icn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--paper-sunk);
+  color: var(--brand-secondary);
+  padding: 7px;
+  flex-shrink: 0;
+}
+
 .info {
   flex: 1;
   min-width: 0;

@@ -27,22 +27,7 @@
       <p class="error-banner">{{ error() }}</p>
     }
 
-    <div class="icon-field">
-      <span class="icon-field-label">Icon — {{ labelFor(form.icon) }}</span>
-      <div class="icon-grid">
-        @for (i of icons; track i) {
-          <button
-            type="button"
-            class="icon-option"
-            [class.selected]="form.icon === i"
-            [title]="labelFor(i)"
-            (click)="selectIcon(i)"
-          >
-            <app-icon [name]="i" />
-          </button>
-        }
-      </div>
-    </div>
+    <app-icon-picker [icons]="icons" [(icon)]="form.icon" />
 
     <div class="lang-grid">
       <label>
