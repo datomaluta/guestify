@@ -27,14 +27,22 @@
       <p class="error-banner">{{ error() }}</p>
     }
 
-    <label>
-      <span>Icon</span>
-      <select name="icon" [(ngModel)]="form.icon">
+    <div class="icon-field">
+      <span class="icon-field-label">Icon — {{ labelFor(form.icon) }}</span>
+      <div class="icon-grid">
         @for (i of icons; track i) {
-          <option [value]="i">{{ i }}</option>
+          <button
+            type="button"
+            class="icon-option"
+            [class.selected]="form.icon === i"
+            [title]="labelFor(i)"
+            (click)="selectIcon(i)"
+          >
+            <app-icon [name]="i" />
+          </button>
         }
-      </select>
-    </label>
+      </div>
+    </div>
 
     <div class="lang-grid">
       <label>

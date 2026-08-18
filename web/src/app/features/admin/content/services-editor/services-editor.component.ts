@@ -5,7 +5,70 @@ import { AdminContentService } from '../../../../core/services/admin-content.ser
 import { AuthService } from '../../../../core/services/auth.service';
 import { IconComponent, IconName } from '../../../../shared/icon/icon.component';
 
-const ICONS: IconName[] = ['concierge-bell', 'cup', 'droplet', 'clock', 'wifi', 'cutlery', 'map-pin', 'shield-check', 'phone'];
+/** სერვისებისთვის შემოთავაზებული curated ნაკრები (UI-chrome icon-ები — chevron-*, external-link — გამორიცხულია). */
+const SERVICE_ICONS: IconName[] = [
+  'general',
+  'concierge-bell',
+  'cup',
+  'cutlery',
+  'bar',
+  'droplet',
+  'pool',
+  'gym',
+  'clock',
+  'wifi',
+  'ac',
+  'tv',
+  'safe',
+  'minibar',
+  'laundry',
+  'elevator',
+  'parking',
+  'shuttle',
+  'luggage',
+  'bike',
+  'beach',
+  'kids-club',
+  'pets',
+  'non-smoking',
+  'business-center',
+  'accessibility',
+  'shield-check',
+  'map-pin',
+  'phone'
+];
+
+const ICON_LABELS: Partial<Record<IconName, string>> = {
+  general: 'ზოგადი',
+  'concierge-bell': 'კონსიერჟი',
+  cup: 'საუზმე',
+  cutlery: 'რესტორანი',
+  bar: 'ბარი',
+  droplet: 'Spa',
+  pool: 'აუზი',
+  gym: 'სავარჯიშო დარბაზი',
+  clock: '24/7',
+  wifi: 'Wi-Fi',
+  ac: 'კონდიციონერი',
+  tv: 'ტელევიზორი',
+  safe: 'სეიფი',
+  minibar: 'მინი-ბარი',
+  laundry: 'სამრეცხაო',
+  elevator: 'ლიფტი',
+  parking: 'პარკინგი',
+  shuttle: 'ტრანსფერი',
+  luggage: 'ბარგი',
+  bike: 'ველოსიპედი',
+  beach: 'პლაჟი',
+  'kids-club': 'საბავშვო კლუბი',
+  pets: 'ცხოველები',
+  'non-smoking': 'არამწეველთათვის',
+  'business-center': 'ბიზნეს-ცენტრი',
+  accessibility: 'ხელმისაწვდომობა',
+  'shield-check': 'უსაფრთხოება',
+  'map-pin': 'მდებარეობა',
+  phone: 'კონტაქტი'
+};
 
 interface ServiceForm {
   icon: IconName;
@@ -20,7 +83,7 @@ interface ServiceForm {
 }
 
 const BLANK: ServiceForm = {
-  icon: 'concierge-bell',
+  icon: 'general',
   title_ka: '',
   title_en: '',
   title_ru: '',
@@ -43,7 +106,7 @@ export class ServicesEditorComponent {
   private readonly auth = inject(AuthService);
   private readonly hotelId = this.auth.profile()!.hotel_id!;
 
-  protected readonly icons = ICONS;
+  protected readonly icons = SERVICE_ICONS;
   protected readonly items = signal<HotelServiceItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
@@ -67,7 +130,7 @@ export class ServicesEditorComponent {
   edit(item: HotelServiceItem): void {
     this.editingId.set(item.id);
     this.form = {
-      icon: (item.icon as IconName) || 'concierge-bell',
+      icon: this.iconFor(item.icon),
       title_ka: item.title_ka,
       title_en: item.title_en || '',
       title_ru: item.title_ru || '',
@@ -82,6 +145,14 @@ export class ServicesEditorComponent {
   cancelEdit(): void {
     this.editingId.set(null);
     this.form = { ...BLANK };
+  }
+
+  selectIcon(icon: IconName): void {
+    this.form = { ...this.form, icon };
+  }
+
+  labelFor(icon: IconName): string {
+    return ICON_LABELS[icon] ?? icon;
   }
 
   async submit(): Promise<void> {
@@ -106,6 +177,6 @@ export class ServicesEditorComponent {
   }
 
   iconFor(icon: string | null): IconName {
-    return ICONS.includes(icon as IconName) ? (icon as IconName) : 'concierge-bell';
+    return SERVICE_ICONS.includes(icon as IconName) ? (icon as IconName) : 'general';
   }
 }
