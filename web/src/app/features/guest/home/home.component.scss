@@ -42,10 +42,12 @@
   animation: guestify-fade-up 0.4s ease both;
   animation-delay: calc(var(--i, 0) * 60ms);
 
-  &:hover {
-    border-color: var(--brand-primary);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--brand-primary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
   }
 
   &:active {
