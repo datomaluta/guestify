@@ -54,6 +54,12 @@
   }
 }
 
+.icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .icn {
   width: 36px;
   height: 36px;
@@ -61,16 +67,15 @@
   background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
   color: var(--brand-primary);
   padding: 8px;
+  flex-shrink: 0;
 }
 
 .chevron {
-  position: absolute;
-  top: 16px;
-  right: 14px;
   width: 14px;
   height: 14px;
   color: var(--ink-faint);
   opacity: 0.7;
+  flex-shrink: 0;
 }
 
 .t {
