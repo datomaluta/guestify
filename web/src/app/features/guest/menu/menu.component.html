@@ -19,10 +19,12 @@
   </div>
 
   <div class="menu-list">
-    @for (item of visibleItems(); track item.id) {
-      <div class="menu-row">
+    @for (item of visibleItems(); track item.id; let i = $index) {
+      <div class="menu-row" [style.--i]="i">
         @if (item.image_url) {
           <img class="thumb" [src]="item.image_url" [alt]="item | localize: 'name'" loading="lazy" width="52" height="52" />
+        } @else {
+          <div class="thumb placeholder"></div>
         }
         <div class="info">
           <p class="t">{{ item | localize: 'name' }}</p>

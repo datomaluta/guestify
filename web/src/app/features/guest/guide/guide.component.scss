@@ -5,11 +5,29 @@
   text-align: center;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px 24px;
+}
+
 .place-card {
   display: flex;
   gap: 12px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--line-soft);
+  padding: 14px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  animation: guestify-fade-up 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+
+  &:hover {
+    border-color: var(--brand-primary);
+    box-shadow: var(--shadow-md);
+  }
 }
 
 .thumb {
@@ -47,6 +65,11 @@
   font-weight: 700;
   color: var(--brand-secondary);
   text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.75;
+  }
 
   app-icon {
     width: 14px;

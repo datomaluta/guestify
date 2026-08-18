@@ -37,6 +37,12 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
       place-items: center;
       text-decoration: none;
       flex-shrink: 0;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .back-btn:hover {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
     }
 
     h1 {
