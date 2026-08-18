@@ -81,3 +81,36 @@
   width: 100%;
   margin: 0 auto;
 }
+
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    padding: 12px 16px;
+  }
+
+  .brand {
+    flex-shrink: 0;
+  }
+
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+    flex: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .who {
+    margin-left: 0;
+    gap: 8px;
+  }
+
+  .who .name {
+    display: none;
+  }
+
+  .content {
+    padding: 16px;
+  }
+}

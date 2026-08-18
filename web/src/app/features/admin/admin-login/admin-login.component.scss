@@ -5,6 +5,16 @@
   padding: 24px;
 }
 
+@media (max-width: 480px) {
+  .login-screen {
+    padding: 16px;
+  }
+
+  .login-card input {
+    font-size: 16px; // iOS Safari-ს ავტომატურ zoom-ს ეხსნება focus-ზე, 16px-ზე ნაკლებ font-size-ს რომ ჰქონდეს
+  }
+}
+
 .login-card {
   width: 100%;
   max-width: 340px;
