@@ -9,7 +9,7 @@ import QRCode from 'qrcode';
   selector: 'app-qr-code',
   standalone: true,
   template: `
-    <div class="qr-wrap" [style.width.px]="size()" [style.height.px]="size()">
+    <div class="qr-wrap">
       <canvas #canvas></canvas>
     </div>
     <button type="button" class="qr-download" (click)="download()">{{ downloadLabel() }}</button>
@@ -22,8 +22,12 @@ import QRCode from 'qrcode';
       gap: 12px;
     }
 
+    /* wrap-ს კონკრეტული ზომა აღარ ვუდგენთ (%-იანი canvas-scaling ცოტა არასანდო აღმოჩნდა) —
+       ის უბრალოდ ჰგუგება canvas-ის ბუნებრივ ზომას (inline-flex + padding), canvas კი
+       ზუსტად იმ პიქსელებში იხატება, რასაც size() input ითხოვს — ასე ორივე ყოველთვის ემთხვევა. */
     .qr-wrap {
-      padding: 12px;
+      display: inline-flex;
+      padding: 18px;
       background: #fff;
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -32,8 +36,6 @@ import QRCode from 'qrcode';
 
     canvas {
       display: block;
-      width: 100%;
-      height: 100%;
     }
 
     .qr-download {
@@ -75,7 +77,7 @@ export class QrCodeComponent {
 
       QRCode.toCanvas(canvas, value, {
         width: size,
-        margin: 1,
+        margin: 2,
         color: { dark: '#1a1a1a', light: '#ffffff' }
       }).catch(() => {
         // უსახური QR ვერ დაიხატა (მაგ. ცარიელი/არასწორი value) — ჩუმად ვტოვებთ, საკონტროლო UI-ს ცალკე ექნება ღილაკის დაფარვა საჭიროების შემთხვევაში
