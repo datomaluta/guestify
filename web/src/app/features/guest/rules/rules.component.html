@@ -6,10 +6,13 @@
 
 @for (rule of rules(); track rule.id) {
   <div class="rule-row">
-    <p class="t">{{ rule | localize: 'title' }}</p>
-    @if ((rule | localize: 'content'); as content) {
-      <p class="d">{{ content }}</p>
-    }
+    <div class="icn"><app-icon [name]="iconFor(rule.icon)" /></div>
+    <div>
+      <p class="t">{{ rule | localize: 'title' }}</p>
+      @if ((rule | localize: 'content'); as content) {
+        <p class="d">{{ content }}</p>
+      }
+    </div>
   </div>
 }
 

@@ -3,8 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { HotelRule } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { IconComponent, IconName } from '../../../../shared/icon/icon.component';
+import { CURATED_ICONS } from '../../../../shared/icon/icon-options';
+import { IconPickerComponent } from '../../../../shared/icon-picker/icon-picker.component';
 
 interface RuleForm {
+  icon: IconName;
   title_ka: string;
   title_en: string;
   title_ru: string;
@@ -15,6 +19,7 @@ interface RuleForm {
 }
 
 const BLANK: RuleForm = {
+  icon: 'general',
   title_ka: '',
   title_en: '',
   title_ru: '',
@@ -27,7 +32,7 @@ const BLANK: RuleForm = {
 @Component({
   selector: 'app-rules-editor',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, IconComponent, IconPickerComponent],
   templateUrl: './rules-editor.component.html',
   styleUrl: './rules-editor.component.scss'
 })
@@ -36,6 +41,7 @@ export class RulesEditorComponent {
   private readonly auth = inject(AuthService);
   private readonly hotelId = this.auth.profile()!.hotel_id!;
 
+  protected readonly icons = CURATED_ICONS;
   protected readonly items = signal<HotelRule[]>([]);
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
@@ -59,6 +65,7 @@ export class RulesEditorComponent {
   edit(item: HotelRule): void {
     this.editingId.set(item.id);
     this.form = {
+      icon: this.iconFor(item.icon),
       title_ka: item.title_ka,
       title_en: item.title_en || '',
       title_ru: item.title_ru || '',
@@ -93,5 +100,9 @@ export class RulesEditorComponent {
     await this.content.deleteRule(id);
     if (this.editingId() === id) this.cancelEdit();
     this.refresh();
+  }
+
+  iconFor(icon: string | null): IconName {
+    return CURATED_ICONS.includes(icon as IconName) ? (icon as IconName) : 'general';
   }
 }

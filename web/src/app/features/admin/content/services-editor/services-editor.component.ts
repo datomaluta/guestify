@@ -4,71 +4,8 @@ import { HotelService as HotelServiceItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { IconComponent, IconName } from '../../../../shared/icon/icon.component';
-
-/** სერვისებისთვის შემოთავაზებული curated ნაკრები (UI-chrome icon-ები — chevron-*, external-link — გამორიცხულია). */
-const SERVICE_ICONS: IconName[] = [
-  'general',
-  'concierge-bell',
-  'cup',
-  'cutlery',
-  'bar',
-  'droplet',
-  'pool',
-  'gym',
-  'clock',
-  'wifi',
-  'ac',
-  'tv',
-  'safe',
-  'minibar',
-  'laundry',
-  'elevator',
-  'parking',
-  'shuttle',
-  'luggage',
-  'bike',
-  'beach',
-  'kids-club',
-  'pets',
-  'non-smoking',
-  'business-center',
-  'accessibility',
-  'shield-check',
-  'map-pin',
-  'phone'
-];
-
-const ICON_LABELS: Partial<Record<IconName, string>> = {
-  general: 'ზოგადი',
-  'concierge-bell': 'კონსიერჟი',
-  cup: 'საუზმე',
-  cutlery: 'რესტორანი',
-  bar: 'ბარი',
-  droplet: 'Spa',
-  pool: 'აუზი',
-  gym: 'სავარჯიშო დარბაზი',
-  clock: '24/7',
-  wifi: 'Wi-Fi',
-  ac: 'კონდიციონერი',
-  tv: 'ტელევიზორი',
-  safe: 'სეიფი',
-  minibar: 'მინი-ბარი',
-  laundry: 'სამრეცხაო',
-  elevator: 'ლიფტი',
-  parking: 'პარკინგი',
-  shuttle: 'ტრანსფერი',
-  luggage: 'ბარგი',
-  bike: 'ველოსიპედი',
-  beach: 'პლაჟი',
-  'kids-club': 'საბავშვო კლუბი',
-  pets: 'ცხოველები',
-  'non-smoking': 'არამწეველთათვის',
-  'business-center': 'ბიზნეს-ცენტრი',
-  accessibility: 'ხელმისაწვდომობა',
-  'shield-check': 'უსაფრთხოება',
-  'map-pin': 'მდებარეობა',
-  phone: 'კონტაქტი'
-};
+import { CURATED_ICONS } from '../../../../shared/icon/icon-options';
+import { IconPickerComponent } from '../../../../shared/icon-picker/icon-picker.component';
 
 interface ServiceForm {
   icon: IconName;
@@ -97,7 +34,7 @@ const BLANK: ServiceForm = {
 @Component({
   selector: 'app-services-editor',
   standalone: true,
-  imports: [FormsModule, IconComponent],
+  imports: [FormsModule, IconComponent, IconPickerComponent],
   templateUrl: './services-editor.component.html',
   styleUrl: './services-editor.component.scss'
 })
@@ -106,7 +43,7 @@ export class ServicesEditorComponent {
   private readonly auth = inject(AuthService);
   private readonly hotelId = this.auth.profile()!.hotel_id!;
 
-  protected readonly icons = SERVICE_ICONS;
+  protected readonly icons = CURATED_ICONS;
   protected readonly items = signal<HotelServiceItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
@@ -147,14 +84,6 @@ export class ServicesEditorComponent {
     this.form = { ...BLANK };
   }
 
-  selectIcon(icon: IconName): void {
-    this.form = { ...this.form, icon };
-  }
-
-  labelFor(icon: IconName): string {
-    return ICON_LABELS[icon] ?? icon;
-  }
-
   async submit(): Promise<void> {
     this.saving.set(true);
     this.error.set(null);
@@ -177,6 +106,6 @@ export class ServicesEditorComponent {
   }
 
   iconFor(icon: string | null): IconName {
-    return SERVICE_ICONS.includes(icon as IconName) ? (icon as IconName) : 'general';
+    return CURATED_ICONS.includes(icon as IconName) ? (icon as IconName) : 'general';
   }
 }
