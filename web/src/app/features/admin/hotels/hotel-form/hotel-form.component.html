@@ -93,9 +93,12 @@
           <img class="logo-preview" [src]="hotel()!.logo_url" alt="ლოგო" />
         }
         <label class="upload-btn">
-          {{ uploadingLogo() ? 'იტვირთება…' : 'ფოტოს არჩევა' }}
+          {{ uploadingLogo() ? 'იტვირთება…' : hotel()?.logo_url ? 'ფოტოს შეცვლა' : 'ფოტოს არჩევა' }}
           <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onLogoSelected($event)" [disabled]="uploadingLogo()" hidden />
         </label>
+        @if (hotel()?.logo_url) {
+          <button type="button" class="remove-btn" (click)="removeLogo()" [disabled]="uploadingLogo()">ლოგოს წაშლა</button>
+        }
       </div>
     </div>
 

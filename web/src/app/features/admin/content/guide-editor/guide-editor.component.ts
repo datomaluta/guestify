@@ -118,6 +118,23 @@ export class GuideEditorComponent {
     }
   }
 
+  async removeImage(): Promise<void> {
+    const id = this.editingId();
+    if (!id || !confirm('წავშალოთ ეს ფოტო?')) return;
+
+    this.uploadingImage.set(true);
+    try {
+      await this.content.deleteEntityImage(this.hotelId, `guide/${id}.webp`);
+      await this.content.saveGuidePlace(id, { image_url: null });
+      this.editingImageUrl.set(null);
+      this.refresh();
+    } catch (e) {
+      this.error.set((e as Error).message);
+    } finally {
+      this.uploadingImage.set(false);
+    }
+  }
+
   async remove(id: string): Promise<void> {
     if (!confirm('წავშალოთ ეს ადგილი?')) return;
     await this.content.deleteGuidePlace(id);

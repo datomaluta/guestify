@@ -62,6 +62,12 @@ export class AdminHotelService {
     return logoUrl;
   }
 
+  async removeLogo(hotelId: string): Promise<void> {
+    const { error: removeError } = await this.supabase.client.storage.from('hotel-assets').remove([`${hotelId}/logo.webp`]);
+    if (removeError) throw removeError;
+    await this.updateHotel(hotelId, { logo_url: null } as Partial<HotelWritePayload>);
+  }
+
   async listHotelAdmins(hotelId: string): Promise<HotelAdminProfile[]> {
     const { data, error } = await this.supabase.client
       .from('profiles')

@@ -147,6 +147,21 @@ export class HotelFormComponent {
     }
   }
 
+  async removeLogo(): Promise<void> {
+    const id = this.hotelId();
+    if (!id || !confirm('წავშალოთ ლოგო?')) return;
+
+    this.uploadingLogo.set(true);
+    try {
+      await this.adminHotel.removeLogo(id);
+      this.hotel.set({ ...this.hotel()!, logo_url: null });
+    } catch (e) {
+      this.error.set((e as Error).message);
+    } finally {
+      this.uploadingLogo.set(false);
+    }
+  }
+
   async linkAdmin(): Promise<void> {
     const id = this.hotelId();
     if (!id || !this.newAdminUserId.trim()) return;

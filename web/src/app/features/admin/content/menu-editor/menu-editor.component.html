@@ -149,9 +149,12 @@
             <img class="preview" [src]="editingItemImageUrl()" alt="" />
           }
           <label class="upload-btn">
-            {{ uploadingImage() ? 'იტვირთება…' : 'ფოტოს არჩევა' }}
+            {{ uploadingImage() ? 'იტვირთება…' : editingItemImageUrl() ? 'ფოტოს შეცვლა' : 'ფოტოს არჩევა' }}
             <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="uploadingImage()" hidden />
           </label>
+          @if (editingItemImageUrl()) {
+            <button type="button" class="remove-btn" (click)="removeImage()" [disabled]="uploadingImage()">ფოტოს წაშლა</button>
+          }
         </div>
       }
 
