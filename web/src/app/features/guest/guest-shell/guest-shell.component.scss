@@ -21,7 +21,7 @@
   min-height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
-  background: var(--paper-raised);
+  background: var(--paper);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
@@ -35,7 +35,7 @@
   border-bottom: 1px solid var(--line-soft);
   position: sticky;
   top: 0;
-  background: color-mix(in srgb, var(--paper-raised) 88%, transparent);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 10;
