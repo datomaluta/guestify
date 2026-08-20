@@ -1,15 +1,40 @@
 <div class="icon-field">
-  <span class="icon-field-label">Icon — {{ labelFor(icon()) }}</span>
-  <div class="icon-grid">
-    @for (i of icons(); track i) {
+  <span class="icon-field-label">Icon</span>
+
+  <div class="icon-input-row">
+    <div class="icon-preview">
+      <app-icon [name]="icon() || defaultIcon" [size]="22" />
+    </div>
+    <input
+      type="text"
+      class="icon-input"
+      [value]="icon()"
+      (input)="onInput($any($event.target).value)"
+      placeholder="მაგ: room_service"
+      spellcheck="false"
+      autocapitalize="off"
+    />
+  </div>
+
+  <p class="icon-hint">
+    მოძებნეთ აიქონი
+    <a href="https://fonts.google.com/icons?icon.set=Material+Symbols&icon.style=Outlined" target="_blank" rel="noopener">
+      fonts.google.com/icons
+    </a>
+    -ზე და ჩასვით მისი სახელი — ან აირჩიეთ ქვემოთ.
+  </p>
+
+  <div class="icon-suggestions">
+    @for (s of suggestions; track s.name) {
       <button
         type="button"
-        class="icon-option"
-        [class.selected]="icon() === i"
-        [title]="labelFor(i)"
-        (click)="icon.set(i)"
+        class="icon-suggestion"
+        [class.selected]="icon() === s.name"
+        [title]="s.label"
+        (click)="icon.set(s.name)"
       >
-        <app-icon [name]="i" />
+        <app-icon [name]="s.name" [size]="16" />
+        <span>{{ s.label }}</span>
       </button>
     }
   </div>

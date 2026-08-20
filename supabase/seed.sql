@@ -25,11 +25,11 @@ with new_hotel as (
 insert into public.services (hotel_id, icon, title_ka, title_en, title_ru, description_ka, description_en, description_ru, sort_order)
 select id, v.icon, v.title_ka, v.title_en, v.title_ru, v.description_ka, v.description_en, v.description_ru, v.sort_order
 from new_hotel, (values
-  ('cup', 'საუზმე 07:00–11:00', 'Breakfast 07:00–11:00', 'Завтрак 07:00–11:00',
+  ('local_cafe', 'საუზმე 07:00–11:00', 'Breakfast 07:00–11:00', 'Завтрак 07:00–11:00',
    'მე-2 სართული, რესტორანი Terrazza', '2nd floor, Terrazza restaurant', '2 этаж, ресторан Terrazza', 1),
-  ('droplet', 'Spa და საუნა', 'Spa & Sauna', 'Спа и сауна',
+  ('spa', 'Spa და საუნა', 'Spa & Sauna', 'Спа и сауна',
    'ღიაა 09:00–22:00, წინასწარი ჩაწერით', 'Open 09:00–22:00, by appointment', 'Открыто 09:00–22:00, по записи', 2),
-  ('clock', 'Room Service 24/7', 'Room Service 24/7', 'Room Service 24/7',
+  ('schedule', 'Room Service 24/7', 'Room Service 24/7', 'Room Service 24/7',
    'დარეკეთ რეცეფციაზე ან შეუკვეთეთ აპლიკაციიდან', 'Call reception or order from the app', 'Позвоните на ресепшн или закажите через приложение', 3),
   ('wifi', 'უფასო Wi-Fi', 'Free Wi-Fi', 'Бесплатный Wi-Fi',
    'ქსელი: AuraGuest, პაროლი: hotel2026', 'Network: AuraGuest, password: hotel2026', 'Сеть: AuraGuest, пароль: hotel2026', 4)

@@ -3,12 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { HotelService as HotelServiceItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
-import { IconComponent, IconName } from '../../../../shared/icon/icon.component';
-import { CURATED_ICONS } from '../../../../shared/icon/icon-options';
+import { IconComponent } from '../../../../shared/icon/icon.component';
+import { DEFAULT_ICON } from '../../../../shared/icon/icon-options';
 import { IconPickerComponent } from '../../../../shared/icon-picker/icon-picker.component';
 
 interface ServiceForm {
-  icon: IconName;
+  icon: string;
   title_ka: string;
   title_en: string;
   title_ru: string;
@@ -20,7 +20,7 @@ interface ServiceForm {
 }
 
 const BLANK: ServiceForm = {
-  icon: 'general',
+  icon: DEFAULT_ICON,
   title_ka: '',
   title_en: '',
   title_ru: '',
@@ -43,7 +43,6 @@ export class ServicesEditorComponent {
   private readonly auth = inject(AuthService);
   private readonly hotelId = this.auth.profile()!.hotel_id!;
 
-  protected readonly icons = CURATED_ICONS;
   protected readonly items = signal<HotelServiceItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
@@ -105,7 +104,7 @@ export class ServicesEditorComponent {
     this.refresh();
   }
 
-  iconFor(icon: string | null): IconName {
-    return CURATED_ICONS.includes(icon as IconName) ? (icon as IconName) : 'general';
+  iconFor(icon: string | null): string {
+    return icon || DEFAULT_ICON;
   }
 }

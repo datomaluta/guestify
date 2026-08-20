@@ -3,7 +3,8 @@ import { HotelService as HotelServiceItem } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { SubHeaderComponent } from '../../../shared/sub-header/sub-header.component';
-import { IconComponent, IconName, ICON_NAMES } from '../../../shared/icon/icon.component';
+import { IconComponent } from '../../../shared/icon/icon.component';
+import { DEFAULT_ICON } from '../../../shared/icon/icon-options';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 
@@ -34,7 +35,7 @@ export class ServicesComponent {
     }
   }
 
-  iconFor(icon: string | null): IconName {
-    return ICON_NAMES.includes(icon as IconName) ? (icon as IconName) : 'general';
+  iconFor(icon: string | null): string {
+    return icon || DEFAULT_ICON;
   }
 }

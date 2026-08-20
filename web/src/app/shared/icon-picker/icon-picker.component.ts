@@ -1,8 +1,12 @@
-import { Component, input, model } from '@angular/core';
-import { IconComponent, IconName } from '../icon/icon.component';
-import { ICON_LABELS } from '../icon/icon-options';
+import { Component, model } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
+import { ICON_SUGGESTIONS, DEFAULT_ICON } from '../icon/icon-options';
 
-/** ვიზუალური grid picker curated icon-ების ნაკრებიდან — reusable services/rules/... editor-ებისთვის. */
+/**
+ * Material Symbols-ის თავისუფალი ტექსტური picker — ნებისმიერი აიქონის სახელი fonts.google.com/icons-იდან
+ * შეიძლება ჩაიწეროს პირდაპირ, აღარაა შეზღუდული curated ნაკრებზე. ქვემოთ რამდენიმე ხშირად საჭირო
+ * შემოთავაზება დევს სწრაფი დაწკაპუნებისთვის.
+ */
 @Component({
   selector: 'app-icon-picker',
   standalone: true,
@@ -11,10 +15,12 @@ import { ICON_LABELS } from '../icon/icon-options';
   styleUrl: './icon-picker.component.scss'
 })
 export class IconPickerComponent {
-  readonly icons = input.required<IconName[]>();
-  readonly icon = model.required<IconName>();
+  readonly icon = model.required<string>();
 
-  labelFor(i: IconName): string {
-    return ICON_LABELS[i] ?? i;
+  protected readonly suggestions = ICON_SUGGESTIONS;
+  protected readonly defaultIcon = DEFAULT_ICON;
+
+  onInput(value: string): void {
+    this.icon.set(value.trim());
   }
 }

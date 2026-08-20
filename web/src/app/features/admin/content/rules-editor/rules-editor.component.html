@@ -7,7 +7,7 @@
 
   @for (item of items(); track item.id) {
     <div class="row" [class.editing]="editingId() === item.id">
-      <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
+      <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="16" /></div>
       <div class="info">
         <p class="t">{{ item.title_ka }}</p>
         <p class="d">{{ item.content_ka }}</p>
@@ -24,7 +24,7 @@
       <p class="error-banner">{{ error() }}</p>
     }
 
-    <app-icon-picker [icons]="icons" [(icon)]="form.icon" />
+    <app-icon-picker [(icon)]="form.icon" />
 
     <div class="lang-grid">
       <label>
