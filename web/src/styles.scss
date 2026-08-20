@@ -11,9 +11,9 @@
   --shadow-md: 0 8px 24px -8px rgba(32, 26, 29, 0.18);
   --shadow-lg: 0 16px 40px -12px rgba(32, 26, 29, 0.28);
 
-  /* hotel-specific branding — HotelContextService აყენებს ამ ცვლადებს slug-ის ჩატვირთვისას */
-  --brand-primary: #96772f;
-  --brand-secondary: #7a2638;
+  /* დროებით სტატიკური ბრენდ-ფერია ყველა სასტუმროსთვის (per-hotel ფერი გამორთულია დიზაინის დასაცავად) */
+  --brand-primary: #2b5748;
+  --brand-secondary: #2b5748;
 
   --font-ui:
     'Noto Sans Georgian', 'Segoe UI', -apple-system, BlinkMacSystemFont,
@@ -38,6 +38,8 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
     --shadow-lg: 0 16px 44px -12px rgba(0, 0, 0, 0.65);
+    --brand-primary: #3b82f6;
+    --brand-secondary: #3b82f6;
   }
 }
 
@@ -53,6 +55,8 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
   --shadow-lg: 0 16px 44px -12px rgba(0, 0, 0, 0.65);
+  --brand-primary: #3b82f6;
+  --brand-secondary: #3b82f6;
 }
 
 * {
