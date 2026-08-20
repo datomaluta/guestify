@@ -18,13 +18,14 @@
 }
 
 .app-shell {
-  min-height: 100dvh;
+  height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
   background: var(--paper);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
+  overflow: hidden;
 }
 
 .app-header {
@@ -140,5 +141,8 @@
 
 .app-body {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   animation: guestify-fade-up 0.35s ease both;
 }

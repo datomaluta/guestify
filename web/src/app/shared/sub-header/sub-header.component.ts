@@ -23,6 +23,10 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
       gap: 10px;
       padding: 16px 18px;
       border-bottom: 1px solid var(--line-soft);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--paper);
     }
 
     .back-btn {
