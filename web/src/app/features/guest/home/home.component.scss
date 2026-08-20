@@ -23,6 +23,18 @@
   padding: 18px 18px 24px;
 }
 
+@media (min-width: 720px) {
+  .hero-greet {
+    padding: 28px 32px 8px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 24px 32px 32px;
+  }
+}
+
 .nav-card {
   position: relative;
   display: flex;

@@ -27,6 +27,10 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
       top: 0;
       z-index: 5;
       background: var(--paper);
+
+      @media (min-width: 720px) {
+        padding: 18px 32px;
+      }
     }
 
     .back-btn {
