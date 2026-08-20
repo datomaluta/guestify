@@ -6,6 +6,11 @@ import { hotelAdminGuard } from './core/services/hotel-admin.guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    loadComponent: () => import('./features/landing/landing.component').then((m) => m.LandingComponent)
+  },
+  {
     path: 'hotel/:slug',
     loadComponent: () =>
       import('./features/guest/guest-shell/guest-shell.component').then((m) => m.GuestShellComponent),
@@ -106,6 +111,5 @@ export const routes: Routes = [
       }
     ]
   },
-  { path: '', pathMatch: 'full', redirectTo: 'admin/login' },
-  { path: '**', redirectTo: 'admin/login' }
+  { path: '**', redirectTo: '' }
 ];
