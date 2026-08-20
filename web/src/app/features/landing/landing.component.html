@@ -1,0 +1,185 @@
+<div class="landing">
+  <header class="topbar">
+    <a class="brand-mark" href="#top">
+      <span class="brand-badge">G</span>
+      <span class="brand-word">Guestify</span>
+    </a>
+
+    <div class="lang-switch">
+      @for (l of languages; track l.code) {
+        <button type="button" class="lang-pill" [class.active]="language.lang() === l.code" (click)="setLang(l.code)">
+          {{ l.label }}
+        </button>
+      }
+    </div>
+
+    <button type="button" class="theme-toggle" (click)="theme.toggle()" aria-label="თემის გადართვა">
+      <app-icon [name]="theme.theme() === 'dark' ? 'dark_mode' : 'light_mode'" [size]="17" />
+    </button>
+  </header>
+
+  <div id="top"></div>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">{{ 'landing_eyebrow' | translate }}</p>
+        <h1>{{ 'landing_h1' | translate }}</h1>
+        <p class="sub">{{ 'landing_sub' | translate }}</p>
+
+        <a class="cta-btn" [href]="demoMailto">
+          {{ 'landing_cta' | translate }}
+          <app-icon name="arrow_forward" [size]="15" />
+        </a>
+
+        <div class="hero-proof">
+          <app-icon name="check_circle" [size]="14" />
+          <span>{{ 'landing_proof' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-head">
+          <span class="phone-badge">H</span>
+          <span class="phone-hotel">Hotel Example</span>
+          <span class="phone-langs"><span class="on">ქა</span><span>En</span><span>Ру</span></span>
+        </div>
+        <div class="phone-body">
+          <p class="hi">{{ 'greet_title' | translate }}</p>
+          <p class="sub">{{ 'landing_phone_sub' | translate }}</p>
+          <div class="phone-grid">
+            <div class="phone-card" style="--i:0">
+              <span class="ic"><app-icon name="room_service" [size]="17" /></span>
+              <span class="lbl">{{ 'nav_services' | translate }}</span>
+            </div>
+            <div class="phone-card" style="--i:1">
+              <span class="ic"><app-icon name="restaurant" [size]="17" /></span>
+              <span class="lbl">{{ 'nav_menu' | translate }}</span>
+            </div>
+            <div class="phone-card" style="--i:2">
+              <span class="ic"><app-icon name="location_on" [size]="17" /></span>
+              <span class="lbl">{{ 'nav_guide' | translate }}</span>
+            </div>
+            <div class="phone-card" style="--i:3">
+              <span class="ic"><app-icon name="rule" [size]="17" /></span>
+              <span class="lbl">{{ 'nav_rules' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why reveal">
+    <div class="wrap">
+      <h2>{{ 'landing_why_title' | translate }}</h2>
+      <p>{{ 'landing_why_body' | translate }}</p>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="wrap">
+      <div class="features-grid">
+        @for (f of features; track f.titleKey; let i = $index) {
+          <div class="feature-card reveal" [style.--rd.s]="i * 0.08">
+            <span class="ic"><app-icon [name]="f.icon" [size]="20" /></span>
+            <h3>{{ f.titleKey | translate }}</h3>
+            <p>{{ f.descKey | translate }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="how why">
+    <div class="wrap">
+      <h2>{{ 'landing_how_title' | translate }}</h2>
+
+      <div class="how-grid">
+        @for (s of steps; track s.titleKey; let i = $index) {
+          <div class="how-step reveal" [style.--rd.s]="i * 0.1">
+            <div class="how-num">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</div>
+            <h3>{{ s.titleKey | translate }}</h3>
+            <p>{{ s.descKey | translate }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials reveal">
+    <div class="wrap">
+      <h2>{{ 'landing_testi_title' | translate }}</h2>
+
+      <div class="testi-slider">
+        @if (testimonials.length > testiPerPage()) {
+          <button type="button" class="testi-arrow" [disabled]="testiIndex() === 0" (click)="prevTesti()" aria-label="წინა">
+            <app-icon name="chevron_left" [size]="18" />
+          </button>
+        }
+
+        <div class="testi-viewport">
+          <div class="testi-track" [style.--per-page]="testiPerPage()" [style.transform]="'translateX(' + testiOffsetPercent() + '%)'">
+            @for (t of testimonials; track t.quoteKey) {
+              <div class="testi-item">
+                <div class="testi-card">
+                  <p class="testi-quote">{{ t.quoteKey | translate }}</p>
+                  <p class="testi-who">{{ t.whoKey | translate }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        @if (testimonials.length > testiPerPage()) {
+          <button type="button" class="testi-arrow" [disabled]="testiIndex() === testiMaxIndex()" (click)="nextTesti()" aria-label="შემდეგი">
+            <app-icon name="chevron_right" [size]="18" />
+          </button>
+        }
+      </div>
+
+      @if (testimonials.length > testiPerPage()) {
+        <div class="testi-dots">
+          @for (i of testiDotIndices(); track i) {
+            <button type="button" class="testi-dot" [class.active]="testiIndex() === i" (click)="goTesti(i)" [attr.aria-label]="i + 1"></button>
+          }
+        </div>
+      }
+
+      <p class="placeholder-note">{{ 'landing_testi_note' | translate }}</p>
+    </div>
+  </section>
+
+  <section class="partners">
+    <div class="wrap">
+      <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track">
+        @for (p of partnerPlaceholders; track p) {
+          <span class="partner-item">[პარტნიორი სასტუმრო {{ p }}]</span>
+        }
+        @for (p of partnerPlaceholders; track p) {
+          <span class="partner-item" aria-hidden="true">[პარტნიორი სასტუმრო {{ p }}]</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band reveal">
+    <div class="wrap">
+      <h2>{{ 'landing_cta2_title' | translate }}</h2>
+      <a class="cta-btn" [href]="demoMailto">{{ 'landing_cta' | translate }}</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        <p class="tag">{{ 'landing_footer_tag' | translate }}</p>
+        <p class="made">{{ 'landing_footer_made' | translate }} · © 2026</p>
+      </div>
+      <a class="mail" href="mailto:hello@guestify.ge">hello&#64;guestify.ge</a>
+    </div>
+  </footer>
+</div>
