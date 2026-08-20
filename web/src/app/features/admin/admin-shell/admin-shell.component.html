@@ -16,7 +16,7 @@
       <span class="name">{{ auth.profile()?.full_name || auth.session()?.user?.email }}</span>
       <span class="role">{{ auth.profile()?.role }}</span>
       <button type="button" class="theme-toggle" (click)="theme.toggle()" aria-label="თემის გადართვა">
-        <app-icon [name]="theme.theme() === 'dark' ? 'moon' : 'sun'" />
+        <app-icon [name]="theme.theme() === 'dark' ? 'dark_mode' : 'light_mode'" [size]="18" />
       </button>
       <button type="button" (click)="signOut()">გასვლა</button>
     </div>

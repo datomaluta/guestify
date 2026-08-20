@@ -7,7 +7,7 @@
 
   @for (item of items(); track item.id) {
     <div class="row" [class.editing]="editingId() === item.id">
-      <div class="icn"><app-icon name="phone" /></div>
+      <div class="icn"><app-icon name="call" [size]="16" /></div>
       <div class="info">
         <p class="t">{{ item.label_ka }}</p>
         <p class="d">{{ item.phone }}</p>

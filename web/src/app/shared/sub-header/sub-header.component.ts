@@ -11,7 +11,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
   template: `
     <div class="sub-header">
       <a routerLink="../" class="back-btn" [attr.aria-label]="'back' | translate">
-        <app-icon name="chevron-left" />
+        <app-icon name="chevron_left" [size]="16" />
       </a>
       <h1>{{ titleKey() | translate }}</h1>
     </div>

@@ -20,7 +20,7 @@
   <div class="list">
     @for (item of services(); track item.id; let i = $index) {
       <div class="list-row" [style.--i]="i">
-        <div class="icn"><app-icon [name]="iconFor(item.icon)" /></div>
+        <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="18" /></div>
         <div>
           <p class="t">{{ item | localize: 'title' }}</p>
           @if ((item | localize: 'description'); as desc) {

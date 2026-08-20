@@ -1,66 +1,41 @@
-import { IconName } from './icon.component';
+/**
+ * icon-picker-ის სწრაფი შემოთავაზებები — ყველაზე ხშირად საჭირო Material Symbols სახელები,
+ * მოხერხებულობისთვის (ერთი დაწკაპუნებით). ეს აღარაა დახურული სია — თუ სია არ ეყოფა,
+ * ნებისმიერი სხვა Material Symbols სახელიც (fonts.google.com/icons) პირდაპირ ტექსტურ ველში იწერება.
+ */
+export interface IconSuggestion {
+  name: string;
+  label: string;
+}
 
-/** სერვისების/წესების picker-ისთვის შემოთავაზებული curated ნაკრები (UI-chrome icon-ები — chevron-*, external-link — გამორიცხულია). */
-export const CURATED_ICONS: IconName[] = [
-  'general',
-  'concierge-bell',
-  'cup',
-  'cutlery',
-  'bar',
-  'droplet',
-  'pool',
-  'gym',
-  'clock',
-  'wifi',
-  'ac',
-  'tv',
-  'safe',
-  'minibar',
-  'laundry',
-  'elevator',
-  'parking',
-  'shuttle',
-  'luggage',
-  'bike',
-  'beach',
-  'kids-club',
-  'pets',
-  'non-smoking',
-  'business-center',
-  'accessibility',
-  'shield-check',
-  'map-pin',
-  'phone'
+export const ICON_SUGGESTIONS: IconSuggestion[] = [
+  { name: 'local_cafe', label: 'საუზმე' },
+  { name: 'restaurant', label: 'რესტორანი' },
+  { name: 'local_bar', label: 'ბარი' },
+  { name: 'spa', label: 'Spa' },
+  { name: 'pool', label: 'აუზი' },
+  { name: 'fitness_center', label: 'სავარჯიშო დარბაზი' },
+  { name: 'schedule', label: '24/7' },
+  { name: 'wifi', label: 'Wi-Fi' },
+  { name: 'ac_unit', label: 'კონდიციონერი' },
+  { name: 'tv', label: 'ტელევიზორი' },
+  { name: 'lock', label: 'სეიფი' },
+  { name: 'kitchen', label: 'მინი-ბარი' },
+  { name: 'local_laundry_service', label: 'სამრეცხაო' },
+  { name: 'elevator', label: 'ლიფტი' },
+  { name: 'local_parking', label: 'პარკინგი' },
+  { name: 'airport_shuttle', label: 'ტრანსფერი' },
+  { name: 'luggage', label: 'ბარგი' },
+  { name: 'directions_bike', label: 'ველოსიპედი' },
+  { name: 'beach_access', label: 'პლაჟი' },
+  { name: 'child_care', label: 'საბავშვო კლუბი' },
+  { name: 'pets', label: 'ცხოველები' },
+  { name: 'smoke_free', label: 'არამწეველთათვის' },
+  { name: 'business_center', label: 'ბიზნეს-ცენტრი' },
+  { name: 'accessible', label: 'ხელმისაწვდომობა' },
+  { name: 'room_service', label: 'კონსიერჟი' },
+  { name: 'star', label: 'ზოგადი' }
 ];
 
-export const ICON_LABELS: Partial<Record<IconName, string>> = {
-  general: 'ზოგადი',
-  'concierge-bell': 'კონსიერჟი',
-  cup: 'საუზმე',
-  cutlery: 'რესტორანი',
-  bar: 'ბარი',
-  droplet: 'Spa',
-  pool: 'აუზი',
-  gym: 'სავარჯიშო დარბაზი',
-  clock: '24/7',
-  wifi: 'Wi-Fi',
-  ac: 'კონდიციონერი',
-  tv: 'ტელევიზორი',
-  safe: 'სეიფი',
-  minibar: 'მინი-ბარი',
-  laundry: 'სამრეცხაო',
-  elevator: 'ლიფტი',
-  parking: 'პარკინგი',
-  shuttle: 'ტრანსფერი',
-  luggage: 'ბარგი',
-  bike: 'ველოსიპედი',
-  beach: 'პლაჟი',
-  'kids-club': 'საბავშვო კლუბი',
-  pets: 'ცხოველები',
-  'non-smoking': 'არამწეველთათვის',
-  'business-center': 'ბიზნეს-ცენტრი',
-  accessibility: 'ხელმისაწვდომობა',
-  'shield-check': 'უსაფრთხოება',
-  'map-pin': 'მდებარეობა',
-  phone: 'კონტაქტი'
-};
+/** DB-ში icon ველი ცარიელია/null-ია — ეს ჩნდება ნაცვლად. */
+export const DEFAULT_ICON = 'star';
