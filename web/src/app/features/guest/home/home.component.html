@@ -1,8 +1,3 @@
-<section class="hero-greet">
-  <h2>{{ "greet_title" | translate }}</h2>
-  <p>{{ "greet_sub" | translate }}</p>
-</section>
-
 <div class="card-grid">
   @for (card of cards; track card.route; let i = $index) {
     <a class="nav-card" [routerLink]="card.route" [style.--i]="i">
