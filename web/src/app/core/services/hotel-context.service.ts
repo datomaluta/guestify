@@ -3,13 +3,13 @@ import { HotelService } from './hotel.service';
 import { LanguageService } from '../i18n/language.service';
 import { Hotel } from '../models';
 
-const DEFAULT_PRIMARY = '#96772F';
-const DEFAULT_SECONDARY = '#7A2638';
-
 /**
- * მთელი white-label მექანიზმის გული: slug-ით ტვირთავს სასტუმროს row-ს
- * და აყენებს --brand-primary / --brand-secondary CSS ცვლადებს document root-ზე,
- * რომ ერთმა კოდმა ავტომატურად "აიღოს" თითოეული სასტუმროს ბრენდი.
+ * slug-ით ტვირთავს სასტუმროს row-ს. ბრენდის ფერები (hotel.primary_color/secondary_color)
+ * განზრახ არ გამოიყენება UI-ში — დროებით გადავწყვიტეთ, რომ ყველა სასტუმროს ერთი
+ * სტატიკური ბრენდ-ფერი ჰქონდეს (styles.scss-ის --brand-primary/--brand-secondary),
+ * რომ თითო სასტუმროს თვითნებურმა ფერმა დიზაინი არ დაარღვიოს. ეს ველები admin-ში
+ * (hotel-form) განზრახ დარჩა — მომავალში აქტივაცია მარტივი იქნება, უბრალოდ ეს
+ * კომენტარი და ქვემოთ applyBrand-ის გამოძახება უნდა დაბრუნდეს.
  */
 @Injectable({ providedIn: 'root' })
 export class HotelContextService {
@@ -30,14 +30,7 @@ export class HotelContextService {
     }
 
     this.hotel.set(hotel);
-    this.applyBrand(hotel);
     this.language.applyHotelDefault(hotel.default_language);
     return hotel;
-  }
-
-  private applyBrand(hotel: Hotel): void {
-    const root = document.documentElement.style;
-    root.setProperty('--brand-primary', hotel.primary_color || DEFAULT_PRIMARY);
-    root.setProperty('--brand-secondary', hotel.secondary_color || DEFAULT_SECONDARY);
   }
 }
