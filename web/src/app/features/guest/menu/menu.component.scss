@@ -25,7 +25,6 @@
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover:not(.active) {
-    border-color: var(--brand-primary);
     color: var(--ink);
   }
 
@@ -58,7 +57,6 @@
 
   @media (hover: hover) {
     &:hover {
-      border-color: var(--brand-primary);
       box-shadow: var(--shadow-md);
     }
   }

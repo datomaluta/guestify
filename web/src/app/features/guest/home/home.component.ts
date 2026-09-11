@@ -18,6 +18,12 @@ interface IntentCard {
   labelKey: string;
 }
 
+interface QuickAccessItem {
+  route: string;
+  icon: string;
+  labelKey: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -38,6 +44,12 @@ export class HomeComponent {
     },
     { route: 'guide', icon: 'explore', labelKey: 'home_intent_explore' },
   ]);
+
+  protected readonly quickAccessItems: QuickAccessItem[] = [
+    { route: 'essentials', icon: 'wifi', labelKey: 'home_qa_wifi' },
+    { route: 'essentials', icon: 'logout', labelKey: 'home_qa_checkout' },
+    { route: 'essentials', icon: 'local_parking', labelKey: 'home_qa_parking' }
+  ];
 
   protected readonly cards: NavCard[] = [
     {
