@@ -14,7 +14,9 @@ const BLANK_FORM: HotelFormModel = {
   primary_color: '#96772F',
   secondary_color: '#7A2638',
   default_language: 'ka',
-  address: '',
+  address_ka: '',
+  address_en: '',
+  address_ru: '',
   phone: '',
   email: '',
   whatsapp: '',
@@ -51,6 +53,7 @@ export class HotelFormComponent {
   protected readonly linkingAdmin = signal(false);
 
   protected readonly uploadingLogo = signal(false);
+  protected readonly uploadingHero = signal(false);
 
   protected form: HotelFormModel = { ...BLANK_FORM };
 
@@ -100,7 +103,9 @@ export class HotelFormComponent {
         primary_color: hotel.primary_color || BLANK_FORM.primary_color,
         secondary_color: hotel.secondary_color || BLANK_FORM.secondary_color,
         default_language: hotel.default_language,
-        address: hotel.address || '',
+        address_ka: hotel.address_ka || '',
+        address_en: hotel.address_en || '',
+        address_ru: hotel.address_ru || '',
         phone: hotel.phone || '',
         email: hotel.email || '',
         whatsapp: hotel.whatsapp || '',
@@ -163,6 +168,37 @@ export class HotelFormComponent {
       this.error.set((e as Error).message);
     } finally {
       this.uploadingLogo.set(false);
+    }
+  }
+
+  async onHeroImageSelected(event: Event): Promise<void> {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    const id = this.hotelId();
+    if (!file || !id) return;
+
+    this.uploadingHero.set(true);
+    try {
+      const heroUrl = await this.adminHotel.uploadHeroImage(id, file);
+      this.hotel.set({ ...this.hotel()!, hero_image_url: heroUrl });
+    } catch (e) {
+      this.error.set((e as Error).message);
+    } finally {
+      this.uploadingHero.set(false);
+    }
+  }
+
+  async removeHeroImage(): Promise<void> {
+    const id = this.hotelId();
+    if (!id || !confirm('წავშალოთ ჰერო ფოტო?')) return;
+
+    this.uploadingHero.set(true);
+    try {
+      await this.adminHotel.removeHeroImage(id);
+      this.hotel.set({ ...this.hotel()!, hero_image_url: null });
+    } catch (e) {
+      this.error.set((e as Error).message);
+    } finally {
+      this.uploadingHero.set(false);
     }
   }
 

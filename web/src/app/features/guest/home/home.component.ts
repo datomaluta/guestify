@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../shared/icon/icon.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { LocalizePipe } from '../../../core/i18n/localize.pipe';
+import { HotelContextService } from '../../../core/services/hotel-context.service';
 
 interface NavCard {
   route: string;
@@ -13,11 +15,13 @@ interface NavCard {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, IconComponent, TranslatePipe],
+  imports: [RouterLink, IconComponent, TranslatePipe, LocalizePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  protected readonly hotelContext = inject(HotelContextService);
+
   protected readonly cards: NavCard[] = [
     { route: 'services', icon: 'room_service', titleKey: 'nav_services', descKey: 'nav_services_desc' },
     { route: 'menu', icon: 'restaurant', titleKey: 'nav_menu', descKey: 'nav_menu_desc' },

@@ -7,10 +7,13 @@ export interface Hotel {
   slug: string;
   name: string;
   logo_url: string | null;
+  hero_image_url: string | null;
   primary_color: string | null;
   secondary_color: string | null;
   default_language: AppLanguage;
-  address: string | null;
+  address_ka: string | null;
+  address_en: string | null;
+  address_ru: string | null;
   phone: string | null;
   email: string | null;
   whatsapp: string | null;

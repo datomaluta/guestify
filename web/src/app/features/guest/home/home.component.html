@@ -1,3 +1,18 @@
+@if (hotelContext.hotel()?.hero_image_url) {
+  <div class="hero" [style.background-image]="'url(' + hotelContext.hotel()!.hero_image_url + ')'">
+    <div class="hero-content">
+      <span class="eyebrow">{{ 'home_welcome_to' | translate }}</span>
+      <h1>{{ hotelContext.hotel()?.name }}</h1>
+      @if (hotelContext.hotel() | localize: 'address'; as address) {
+        <div class="loc">
+          <app-icon name="location_on" [size]="14" />
+          <span>{{ address }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}
+
 <div class="card-grid">
   @for (card of cards; track card.route; let i = $index) {
     <a class="nav-card" [routerLink]="card.route" [style.--i]="i">
