@@ -67,8 +67,8 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
   home_favorites_subtitle: {
     ka: 'შერჩეული რეკომენდაციები თქვენთვის',
-    en: 'Handpicked recommendations for you.',
-    ru: 'Рекомендации, подобранные для вас.',
+    en: 'Handpicked recommendations for you',
+    ru: 'Рекомендации, подобранные для вас',
   },
   home_fav_open_maps: {
     ka: 'რუკაზე ნახვა',

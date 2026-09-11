@@ -28,9 +28,11 @@
   flex-direction: column;
   box-shadow: var(--shadow-lg);
   // სქროლი ჩვეულებრივი გვერდის (document) დონეზეა — .app-body-ს საკუთარი
-  // შიდა overflow აღარ აქვს, bottom-nav კი position:fixed-ითაა viewport-ზე მიბმული.
+  // შიდა overflow აღარ აქვს, bottom-nav და ჰედერი კი position:fixed-ითაა
+  // viewport-ზე მიბმული (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა).
   --bottom-nav-gap: 14px;
   --bottom-nav-height: 80px;
+  --app-header-height: 65px;
 }
 
 .app-header {
@@ -39,8 +41,14 @@
   gap: 10px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--line-soft);
-  position: sticky;
+  // sticky-ს სწრაფ სქროლზე (განსაკუთრებით iOS-ზე) ცანცარება/ტიტინი ჰქონდა —
+  // bottom-nav-ის მსგავსად viewport-ზე ვამაგრებთ, .app-shell-ის სვეტს მიყოლებული
+  // (იგივე 430px max-width column ცენტრირებული, უფსკვნის გარეშე, ბოლომდე გვერდზე).
+  position: fixed;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 430px);
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -65,6 +73,8 @@
 .app-body {
   flex: 1;
   animation: guestify-fade-up 0.35s ease both;
-  // bottom-nav position:fixed-ითაა viewport-ს მიმაგრებული — სივრცე ვუტოვოთ, რომ ბოლო კონტენტს არ დაფაროს
+  // ჰედერიც და bottom-nav-იც ახლა position:fixed-ითაა viewport-ს მიმაგრებული —
+  // ორივე მხრიდან სივრცე ვუტოვოთ, რომ კონტენტს არ დაფარონ.
+  padding-top: var(--app-header-height);
   padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
 }
