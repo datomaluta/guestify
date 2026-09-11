@@ -1,62 +1,23 @@
 :root {
-  --paper: #f7f6f2;
+  --paper: #faf9f6;
   --paper-raised: #ffffff;
-  --paper-sunk: #eeece5;
-  --ink: #362d30;
-  --ink-soft: #6e6459;
-  --ink-faint: #9a9083;
-  --line: rgba(32, 26, 29, 0.12);
-  --line-soft: rgba(32, 26, 29, 0.07);
-  --shadow-sm: 0 1px 2px rgba(32, 26, 29, 0.06);
-  --shadow-md: 0 8px 24px -8px rgba(32, 26, 29, 0.18);
-  --shadow-lg: 0 16px 40px -12px rgba(32, 26, 29, 0.28);
+  --paper-sunk: #f2f4f7;
+  --ink: #111827;
+  --ink-soft: #4b5563;
+  --ink-faint: #9ca3af;
+  --line: rgba(17, 24, 39, 0.12);
+  --line-soft: rgba(17, 24, 39, 0.07);
+  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
+  --shadow-md: 0 8px 24px -8px rgba(17, 24, 39, 0.18);
+  --shadow-lg: 0 16px 40px -12px rgba(17, 24, 39, 0.28);
 
   /* დროებით სტატიკური ბრენდ-ფერია ყველა სასტუმროსთვის (per-hotel ფერი გამორთულია დიზაინის დასაცავად) */
-  --brand-primary: #2b5748;
-  --brand-secondary: #2b5748;
+  --brand-primary: #3b82f6;
+  --brand-secondary: #1d3557;
 
   --font-ui:
     'Noto Sans Georgian', 'Segoe UI', -apple-system, BlinkMacSystemFont,
     'BPG Mrgvlovani Caps GPL&GNU', Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
-
-/*
- * თემა სამ მდგომარეობად: default light-ია (root), სისტემური dark ჩაირთვება
- * თუ ხელით light არ არის არჩეული (:not([data-theme="light"])), ხოლო
- * [data-theme="dark"] მუშაობს მაშინაც, თუ სისტემა light-ზეა (ThemeService-ის toggle).
- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --paper: #0d0f1e;
-    --paper-raised: #0f172a;
-    --paper-sunk: #020617;
-    --ink: #f8fafc;
-    --ink-soft: #94a3b8;
-    --ink-faint: #64748b;
-    --line: rgba(248, 250, 252, 0.14);
-    --line-soft: rgba(248, 250, 252, 0.08);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
-    --shadow-lg: 0 16px 44px -12px rgba(0, 0, 0, 0.65);
-    --brand-primary: #c9a342;
-    --brand-secondary: #c9a342;
-  }
-}
-
-:root[data-theme='dark'] {
-  --paper: #0d0f1e;
-  --paper-raised: #151829;
-  --paper-sunk: #23273e;
-  --ink: #f8fafc;
-  --ink-soft: #94a3b8;
-  --ink-faint: #64748b;
-  --line: rgba(248, 250, 252, 0.14);
-  --line-soft: rgba(248, 250, 252, 0.08);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 16px 44px -12px rgba(0, 0, 0, 0.65);
-  --brand-primary: #c9a342;
-  --brand-secondary: #c9a342;
 }
 
 * {
