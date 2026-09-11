@@ -19,7 +19,32 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
 
   greet_title: { ka: 'მოგესალმებით', en: 'Welcome', ru: 'Добро пожаловать' },
-  home_welcome_to: { ka: 'მოგესალმებით', en: 'Welcome to', ru: 'Добро пожаловать в' },
+  home_welcome_to: {
+    ka: 'მოგესალმებით',
+    en: 'Welcome to',
+    ru: 'Добро пожаловать в',
+  },
+
+  home_intent_title: {
+    ka: 'რისი გაკეთება გსურთ?',
+    en: 'What would you like to do?',
+    ru: 'Что вы хотите сделать?',
+  },
+  home_intent_arrived: {
+    ka: 'ახლახანს ჩამოვედი',
+    en: 'I just arrived',
+    ru: 'Я только что прибыл',
+  },
+  home_intent_need: {
+    ka: 'რაღაც მჭირდება...',
+    en: 'I need something',
+    ru: 'Мне что-то нужно',
+  },
+  home_intent_explore: {
+    ka: 'მინდა აღმოვაჩინო',
+    en: 'I want to explore',
+    ru: 'Хочу осмотреться',
+  },
   greet_sub: {
     ka: 'აირჩიეთ სექცია დასაწყებად',
     en: 'Choose a section to get started',
