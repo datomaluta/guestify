@@ -1,9 +1,5 @@
 .state-screen {
-  // 100svh (small viewport height) და არა 100dvh — dvh Chrome-ის iOS-ზე toolbar-ის
-  // გაქრობა/გამოჩენაზე ცოცხლად იცვლება და ამ სიმაღლის cascading resize-ი
-  // position:fixed ბოთომ-ნავს ატიტინებდა/ცვლიდა ადგილს. svh სტაბილურია (toolbar
-  // ყოველთვის ხილულადაა გათვლილი) — ნავი აღარ "დაბლა იწევს".
-  min-height: 100svh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
   text-align: center;
@@ -22,8 +18,7 @@
 }
 
 .app-shell {
-  // იხ. .state-screen-ის კომენტარი — 100dvh-ის ნაცვლად 100svh იმავე მიზეზით.
-  min-height: 100svh;
+  min-height: 100dvh;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
   // დესკტოპზეც კი ტელეფონის სიგანეზე ვჩერდებით და აღარ ვზრდით ფართო layout-ისთვის.
   max-width: 430px;
@@ -33,11 +28,10 @@
   flex-direction: column;
   box-shadow: var(--shadow-lg);
   // სქროლი ჩვეულებრივი გვერდის (document) დონეზეა — .app-body-ს საკუთარი
-  // შიდა overflow აღარ აქვს, bottom-nav და ჰედერი კი position:fixed-ითაა
-  // viewport-ზე მიბმული (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა, floating pill
-  // ბოთომ-ნავი კი ტელეფონების ბრაუზერის ქვედა chrome-ს ეჯახებოდა — ორივე ახლა
-  // ბოლომდე/გვერდებამდე მიბჯენილია, float-ის გარეშე).
-  --bottom-nav-height: 64px;
+  // შიდა overflow აღარ აქვს, bottom-nav position:fixed-ითაა viewport-ზე მიბმული
+  // (floating pill), ჰედერი კი ასევე fixed-ითაა (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა).
+  --bottom-nav-gap: 14px;
+  --bottom-nav-height: 80px;
   --app-header-height: 65px;
 }
 
@@ -79,9 +73,8 @@
 .app-body {
   flex: 1;
   animation: guestify-fade-up 0.35s ease both;
-  // ჰედერიც და bottom-nav-იც ახლა position:fixed-ითაა viewport-ს მიმაგრებული —
-  // ორივე მხრიდან სივრცე ვუტოვოთ, რომ კონტენტს არ დაფარონ.
+  // ჰედერი position:fixed-ითაა viewport-ს მიმაგრებული — ზემოთ სივრცე ვუტოვოთ, რომ
+  // კონტენტს არ დაფაროს. bottom-nav-იც fixed-ითაა (floating pill) — იმასაც სივრცე ვუტოვოთ ქვემოთ.
   padding-top: var(--app-header-height);
-  // +16px, რომ ბოლო კონტენტი პირდაპირ ნავს არ ეკვროდეს, სუნთქვის სივრცე დარჩეს
-  padding-bottom: calc(var(--bottom-nav-height) + 16px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
 }

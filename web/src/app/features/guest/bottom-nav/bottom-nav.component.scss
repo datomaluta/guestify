@@ -1,23 +1,17 @@
 .bottom-nav {
   display: flex;
   align-items: stretch;
-  // floating pill ტელეფონის ბრაუზერების (Safari/Chrome) ქვედა chrome-ს (address
-  // bar/toolbar-ს) ეჯახებოდა და არაკომფორტული იყო — ჰედერის მსგავსად ახლა ბოლომდე,
-  // ორივე გვერდით და ქვემოთაც მიბჯენილია (float-ი და border-radius მოშორებულია).
+  // position:fixed — გვერდი ჩვეულებრივად (document-ის დონეზე) სქროლავს, ამიტომ
+  // ნავიგაცია viewport-ზეა მიმაგრებული და არა .app-shell-ზე (რომელსაც კონტენტთან ერთად სიმაღლე ეზრდება).
+  // სიგანე იმეორებს .app-shell-ის max-width 430px + 14px გვერდითი შეწოვას.
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: min(100vw, 430px);
-  // --vv-bottom-offset TS-იდან მოდის (visualViewport API) — Chrome-ის iOS-ზე toolbar-ის
-  // ანიმაციისას layout/visual viewport-ის დესინქრონს აფარებს, თორემ bottom:0 მარტო
-  // საკმარისი არ არის (იხ. კომპონენტის TS ფაილის კომენტარი).
-  // bottom: var(--vv-bottom-offset, 0px);
+  width: min(calc(100vw - 28px), 402px);
+  bottom: calc(var(--bottom-nav-gap, 14px) + env(safe-area-inset-bottom, 0px));
   height: var(--bottom-nav-height, 60px);
-  position: fixed;
-  bottom: env(safe-area-inset-bottom, 10px);
-
-  // padding-bottom: env(safe-area-inset-bottom, 0px);
-  border-top: 1px solid var(--line-soft);
+  border-radius: 20px;
+  border: 1px solid var(--line-soft);
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
