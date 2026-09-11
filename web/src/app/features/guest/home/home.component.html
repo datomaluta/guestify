@@ -13,6 +13,18 @@
   </div>
 }
 
+<div class="intent-section">
+  <h2 class="intent-title">{{ 'home_intent_title' | translate }}</h2>
+  <div class="intent-grid">
+    @for (card of intentCards(); track card.labelKey) {
+      <a class="intent-card" [routerLink]="card.route">
+        <div class="intent-icn"><app-icon [name]="card.icon" [size]="22" /></div>
+        <span class="intent-label">{{ card.labelKey | translate }}</span>
+      </a>
+    }
+  </div>
+</div>
+
 <div class="card-grid">
   @for (card of cards; track card.route; let i = $index) {
     <a class="nav-card" [routerLink]="card.route" [style.--i]="i">
