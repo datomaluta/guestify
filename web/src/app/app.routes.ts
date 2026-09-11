@@ -40,6 +40,16 @@ export const routes: Routes = [
         path: 'rules',
         loadComponent: () => import('./features/guest/rules/rules.component').then((m) => m.RulesComponent),
         data: { preload: true }
+      },
+      {
+        path: 'essentials',
+        loadComponent: () =>
+          import('./features/guest/essentials/essentials.component').then((m) => m.EssentialsComponent),
+        data: { preload: true }
+      },
+      {
+        path: 'ai',
+        loadComponent: () => import('./features/guest/ai/ai.component').then((m) => m.AiComponent)
       }
     ]
   },

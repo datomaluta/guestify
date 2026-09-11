@@ -1,5 +1,7 @@
 export type AppLanguage = 'ka' | 'en' | 'ru';
 
+export type HotelPackage = 'standard' | 'premium';
+
 export interface Hotel {
   id: string;
   slug: string;
@@ -13,6 +15,7 @@ export interface Hotel {
   email: string | null;
   whatsapp: string | null;
   is_active: boolean;
+  package: HotelPackage;
   created_at: string;
   updated_at: string;
 }

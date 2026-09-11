@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { HotelService } from './hotel.service';
 import { LanguageService } from '../i18n/language.service';
 import { Hotel } from '../models';
@@ -18,6 +18,8 @@ export class HotelContextService {
 
   readonly hotel = signal<Hotel | null>(null);
   readonly notFound = signal(false);
+  /** სტუმრის bottom nav-ი ამის მიხედვით წყვეტს რომელი ტაბები აჩვენოს (იხ. bottom-nav.component). */
+  readonly isPremium = computed(() => this.hotel()?.package === 'premium');
 
   async loadBySlug(slug: string): Promise<Hotel | null> {
     this.notFound.set(false);

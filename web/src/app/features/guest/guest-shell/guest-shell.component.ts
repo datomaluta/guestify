@@ -4,11 +4,12 @@ import { HotelContextService } from '../../../core/services/hotel-context.servic
 import { LanguageService } from '../../../core/i18n/language.service';
 import { AppLanguage } from '../../../core/models';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { BottomNavComponent } from '../bottom-nav/bottom-nav.component';
 
 @Component({
   selector: 'app-guest-shell',
   standalone: true,
-  imports: [RouterOutlet, TranslatePipe],
+  imports: [RouterOutlet, TranslatePipe, BottomNavComponent],
   templateUrl: './guest-shell.component.html',
   styleUrl: './guest-shell.component.scss'
 })
