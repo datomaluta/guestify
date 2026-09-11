@@ -204,16 +204,14 @@
   gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  // მარცხენა inset-ს (18px) იძლევა მშობელი .intent-section-ის padding — მასზე
-  // negative margin/padding აღარ გვადევს, რადგან overflow-x:auto ფლექს-კონტეინერს
-  // Chromium-ში საწყისი scrollLeft ისე უსწორებდა, რომ padding-inline-start
-  // "შთანთქავდა" და პირველი ბარათი მაინც ეკრანის კიდეს ეკვროდა.
-  // მარჯვნივ კი განზრახ ვბლევთ ეკრანის ბოლომდე (-18px margin-ით), რომ სქროლის დროს
-  // შუალედური ბარათები ეკრანის კიდეზე ჩამოჭრილი ჩანდეს (peek). padding-right კი
-  // ბოლოში ინახავს იმ 18px-ს, რომ ბოლო ბარათი (და "ყველას ნახვა") ბოლომდე
-  // გადაქაჩვის შემდეგ ისევ ჩვეულებრივ inset-ს ინარჩუნებდეს, ეკრანის კიდეს არ ეკვროდეს —
-  // ეს trailing padding სქროლის შუალედურ პოზიციებზე ხედვას არ ავიწროებს.
-  margin-right: -18px;
+  // კონტეინერი ორივე მხრიდან ეკრანის ბოლომდეა (-18px margin ორივე მხარეს) — რომ
+  // სქროლის დროს შუალედური ბარათები ორივე კიდეზე ჩამოჭრილი ჩანდეს (peek).
+  // 18px inset თავიდან/ბოლოში ცალკეული ბარათების საკუთარი margin-ით მიიღწევა
+  // (იხ. .fav-card:first-child და padding-right ქვემოთ). scroll-padding-left
+  // აქ აუცილებელია: scroll-snap-type-ის გარეშეც კი Chromium პირველი ბარათის
+  // საკუთარ margin-left-ს "შთანთქავდა" საწყის scrollLeft-ში (snap-ალგორითმი
+  // მას padding-ის გარეშე ითვლიდა) — ამის გამო inset თავიდანვე ქრებოდა.
+  margin: 0 -18px;
   padding: 2px 18px 6px 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -237,6 +235,18 @@
   text-decoration: none;
   color: inherit;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  // საწყისი inset მხოლოდ პირველ ბარათზე, საკუთარ margin-ად — შესქროლვისას ეს
+  // ბარათი ეკრანს ტოვებს და მომდევნო ბარათებს აღარაფერი ეკვრებათ მარცხნივ.
+  // scroll-margin-left ცალკეა საჭირო: scroll-snap-ის ალგორითმი წინააღმდეგ
+  // შემთხვევაში ამ margin-ს "ითვლის" და საწყის scrollLeft-საც წინსწრებით სწორედ
+  // ამ 18px-ის შთანთქმით ითვლის (და ეს ეფექტი ყველა მომდევნო snap-პოზიციაზეც
+  // გავრცელდებოდა, keby scroll-padding-ს ვიყენებდით კონტეინერზე) — ეს კი მხოლოდ
+  // ამ ერთ ბარათს ეხება.
+  &:first-child {
+    margin-left: 18px;
+    scroll-margin-left: 18px;
+  }
 
   @media (hover: hover) {
     &:hover {
