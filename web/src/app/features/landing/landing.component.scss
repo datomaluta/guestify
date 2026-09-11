@@ -186,34 +186,6 @@ h3 {
   }
 }
 
-.theme-toggle {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--paper-raised);
-  color: var(--ink-soft);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.15s ease;
-
-  &:active {
-    transform: scale(0.9);
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      color: var(--ink);
-      border-color: var(--brand-primary);
-    }
-  }
-}
-
 /* ---------- shared layout ---------- */
 .wrap {
   max-width: 1120px;

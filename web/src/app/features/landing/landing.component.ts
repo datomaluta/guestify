@@ -1,7 +1,6 @@
 import { Component, ElementRef, afterNextRender, inject, signal } from '@angular/core';
 import { LanguageService } from '../../core/i18n/language.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
-import { ThemeService } from '../../core/theme.service';
 import { AppLanguage } from '../../core/models';
 import { IconComponent } from '../../shared/icon/icon.component';
 
@@ -37,7 +36,6 @@ const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Gu
 })
 export class LandingComponent {
   protected readonly language = inject(LanguageService);
-  protected readonly theme = inject(ThemeService);
   private readonly elRef = inject(ElementRef<HTMLElement>);
 
   protected readonly demoMailto = DEMO_MAILTO;

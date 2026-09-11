@@ -33,9 +33,5 @@
     <main class="app-body">
       <router-outlet />
     </main>
-
-    <button type="button" class="theme-fab" (click)="theme.toggle()" aria-label="თემის გადართვა">
-      <app-icon [name]="theme.theme() === 'dark' ? 'dark_mode' : 'light_mode'" [size]="22" />
-    </button>
   </div>
 }
