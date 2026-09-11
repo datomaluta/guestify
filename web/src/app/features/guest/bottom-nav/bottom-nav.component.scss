@@ -1,9 +1,13 @@
 .bottom-nav {
   display: flex;
   align-items: stretch;
-  position: absolute;
-  left: 14px;
-  right: 14px;
+  // position:fixed — გვერდი ახლა ჩვეულებრივად (document-ის დონეზე) სქროლავს, ამიტომ
+  // ნავიგაცია viewport-ზეა მიმაგრებული და არა .app-shell-ზე (რომელსაც კონტენტთან ერთად სიმაღლე ეზრდება).
+  // სიგანე იმეორებს .app-shell-ის max-width 430px + 14px გვერდითი შეწოვას.
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100vw - 28px), 402px);
   bottom: calc(var(--bottom-nav-gap, 14px) + env(safe-area-inset-bottom, 0px));
   height: var(--bottom-nav-height, 60px);
   border-radius: 20px;
