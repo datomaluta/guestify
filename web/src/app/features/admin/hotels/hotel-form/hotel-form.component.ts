@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AppLanguage, Hotel } from '../../../../core/models';
+import { AppLanguage, Hotel, HotelPackage } from '../../../../core/models';
 import { AdminHotelService, HotelAdminProfile, HotelWritePayload } from '../../../../core/services/admin-hotel.service';
 import { QrCodeComponent } from '../../../../shared/qr-code/qr-code.component';
 
@@ -18,7 +18,8 @@ const BLANK_FORM: HotelFormModel = {
   phone: '',
   email: '',
   whatsapp: '',
-  is_active: true
+  is_active: true,
+  package: 'standard'
 };
 
 @Component({
@@ -34,6 +35,7 @@ export class HotelFormComponent {
   private readonly adminHotel = inject(AdminHotelService);
 
   protected readonly languages: AppLanguage[] = ['ka', 'en', 'ru'];
+  protected readonly packages: HotelPackage[] = ['standard', 'premium'];
 
   protected readonly isNew = signal(true);
   protected readonly hotelId = signal<string | null>(null);
@@ -102,7 +104,8 @@ export class HotelFormComponent {
         phone: hotel.phone || '',
         email: hotel.email || '',
         whatsapp: hotel.whatsapp || '',
-        is_active: hotel.is_active
+        is_active: hotel.is_active,
+        package: hotel.package
       };
       this.admins.set(await this.adminHotel.listHotelAdmins(id));
     } catch (e) {

@@ -51,6 +51,15 @@
         </select>
       </label>
 
+      <label>
+        <span>პაკეტი</span>
+        <select name="package" [(ngModel)]="form.package">
+          @for (p of packages; track p) {
+            <option [value]="p">{{ p === 'premium' ? 'პრემიუმი' : 'სტანდარტი' }}</option>
+          }
+        </select>
+      </label>
+
       <label class="checkbox">
         <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
         <span>აქტიურია (სტუმრები ხედავენ)</span>

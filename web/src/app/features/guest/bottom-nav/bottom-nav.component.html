@@ -1,0 +1,13 @@
+<nav class="bottom-nav">
+  @for (tab of tabs(); track tab.path) {
+    <a
+      class="tab"
+      [routerLink]="tabHref(tab)"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: !!tab.exact }"
+    >
+      <span class="icn"><app-icon [name]="tab.icon" [size]="22" /></span>
+      <span class="label">{{ tab.labelKey | translate }}</span>
+    </a>
+  }
+</nav>

@@ -26,6 +26,9 @@
   flex-direction: column;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+  position: relative; // bottom-nav floats absolutely within this
+  --bottom-nav-gap: 14px;
+  --bottom-nav-height: 80px;
 }
 
 .app-header {
@@ -120,4 +123,6 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   animation: guestify-fade-up 0.35s ease both;
+  // bottom-nav float-ავს ზემოდან (position: absolute) — სივრცე ვუტოვოთ, რომ ბოლო კონტენტს არ დაფაროს
+  padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
 }
