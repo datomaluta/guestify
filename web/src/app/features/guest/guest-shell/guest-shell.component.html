@@ -10,24 +10,8 @@
 } @else {
   <div class="app-shell">
     <header class="app-header">
-      @if (hotelContext.hotel()!.logo_url) {
-        <img class="logo-badge" [src]="hotelContext.hotel()!.logo_url" [alt]="hotelContext.hotel()!.name" />
-      } @else {
-        <div class="logo-badge logo-fallback">{{ logoInitial() }}</div>
-      }
-      <div class="brand-name">{{ hotelContext.hotel()!.name }}</div>
-      <div class="lang-switch">
-        @for (l of languages; track l.code) {
-          <button
-            type="button"
-            class="lang-pill"
-            [class.active]="language.lang() === l.code"
-            (click)="setLang(l.code)"
-          >
-            {{ l.label }}
-          </button>
-        }
-      </div>
+      <span class="wordmark">check<span class="accent">it</span></span>
+      <app-lang-dropdown />
     </header>
 
     <main class="app-body">
