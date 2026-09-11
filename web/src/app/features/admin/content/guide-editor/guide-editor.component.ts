@@ -13,6 +13,7 @@ interface PlaceForm {
   description_en: string;
   description_ru: string;
   google_maps_url: string;
+  walk_minutes: number | null;
   sort_order: number;
 }
 
@@ -25,6 +26,7 @@ const BLANK: PlaceForm = {
   description_en: '',
   description_ru: '',
   google_maps_url: '',
+  walk_minutes: null,
   sort_order: 0
 };
 
@@ -40,7 +42,7 @@ export class GuideEditorComponent {
   private readonly auth = inject(AuthService);
   private readonly hotelId = this.auth.profile()!.hotel_id!;
 
-  protected readonly categories = ['attraction', 'restaurant', 'shop', 'transport'];
+  protected readonly categories = ['cafe', 'restaurant', 'experience', 'attraction', 'shop'];
 
   protected readonly items = signal<GuidePlace[]>([]);
   protected readonly loading = signal(true);
@@ -76,6 +78,7 @@ export class GuideEditorComponent {
       description_en: item.description_en || '',
       description_ru: item.description_ru || '',
       google_maps_url: item.google_maps_url || '',
+      walk_minutes: item.walk_minutes,
       sort_order: item.sort_order
     };
   }

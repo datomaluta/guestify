@@ -76,10 +76,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-
-  &.qa-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .intent-card {
@@ -115,18 +111,12 @@
 .intent-icn {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
   background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
   color: var(--brand-primary);
   flex-shrink: 0;
-
-  .qa-grid & {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-  }
 }
 
 .intent-label {
@@ -134,10 +124,254 @@
   font-weight: 600;
   text-align: center;
   line-height: 1.25;
+}
 
-  .qa-grid & {
-    font-size: 10px;
+// Quick access — განზრახ არაბოქსიანი, მსუბუქი სტილი: ზემოთ უკვე გვაქვს ერთი
+// ბოქსების რიგი (intent-card), მეორე იდენტური ბოქსების რიგი ერთმანეთზე მიწყობილი
+// ცუდად ჯდებოდა — აქ უბრალოდ წრიული აისქონია, ბოქსის/ჩრდილის გარეშე.
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.qa-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper-raised);
+
+  &:active {
+    transform: scale(0.94);
   }
+}
+
+.qa-icn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  color: var(--brand-primary);
+  transition: box-shadow 0.15s ease;
+
+  @media (hover: hover) {
+    .qa-card:hover & {
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}
+
+.qa-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.25;
+}
+
+// Local Favorites — თავიდან ჩანს ~1.5 ბარათი და დანარჩენი გვერდით სქროლის მიღმაა
+// (peek-scroll), რომ ცხადი იყოს რომ სია გრძელდება.
+.fav-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+
+  app-icon {
+    color: #e8973f;
+  }
+}
+
+.fav-subtitle {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.fav-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  // მარცხენა inset-ს (18px) იძლევა მშობელი .intent-section-ის padding — მასზე
+  // negative margin/padding აღარ გვადევს, რადგან overflow-x:auto ფლექს-კონტეინერს
+  // Chromium-ში საწყისი scrollLeft ისე უსწორებდა, რომ padding-inline-start
+  // "შთანთქავდა" და პირველი ბარათი მაინც ეკრანის კიდეს ეკვროდა.
+  // მარჯვნივ კი განზრახ ვბლევთ ეკრანის ბოლომდე (-18px margin-ით), რომ სქროლის დროს
+  // შუალედური ბარათები ეკრანის კიდეზე ჩამოჭრილი ჩანდეს (peek). padding-right კი
+  // ბოლოში ინახავს იმ 18px-ს, რომ ბოლო ბარათი (და "ყველას ნახვა") ბოლომდე
+  // გადაქაჩვის შემდეგ ისევ ჩვეულებრივ inset-ს ინარჩუნებდეს, ეკრანის კიდეს არ ეკვროდეს —
+  // ეს trailing padding სქროლის შუალედურ პოზიციებზე ხედვას არ ავიწროებს.
+  margin-right: -18px;
+  padding: 2px 18px 6px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.fav-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 78%;
+  max-width: 300px;
+  scroll-snap-align: start;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+// "ყველას ნახვა" — ბოლო ბარათი, სხვებზე ვიწრო და ცენტრირებული, უბრალო CTA.
+.fav-see-all {
+  flex-basis: 34%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 14px;
+  background: color-mix(in srgb, var(--brand-primary) 6%, var(--paper-raised));
+}
+
+.fav-see-all-icn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--brand-primary) 16%, var(--paper-raised));
+  color: var(--brand-primary);
+}
+
+.fav-see-all-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+.fav-photo {
+  position: relative;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  // ფოტოს არარსებობისას საბუთი აისქონია ბრენდის ერთიან ფერზე — კატეგორიების
+  // მიხედვით აქ ფერი განზრახ არ იცვლება.
+  background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
+  color: var(--brand-primary);
+
+  // absolute + inset:0 რომ height:100%-ის რეზოლუცია არ იყოს დამოკიდებული
+  // align-items-ზე (place-items: center-თან/flex align-center-თან ერთად
+  // საკუთარ სიმაღლეზე ჩამოშლის ნაცვლად, image თავისი ინტრინსიკ თანაფარდობით იბეჭდებოდა).
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.fav-body {
+  flex: 1; // ბარათები .fav-scroll-ში სიმაღლით უკვე გათანაბრებულია (flex align-items: stretch),
+  // ეს კი საშუალებას აძლევს .fav-maps-ს margin-top: auto-თი ყოველთვის ძირში მიეწოს.
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 14px 16px;
+}
+
+.fav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fav-category {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+}
+
+.fav-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+
+.fav-walk {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.fav-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  margin: 2px 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fav-maps {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 7px 13px;
+  border-radius: 999px;
+  margin-top: auto; // ყოველთვის ბარათის ძირში, აღწერის სიგრძის მიუხედავად
+  color: var(--brand-primary);
+  background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
 }
 
 .card-grid {

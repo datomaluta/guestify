@@ -46,11 +46,60 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Хочу осмотреться',
   },
 
-  home_qa_title: { ka: 'სწრაფი წვდომა', en: 'Quick access', ru: 'Быстрый доступ' },
+  home_qa_title: {
+    ka: 'სწრაფი წვდომა',
+    en: 'Quick access',
+    ru: 'Быстрый доступ',
+  },
   home_qa_wifi: { ka: 'Wi-Fi', en: 'Wi-Fi', ru: 'Wi-Fi' },
   home_qa_checkout: { ka: 'Check-out', en: 'Check-out', ru: 'Выезд' },
   home_qa_parking: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
-  home_qa_contact_host: { ka: 'დაუკავშირდი ჰოსტს', en: 'Contact host', ru: 'Связаться с хостом' },
+  home_qa_contact_host: {
+    ka: 'ჰოსტი',
+    en: 'Host',
+    ru: 'Хозяин',
+  },
+
+  home_favorites_title: {
+    ka: 'ადგილობრივი რჩევები',
+    en: 'Local Favorites',
+    ru: 'Местные фавориты',
+  },
+  home_favorites_subtitle: {
+    ka: 'შერჩეული რეკომენდაციები თქვენთვის',
+    en: 'Handpicked recommendations for you.',
+    ru: 'Рекомендации, подобранные для вас.',
+  },
+  home_fav_open_maps: {
+    ka: 'რუკაზე ნახვა',
+    en: 'Open in Maps',
+    ru: 'Открыть карту',
+  },
+  home_min_walk_suffix: {
+    ka: 'წუთი',
+    en: 'min walk',
+    ru: 'мин. пешком',
+  },
+  home_fav_see_all: {
+    ka: 'ყველას ნახვა',
+    en: 'See all',
+    ru: 'Смотреть все',
+  },
+  guide_cat_cafe: { ka: 'კაფე', en: 'Café', ru: 'Кафе' },
+  guide_cat_restaurant: { ka: 'რესტორანი', en: 'Restaurant', ru: 'Ресторан' },
+  guide_cat_experience: {
+    ka: 'გამოცდილება',
+    en: 'Experience',
+    ru: 'Впечатление',
+  },
+  guide_cat_attraction: {
+    ka: 'ღირსშესანიშნაობა',
+    en: 'Attraction',
+    ru: 'Достопримечательность',
+  },
+  guide_cat_shop: { ka: 'მაღაზია', en: 'Shop', ru: 'Магазин' },
+  guide_cat_other: { ka: 'ადგილი', en: 'Place', ru: 'Место' },
+
   greet_sub: {
     ka: 'აირჩიეთ სექცია დასაწყებად',
     en: 'Choose a section to get started',

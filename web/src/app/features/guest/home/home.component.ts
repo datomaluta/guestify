@@ -1,9 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../shared/icon/icon.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
+import { HotelService } from '../../../core/services/hotel.service';
+import { GuidePlace, guideCategoryMeta } from '../../../core/models';
 
 interface NavCard {
   route: string;
@@ -24,6 +26,10 @@ interface QuickAccessItem {
   labelKey: string;
 }
 
+// Home-ზე მაქსიმუმ ამდენი "Local Favorites" ბარათი ჩანს — თუ სასტუმროს მეტი აქვს
+// დამატებული, ბოლოში "ყველას ნახვა" ჩნდება და Explore (guide) გვერდზე გადაყავს.
+const HOME_FAVORITES_LIMIT = 3;
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -33,6 +39,21 @@ interface QuickAccessItem {
 })
 export class HomeComponent {
   protected readonly hotelContext = inject(HotelContextService);
+  private readonly hotelService = inject(HotelService);
+
+  protected readonly guideCategoryMeta = guideCategoryMeta;
+  protected readonly favoritePlaces = signal<GuidePlace[]>([]);
+  protected readonly hasMoreFavorites = signal(false);
+
+  constructor() {
+    const hotelId = this.hotelContext.hotel()?.id;
+    if (hotelId) {
+      this.hotelService.getGuidePlaces(hotelId).then((places) => {
+        this.favoritePlaces.set(places.slice(0, HOME_FAVORITES_LIMIT));
+        this.hasMoreFavorites.set(places.length > HOME_FAVORITES_LIMIT);
+      });
+    }
+  }
 
   // "რაღაც მჭირდება" სტანდარტ სასტუმროზე AI-ს ნაცვლად essentials-ზე მიდის — AI ხომ პრემიუმ-ონლი ტაბია.
   protected readonly intentCards = computed<IntentCard[]>(() => [

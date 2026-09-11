@@ -71,6 +71,10 @@
         <input name="google_maps_url" [(ngModel)]="form.google_maps_url" placeholder="https://maps.google.com/?q=..." />
       </label>
       <label class="sort">
+        <span>ფეხით (წუთი)</span>
+        <input type="number" name="walk_minutes" [(ngModel)]="form.walk_minutes" min="0" placeholder="მაგ. 3" />
+      </label>
+      <label class="sort">
         <span>რიგითობა</span>
         <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
       </label>
