@@ -66,8 +66,18 @@
       </label>
 
       <label class="span-2">
-        <span>მისამართი</span>
-        <input name="address" [(ngModel)]="form.address" />
+        <span>მისამართი (ქარ)</span>
+        <input name="address_ka" [(ngModel)]="form.address_ka" />
+      </label>
+
+      <label class="span-2">
+        <span>Address (EN)</span>
+        <input name="address_en" [(ngModel)]="form.address_en" />
+      </label>
+
+      <label class="span-2">
+        <span>Адрес (RU)</span>
+        <input name="address_ru" [(ngModel)]="form.address_ru" />
       </label>
 
       <label>
@@ -107,6 +117,23 @@
         </label>
         @if (hotel()?.logo_url) {
           <button type="button" class="remove-btn" (click)="removeLogo()" [disabled]="uploadingLogo()">ლოგოს წაშლა</button>
+        }
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>ჰერო ფოტო (Home გვერდი)</h2>
+      <p class="hint">დიდი ატმოსფერული ფოტო, რომელიც სტუმრის Home გვერდის თავზე ჩანს სასტუმროს სახელთან და მისამართთან ერთად.</p>
+      <div class="logo-row">
+        @if (hotel()?.hero_image_url) {
+          <img class="logo-preview" [src]="hotel()!.hero_image_url" alt="ჰერო ფოტო" />
+        }
+        <label class="upload-btn">
+          {{ uploadingHero() ? 'იტვირთება…' : hotel()?.hero_image_url ? 'ფოტოს შეცვლა' : 'ფოტოს არჩევა' }}
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onHeroImageSelected($event)" [disabled]="uploadingHero()" hidden />
+        </label>
+        @if (hotel()?.hero_image_url) {
+          <button type="button" class="remove-btn" (click)="removeHeroImage()" [disabled]="uploadingHero()">ფოტოს წაშლა</button>
         }
       </div>
     </div>

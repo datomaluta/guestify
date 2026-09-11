@@ -10,7 +10,7 @@ export interface HotelAdminProfile {
   full_name: string | null;
 }
 
-export type HotelWritePayload = Omit<Hotel, 'id' | 'created_at' | 'updated_at' | 'logo_url'>;
+export type HotelWritePayload = Omit<Hotel, 'id' | 'created_at' | 'updated_at' | 'logo_url' | 'hero_image_url'>;
 
 /** superadmin-ის Hotels CRUD + hotel_admin-ის მიბმა/მოხსნა კონკრეტულ სასტუმროზე. */
 @Injectable({ providedIn: 'root' })
@@ -66,6 +66,29 @@ export class AdminHotelService {
     const { error: removeError } = await this.supabase.client.storage.from('hotel-assets').remove([`${hotelId}/logo.webp`]);
     if (removeError) throw removeError;
     await this.updateHotel(hotelId, { logo_url: null } as Partial<HotelWritePayload>);
+  }
+
+  /** Home გვერდის ჰერო ფოტო — ლოგოზე დიდი გახლეჩა (1600px), რადგან სრულ სიგანეზე გამოისახება. */
+  async uploadHeroImage(hotelId: string, file: File): Promise<string> {
+    const blob = await resizeImage(file, 1600, 0.82);
+    const path = `${hotelId}/hero.webp`;
+
+    const { error: uploadError } = await this.supabase.client.storage
+      .from('hotel-assets')
+      .upload(path, blob, { upsert: true, contentType: 'image/webp' });
+    if (uploadError) throw uploadError;
+
+    const { data } = this.supabase.client.storage.from('hotel-assets').getPublicUrl(path);
+    const heroUrl = `${data.publicUrl}?v=${Date.now()}`;
+
+    await this.updateHotel(hotelId, { hero_image_url: heroUrl } as Partial<HotelWritePayload>);
+    return heroUrl;
+  }
+
+  async removeHeroImage(hotelId: string): Promise<void> {
+    const { error: removeError } = await this.supabase.client.storage.from('hotel-assets').remove([`${hotelId}/hero.webp`]);
+    if (removeError) throw removeError;
+    await this.updateHotel(hotelId, { hero_image_url: null } as Partial<HotelWritePayload>);
   }
 
   async listHotelAdmins(hotelId: string): Promise<HotelAdminProfile[]> {

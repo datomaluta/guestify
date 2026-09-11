@@ -19,6 +19,7 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
 
   greet_title: { ka: 'მოგესალმებით', en: 'Welcome', ru: 'Добро пожаловать' },
+  home_welcome_to: { ka: 'მოგესალმებით', en: 'Welcome to', ru: 'Добро пожаловать в' },
   greet_sub: {
     ka: 'აირჩიეთ სექცია დასაწყებად',
     en: 'Choose a section to get started',
