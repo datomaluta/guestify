@@ -8,7 +8,10 @@
   left: 50%;
   transform: translateX(-50%);
   width: min(100vw, 430px);
-  bottom: 0;
+  // --vv-bottom-offset TS-იდან მოდის (visualViewport API) — Chrome-ის iOS-ზე toolbar-ის
+  // ანიმაციისას layout/visual viewport-ის დესინქრონს აფარებს, თორემ bottom:0 მარტო
+  // საკმარისი არ არის (იხ. კომპონენტის TS ფაილის კომენტარი).
+  bottom: var(--vv-bottom-offset, 0px);
   height: var(--bottom-nav-height, 60px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   border-top: 1px solid var(--line-soft);
