@@ -1,5 +1,9 @@
 .state-screen {
-  min-height: 100dvh;
+  // 100svh (small viewport height) და არა 100dvh — dvh Chrome-ის iOS-ზე toolbar-ის
+  // გაქრობა/გამოჩენაზე ცოცხლად იცვლება და ამ სიმაღლის cascading resize-ი
+  // position:fixed ბოთომ-ნავს ატიტინებდა/ცვლიდა ადგილს. svh სტაბილურია (toolbar
+  // ყოველთვის ხილულადაა გათვლილი) — ნავი აღარ "დაბლა იწევს".
+  min-height: 100svh;
   display: grid;
   place-items: center;
   text-align: center;
@@ -18,7 +22,8 @@
 }
 
 .app-shell {
-  min-height: 100dvh;
+  // იხ. .state-screen-ის კომენტარი — 100dvh-ის ნაცვლად 100svh იმავე მიზეზით.
+  min-height: 100svh;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
   // დესკტოპზეც კი ტელეფონის სიგანეზე ვჩერდებით და აღარ ვზრდით ფართო layout-ისთვის.
   max-width: 430px;
