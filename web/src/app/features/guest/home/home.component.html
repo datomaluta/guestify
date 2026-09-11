@@ -27,21 +27,79 @@
 
 <div class="intent-section">
   <h2 class="intent-title">{{ 'home_qa_title' | translate }}</h2>
-  <div class="intent-grid qa-grid">
+  <div class="qa-grid">
     @for (item of quickAccessItems; track item.labelKey) {
-      <a class="intent-card" [routerLink]="item.route">
-        <div class="intent-icn"><app-icon [name]="item.icon" [size]="17" /></div>
-        <span class="intent-label">{{ item.labelKey | translate }}</span>
+      <a class="qa-card" [routerLink]="item.route">
+        <div class="qa-icn"><app-icon [name]="item.icon" [size]="19" /></div>
+        <span class="qa-label">{{ item.labelKey | translate }}</span>
       </a>
     }
     @if (hotelContext.hotel()?.phone; as phone) {
-      <a class="intent-card" [href]="'tel:' + phone">
-        <div class="intent-icn"><app-icon name="call" [size]="17" /></div>
-        <span class="intent-label">{{ 'home_qa_contact_host' | translate }}</span>
+      <a class="qa-card" [href]="'tel:' + phone">
+        <div class="qa-icn"><app-icon name="call" [size]="19" /></div>
+        <span class="qa-label">{{ 'home_qa_contact_host' | translate }}</span>
       </a>
     }
   </div>
 </div>
+
+@if (favoritePlaces().length > 0) {
+  <div class="intent-section">
+    <h2 class="intent-title fav-title">
+      {{ 'home_favorites_title' | translate }}
+      <app-icon name="auto_awesome" [size]="16" />
+    </h2>
+    <p class="fav-subtitle">{{ 'home_favorites_subtitle' | translate }}</p>
+
+    <div class="fav-scroll">
+      @for (place of favoritePlaces(); track place.id) {
+        <a
+          class="fav-card"
+          [href]="place.google_maps_url || null"
+          [target]="place.google_maps_url ? '_blank' : null"
+          rel="noopener"
+        >
+          <div class="fav-photo">
+            @if (place.image_url) {
+              <img [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
+            } @else {
+              <app-icon [name]="guideCategoryMeta(place.category).icon" [size]="26" />
+            }
+          </div>
+          <div class="fav-body">
+            <div class="fav-row">
+              <span class="fav-category">
+                {{ guideCategoryMeta(place.category).labelKey | translate }}
+              </span>
+              @if (place.walk_minutes) {
+                <span class="fav-walk">
+                  <app-icon name="directions_walk" [size]="12" />
+                  {{ place.walk_minutes }} {{ 'home_min_walk_suffix' | translate }}
+                </span>
+              }
+            </div>
+            <p class="fav-name">{{ place | localize: 'name' }}</p>
+            @if (place | localize: 'description'; as desc) {
+              <p class="fav-desc">{{ desc }}</p>
+            }
+            @if (place.google_maps_url) {
+              <span class="fav-maps">
+                <app-icon name="location_on" [size]="13" />
+                {{ 'home_fav_open_maps' | translate }}
+              </span>
+            }
+          </div>
+        </a>
+      }
+      @if (hasMoreFavorites()) {
+        <a class="fav-card fav-see-all" routerLink="guide">
+          <div class="fav-see-all-icn"><app-icon name="arrow_forward" [size]="20" /></div>
+          <span class="fav-see-all-label">{{ 'home_fav_see_all' | translate }}</span>
+        </a>
+      }
+    </div>
+  </div>
+}
 
 <div class="card-grid">
   @for (card of cards; track card.route; let i = $index) {

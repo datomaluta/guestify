@@ -10,6 +10,7 @@ export interface GuidePlace {
   description_ru: string | null;
   image_url: string | null;
   google_maps_url: string | null;
+  walk_minutes: number | null;
   sort_order: number;
   created_at: string;
 }
