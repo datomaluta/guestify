@@ -45,6 +45,12 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'I want to explore',
     ru: 'Хочу осмотреться',
   },
+
+  home_qa_title: { ka: 'სწრაფი წვდომა', en: 'Quick access', ru: 'Быстрый доступ' },
+  home_qa_wifi: { ka: 'Wi-Fi', en: 'Wi-Fi', ru: 'Wi-Fi' },
+  home_qa_checkout: { ka: 'Check-out', en: 'Check-out', ru: 'Выезд' },
+  home_qa_parking: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
+  home_qa_contact_host: { ka: 'დაუკავშირდი ჰოსტს', en: 'Contact host', ru: 'Связаться с хостом' },
   greet_sub: {
     ka: 'აირჩიეთ სექცია დასაწყებად',
     en: 'Choose a section to get started',
