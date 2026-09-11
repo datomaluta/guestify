@@ -7,13 +7,6 @@ import { HotelContextService } from '../../../core/services/hotel-context.servic
 import { HotelService } from '../../../core/services/hotel.service';
 import { GuidePlace, guideCategoryMeta } from '../../../core/models';
 
-interface NavCard {
-  route: string;
-  icon: string;
-  titleKey: string;
-  descKey: string;
-}
-
 interface IntentCard {
   route: string;
   icon: string;
@@ -28,7 +21,7 @@ interface QuickAccessItem {
 
 // Home-ზე მაქსიმუმ ამდენი "Local Favorites" ბარათი ჩანს — თუ სასტუმროს მეტი აქვს
 // დამატებული, ბოლოში "ყველას ნახვა" ჩნდება და Explore (guide) გვერდზე გადაყავს.
-const HOME_FAVORITES_LIMIT = 3;
+const HOME_FAVORITES_LIMIT = 5;
 
 @Component({
   selector: 'app-home',
@@ -70,32 +63,5 @@ export class HomeComponent {
     { route: 'essentials', icon: 'wifi', labelKey: 'home_qa_wifi' },
     { route: 'essentials', icon: 'logout', labelKey: 'home_qa_checkout' },
     { route: 'essentials', icon: 'local_parking', labelKey: 'home_qa_parking' }
-  ];
-
-  protected readonly cards: NavCard[] = [
-    {
-      route: 'services',
-      icon: 'room_service',
-      titleKey: 'nav_services',
-      descKey: 'nav_services_desc',
-    },
-    {
-      route: 'menu',
-      icon: 'restaurant',
-      titleKey: 'nav_menu',
-      descKey: 'nav_menu_desc',
-    },
-    {
-      route: 'guide',
-      icon: 'location_on',
-      titleKey: 'nav_guide',
-      descKey: 'nav_guide_desc',
-    },
-    {
-      route: 'rules',
-      icon: 'rule',
-      titleKey: 'nav_rules',
-      descKey: 'nav_rules_desc',
-    },
   ];
 }

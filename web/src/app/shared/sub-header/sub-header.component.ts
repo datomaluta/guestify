@@ -24,7 +24,10 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
       padding: 16px 18px;
       border-bottom: 1px solid var(--line-soft);
       position: sticky;
-      top: 0;
+      // app-header ახლა position:fixed-ია (და აღარ იკავებს ადგილს დოკუმენტის დინებაში) —
+      // top: 0-ს ნაცვლად მისი სიმაღლის ტოლი ოფსეტი გვჭირდება, თორემ ეს sticky header
+      // სქროლისას ფიქსირებული ჰედერის მიღმა "იმალება" (z-index-ის მიუხედავად).
+      top: var(--app-header-height, 0px);
       z-index: 5;
       background: var(--paper);
 
