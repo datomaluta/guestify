@@ -29,9 +29,10 @@
   box-shadow: var(--shadow-lg);
   // სქროლი ჩვეულებრივი გვერდის (document) დონეზეა — .app-body-ს საკუთარი
   // შიდა overflow აღარ აქვს, bottom-nav და ჰედერი კი position:fixed-ითაა
-  // viewport-ზე მიბმული (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა).
-  --bottom-nav-gap: 14px;
-  --bottom-nav-height: 80px;
+  // viewport-ზე მიბმული (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა, floating pill
+  // ბოთომ-ნავი კი ტელეფონების ბრაუზერის ქვედა chrome-ს ეჯახებოდა — ორივე ახლა
+  // ბოლომდე/გვერდებამდე მიბჯენილია, float-ის გარეშე).
+  --bottom-nav-height: 64px;
   --app-header-height: 65px;
 }
 
@@ -76,5 +77,6 @@
   // ჰედერიც და bottom-nav-იც ახლა position:fixed-ითაა viewport-ს მიმაგრებული —
   // ორივე მხრიდან სივრცე ვუტოვოთ, რომ კონტენტს არ დაფარონ.
   padding-top: var(--app-header-height);
-  padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
+  // +16px, რომ ბოლო კონტენტი პირდაპირ ნავს არ ეკვროდეს, სუნთქვის სივრცე დარჩეს
+  padding-bottom: calc(var(--bottom-nav-height) + 16px + env(safe-area-inset-bottom, 0px));
 }
