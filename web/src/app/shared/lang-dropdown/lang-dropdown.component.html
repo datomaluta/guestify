@@ -1,0 +1,25 @@
+<button
+  type="button"
+  class="trigger"
+  [class.open]="open()"
+  (click)="toggle($event)"
+>
+  <app-icon name="language" [size]="18" class="globe" />
+  <span>{{ currentLabel() }}</span>
+  <!-- <app-icon name="expand_more" [size]="16" /> -->
+</button>
+
+@if (open()) {
+  <div class="menu">
+    @for (l of languages; track l.code) {
+      <button
+        type="button"
+        class="option"
+        [class.active]="language.lang() === l.code"
+        (click)="select(l.code)"
+      >
+        {{ l.label }}
+      </button>
+    }
+  </div>
+}

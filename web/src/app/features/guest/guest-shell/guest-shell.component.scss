@@ -49,71 +49,18 @@
   }
 }
 
-.logo-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  flex-shrink: 0;
-  object-fit: cover;
-  box-shadow: var(--shadow-sm);
-}
+// Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —
+// hotel-ის საკუთარი ლოგო/სახელი განზრახ აღარ ჩანს, ერთი კონსისტენტური ბრენდი გვინდა ყველა სასტუმროზე.
+.wordmark {
+  font-family: 'Inter', var(--font-ui);
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-right: auto;
 
-.logo-fallback {
-  background: linear-gradient(
-    155deg,
-    var(--brand-primary),
-    var(--brand-secondary)
-  );
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.brand-name {
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.01em;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.lang-switch {
-  display: flex;
-  gap: 4px;
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  padding: 3px;
-  border-radius: 999px;
-  flex-shrink: 0;
-}
-
-.lang-pill {
-  font-size: 12px;
-  font-weight: 600;
-  border: none;
-  background: transparent;
-  color: var(--ink-soft);
-  padding: 6px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease,
-    box-shadow 0.15s ease;
-
-  &:hover:not(.active) {
-    color: var(--ink);
-  }
-
-  &.active {
-    /* ბრენდის ფერზე ოდნავ მუქი, შერეული — რომ dark mode-ზე ზედმეტად ფერადი/ლურჯი არ ჩანდეს */
-    background: var(--brand-primary);
-    color: #fff;
-    box-shadow: var(--shadow-sm);
+  .accent {
+    color: var(--brand-primary);
   }
 }
 
