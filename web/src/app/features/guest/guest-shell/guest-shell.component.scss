@@ -18,7 +18,7 @@
 }
 
 .app-shell {
-  height: 100dvh;
+  min-height: 100dvh;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
   // დესკტოპზეც კი ტელეფონის სიგანეზე ვჩერდებით და აღარ ვზრდით ფართო layout-ისთვის.
   max-width: 430px;
@@ -27,8 +27,8 @@
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  position: relative; // bottom-nav floats absolutely within this
+  // სქროლი ჩვეულებრივი გვერდის (document) დონეზეა — .app-body-ს საკუთარი
+  // შიდა overflow აღარ აქვს, bottom-nav კი position:fixed-ითაა viewport-ზე მიბმული.
   --bottom-nav-gap: 14px;
   --bottom-nav-height: 80px;
 }
@@ -64,10 +64,7 @@
 
 .app-body {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   animation: guestify-fade-up 0.35s ease both;
-  // bottom-nav float-ავს ზემოდან (position: absolute) — სივრცე ვუტოვოთ, რომ ბოლო კონტენტს არ დაფაროს
+  // bottom-nav position:fixed-ითაა viewport-ს მიმაგრებული — სივრცე ვუტოვოთ, რომ ბოლო კონტენტს არ დაფაროს
   padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
 }
