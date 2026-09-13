@@ -14,6 +14,7 @@ export class ContentShellComponent {
     { path: 'menu', label: 'მენიუ' },
     { path: 'guide', label: 'გზამკვლევი' },
     { path: 'rules', label: 'წესები' },
-    { path: 'contacts', label: 'კონტაქტები' }
+    { path: 'contacts', label: 'კონტაქტები' },
+    { path: 'ai-topics', label: 'AI თემები' }
   ];
 }

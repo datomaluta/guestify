@@ -72,9 +72,23 @@
 
 .app-body {
   flex: 1;
-  animation: guestify-fade-up 0.35s ease both;
+  // განზრახ მხოლოდ opacity (არა საერთო guestify-fade-up, რომელსაც transform აქვს) — route
+  // entry-ზე transform-იანი ანიმაცია (თუნდაც fill-mode:both-ით დამთავრებული, საბოლოო
+  // მნიშვნელობა transform:none) CSS-ის მიხედვით მაინც აქცევს ამ ელემენტს "containing
+  // block"-ად ნებისმიერი fixed-პოზიციური შვილისთვის (viewport-ის ნაცვლად) — რაც router-outlet-ში
+  // ჩატვირთულ გვერდებს (მაგ. ai.component-ის fixed შეყვანის ზოლს) ამტვრევდა.
+  animation: guestify-fade-in 0.35s ease both;
   // ჰედერი position:fixed-ითაა viewport-ს მიმაგრებული — ზემოთ სივრცე ვუტოვოთ, რომ
   // კონტენტს არ დაფაროს. bottom-nav-იც fixed-ითაა (floating pill) — იმასაც სივრცე ვუტოვოთ ქვემოთ.
   padding-top: var(--app-header-height);
   padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
+}
+
+@keyframes guestify-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -116,6 +116,13 @@ export const routes: Routes = [
               import('./features/admin/content/contacts-editor/contacts-editor.component').then(
                 (m) => m.ContactsEditorComponent
               )
+          },
+          {
+            path: 'ai-topics',
+            loadComponent: () =>
+              import('./features/admin/content/ai-topics-editor/ai-topics-editor.component').then(
+                (m) => m.AiTopicsEditorComponent
+              )
           }
         ]
       }

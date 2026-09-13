@@ -1,0 +1,82 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">თემები ჯერ არ დამატებულა</p>
+  }
+
+  @for (item of items(); track item.id) {
+    <div class="row" [class.editing]="editingId() === item.id">
+      <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="16" /></div>
+      <div class="info">
+        <p class="t">{{ item.title_ka }}</p>
+        <p class="d">{{ item.answer_ka }}</p>
+      </div>
+      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
+    </div>
+  }
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'თემის რედაქტირება' : 'ახალი თემა' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <app-icon-picker [(icon)]="form.icon" />
+
+    <div class="lang-grid">
+      <label>
+        <span>სათაური / chip-ლეიბლი (ქარ) *</span>
+        <input name="title_ka" [(ngModel)]="form.title_ka" required />
+      </label>
+      <label>
+        <span>Title (EN)</span>
+        <input name="title_en" [(ngModel)]="form.title_en" />
+      </label>
+      <label>
+        <span>Название (RU)</span>
+        <input name="title_ru" [(ngModel)]="form.title_ru" />
+      </label>
+
+      <label>
+        <span>საკვანძო სიტყვები, მძიმით გამოყოფილი (ქარ)</span>
+        <input name="keywords_ka" [(ngModel)]="form.keywords_ka" placeholder="პარკინგი, მანქანა, გარაჟი" />
+      </label>
+      <label>
+        <span>Keywords, comma-separated (EN)</span>
+        <input name="keywords_en" [(ngModel)]="form.keywords_en" placeholder="parking, car, garage" />
+      </label>
+      <label>
+        <span>Ключевые слова, через запятую (RU)</span>
+        <input name="keywords_ru" [(ngModel)]="form.keywords_ru" placeholder="парковка, машина, гараж" />
+      </label>
+
+      <label>
+        <span>მზა პასუხი (ქარ) *</span>
+        <textarea name="answer_ka" [(ngModel)]="form.answer_ka" rows="3" required></textarea>
+      </label>
+      <label>
+        <span>Answer (EN)</span>
+        <textarea name="answer_en" [(ngModel)]="form.answer_en" rows="3"></textarea>
+      </label>
+      <label>
+        <span>Ответ (RU)</span>
+        <textarea name="answer_ru" [(ngModel)]="form.answer_ru" rows="3"></textarea>
+      </label>
+    </div>
+
+    <label class="sort">
+      <span>რიგითობა</span>
+      <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">გაუქმება</button>
+      }
+    </div>
+  </form>
+}

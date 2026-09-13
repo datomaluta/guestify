@@ -186,6 +186,51 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Контактные номера',
   },
 
+  // --- AI Concierge (guest tab) ---
+  ai_greeting_text: {
+    ka: 'გამარჯობა! მვ ვარ თქვენი AI ასისტენტი. როგორ შემიძლია დაგეხმაროთ თქვენი დარჩენის მაქსიმალურად სასიამოვნოდ წარმართვაში?',
+    en: 'Hi there! I’m your AI assistant. How can I help make your stay amazing?',
+    ru: 'Привет! Я ваш AI-ассистент. Как я могу сделать ваше пребывание ещё лучше?',
+  },
+  ai_header_title: { ka: 'ჰკითხე AI-ს', en: 'Ask AI', ru: 'Спросите AI' },
+  ai_input_placeholder: {
+    ka: 'რა გაინტერესებთ?',
+    en: 'What would you like to know?',
+    ru: 'Что вы хотели бы узнать?',
+  },
+  ai_helper_text: {
+    ka: 'დაუყოვნებელი პასუხები, 24/7, თქვენი დარჩენის განმავლობაში.',
+    en: 'Instant answers, 24/7 during your stay.',
+    ru: 'Мгновенные ответы, 24/7 на протяжении всего проживания.',
+  },
+  ai_hedge_prefix: {
+    ka: 'ალბათ ამას გულისხმობთ:',
+    en: 'Perhaps you mean:',
+    ru: 'Возможно, вы имеете в виду:',
+  },
+  ai_fallback_text: {
+    ka: 'ზუსტად ვერ მივხვდი, რას გულისხმობთ 🙂 სცადეთ სხვანაირად ჩამოაყალიბოთ, ან დარეკეთ რეცეფციაში.',
+    en: 'I couldn’t quite understand that 🙂 Try rephrasing your question, or call reception.',
+    ru: 'Я не совсем понял, что вы имеете в виду 🙂 Попробуйте переформулировать вопрос или позвоните на ресепшен.',
+  },
+  ai_faq_heading: {
+    ka: 'ხშირად კითხულობენ',
+    en: 'People often ask',
+    ru: 'Часто спрашивают',
+  },
+  ai_show_more_topics: {
+    ka: 'მეტის ნახვა',
+    en: 'Show more',
+    ru: 'Показать больше',
+  },
+  ai_contact_host_cta: {
+    ka: 'დარეკეთ მიმღებში',
+    en: 'Call reception',
+    ru: 'Позвонить на ресепшен',
+  },
+  // ai_topic_*_label key-ები აღარ არსებობს — თემების სათაურები (title_ka/en/ru) ახლა
+  // Supabase `ai_topics` ცხრილიდან მოდის (localize()-ით), არა აქედან. იხ. ai-topics-editor.
+
   empty_state: {
     ka: 'ინფორმაცია მალე დაემატება',
     en: 'Information coming soon',
