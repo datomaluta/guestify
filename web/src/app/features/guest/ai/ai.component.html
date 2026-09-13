@@ -1,14 +1,5 @@
 <div class="ai-page">
-  @if (messages().length === 0) {
-    <div class="idle">
-      <div class="bubble bubble-assistant greeting">
-        <div class="avatar"><app-icon name="auto_awesome" [size]="17" /></div>
-        <p>{{ "ai_greeting_text" | translate }}</p>
-      </div>
-
-      <ng-container [ngTemplateOutlet]="chipList" />
-    </div>
-  } @else {
+  @if (messages().length > 0) {
     <div class="convo-header">
       <button
         type="button"
@@ -20,64 +11,79 @@
       </button>
       <h1>{{ "ai_header_title" | translate }}</h1>
     </div>
+  }
 
-    <div class="convo">
-      @for (message of messages(); track message.id) {
-        @if (message.role === "user") {
-          <div class="bubble bubble-user">{{ message.text }}</div>
-        } @else if (message.role === "typing") {
-          <div class="bubble bubble-assistant typing">
-            <span class="dot"></span><span class="dot"></span
-            ><span class="dot"></span>
-          </div>
-        } @else {
-          <div class="bubble bubble-assistant">
-            @if (message.hedgeLabel) {
-              <p class="hedge">
-                {{ "ai_hedge_prefix" | translate }}
-                {{ message.hedgeLabel }}?
-              </p>
+  <div #aiBody class="ai-body">
+    @if (messages().length === 0) {
+      <div class="idle">
+        <div class="bubble bubble-assistant greeting">
+          <div class="avatar"><app-icon name="auto_awesome" [size]="17" /></div>
+          <p>{{ "ai_greeting_text" | translate }}</p>
+        </div>
+
+        <ng-container [ngTemplateOutlet]="chipList" />
+      </div>
+    } @else {
+      <div class="convo">
+        @for (message of messages(); track message.id) {
+          @if (message.role === "user") {
+            <div class="bubble bubble-user">{{ message.text }}</div>
+          } @else if (message.role === "typing") {
+            <div class="bubble bubble-assistant typing">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+          } @else {
+            <div class="bubble bubble-assistant">
+              @if (message.hedgeLabel) {
+                <p class="hedge">
+                  {{ "ai_hedge_prefix" | translate }}
+                  {{ message.hedgeLabel }}?
+                </p>
+              }
+              <p>{{ message.text }}</p>
+            </div>
+
+            @if (
+              message.showContactHost && hotelContext.hotel()?.phone;
+              as phone
+            ) {
+              <a class="contact-host" [href]="'tel:' + phone">
+                <app-icon name="call" [size]="15" />
+                {{ "ai_contact_host_cta" | translate }}
+              </a>
             }
-            <p>{{ message.text }}</p>
-          </div>
-
-          @if (
-            message.showContactHost && hotelContext.hotel()?.phone;
-            as phone
-          ) {
-            <a class="contact-host" [href]="'tel:' + phone">
-              <app-icon name="call" [size]="15" />
-              {{ "ai_contact_host_cta" | translate }}
-            </a>
           }
         }
-      }
-      <div #bottomMarker class="bottom-marker"></div>
-    </div>
-  }
-</div>
+        <div #bottomMarker class="bottom-marker"></div>
+      </div>
+    }
+  </div>
 
-<div class="composer">
-  <form class="input-bar" (ngSubmit)="onSend()">
-    <input
-      type="text"
-      name="draft"
-      [(ngModel)]="draft"
-      [placeholder]="'ai_input_placeholder' | translate"
-      autocomplete="off"
-    />
-    <button
-      type="submit"
-      class="send-btn"
-      [attr.aria-label]="'ai_header_title' | translate"
-    >
-      <app-icon name="send" [size]="17" />
-    </button>
-  </form>
+  <div class="composer">
+    <form class="input-bar" (ngSubmit)="onSend()">
+      <input
+        type="text"
+        name="draft"
+        [(ngModel)]="draft"
+        [placeholder]="'ai_input_placeholder' | translate"
+        autocomplete="off"
+      />
+      <button
+        type="submit"
+        class="send-btn"
+        [attr.aria-label]="'ai_header_title' | translate"
+      >
+        <app-icon name="send" [size]="17" />
+      </button>
+    </form>
+  </div>
 </div>
 
 <!-- idle-ზეც და fallback/hedge-ის ქვემოთაც გამეორებული chip-სია — ერთხელ განსაზღვრული, ორივეგან
-     ngTemplateOutlet-ით ჩასმული, რომ "მეტის ნახვა"-ს ლოგიკა ორივეგან სინქრონულად იმუშაოს. -->
+     ngTemplateOutlet-ით ჩასმული. ორსვეტიან grid-შია, მხოლოდ პირველი 4 თემა ჩნდება (არც
+     "მეტის ნახვა", არც სქროლი) — რომელი 4 ჩნდება sort_order-ზეა დამოკიდებული (ე.ი. admin-ის
+     ხელშია); თუ საჭირო თემა ამ 4-ში არ ჯდება, სტუმარს თავისუფალი ტექსტის ველი ხომ აქვს. -->
 <ng-template #chipList>
   <div class="chip-list-block">
     <p class="chip-list-heading">{{ "ai_faq_heading" | translate }}</p>
@@ -91,17 +97,6 @@
       >
         <div class="icn"><app-icon [name]="topic.icon || defaultIcon" [size]="18" /></div>
         <span class="chip-label">{{ topicTitle(topic) }}</span>
-        <app-icon class="chevron" name="chevron_right" [size]="18" />
-      </button>
-    }
-    @if (hasMoreTopics()) {
-      <button
-        type="button"
-        class="chip-row chip-more"
-        (click)="showAllTopics.set(true)"
-      >
-        <div class="icn"><app-icon name="expand_more" [size]="18" /></div>
-        <span class="chip-label">{{ "ai_show_more_topics" | translate }}</span>
       </button>
     }
     </div>

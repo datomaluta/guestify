@@ -42,9 +42,9 @@ export class AiComponent {
   protected readonly hotelContext = inject(HotelContextService);
   private readonly language = inject(LanguageService);
 
-  /** ერთდროულად ხილული chip-ების ჯერადი ლიმიტი — 20 თემა ერთბაშად ძალიან ბევრი/ხმაურიანია
-   * ეკრანზე; თავიდან მხოლოდ პირველი (sort_order-ით) ჩანს, დანარჩენი "მეტის ნახვით" იშლება. */
-  private static readonly VISIBLE_TOPICS_LIMIT = 5;
+  /** ერთდროულად ხილული chip-ების ჯერადი ლიმიტი — მხოლოდ პირველი (sort_order-ით) 4 ჩანს,
+   * "მეტის ნახვის"/სქროლის გარეშე; დანარჩენის საპოვნელად სტუმარს თავისუფალი ტექსტის ველი აქვს. */
+  private static readonly VISIBLE_TOPICS_LIMIT = 4;
 
   protected readonly defaultIcon = DEFAULT_ICON;
 
@@ -52,17 +52,10 @@ export class AiComponent {
   protected readonly messages = signal<ChatMessage[]>([]);
   protected draft = '';
 
-  /** ერთი გაზიარებული signal საკმარისია — გაშლა ყველგან (idle-ზეც და fallback-ის ქვემოთაც)
-   * ერთად ეხმარება, ცალ-ცალკე მდგომარეობის მართვა ამ მასშტაბით ზედმეტი გართულება იქნებოდა. */
-  protected readonly showAllTopics = signal(false);
-  protected readonly visibleTopics = computed(() =>
-    this.showAllTopics() ? this.topics() : this.topics().slice(0, AiComponent.VISIBLE_TOPICS_LIMIT)
-  );
-  protected readonly hasMoreTopics = computed(
-    () => !this.showAllTopics() && this.topics().length > AiComponent.VISIBLE_TOPICS_LIMIT
-  );
+  protected readonly visibleTopics = computed(() => this.topics().slice(0, AiComponent.VISIBLE_TOPICS_LIMIT));
 
   private readonly bottomMarker = viewChild<ElementRef<HTMLElement>>('bottomMarker');
+  private readonly aiBody = viewChild<ElementRef<HTMLElement>>('aiBody');
 
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;
@@ -120,18 +113,15 @@ export class AiComponent {
   }
 
   /**
-   * ისევ idle (მისალმება + chip-სია) ეკრანზე დაბრუნება — route-ის შეცვლის გარეშე.
-   * route არ იცვლება, ასე რომ Router-ის scroll-restoration არ ჩაერთვება — manually ვწევთ
-   * ზემოთ, თორემ დიდი საუბრიდან დაბრუნებისას გვერდი ძველ (ახლა უკვე შეცვლილ/მოკლე)
-   * scroll-პოზიციაზე დარჩება და idle-ის თავი (მისალმება) აღარ ჩანს.
+   * ისევ idle (მისალმება + chip-სია) ეკრანზე დაბრუნება. .ai-body ახლა საკუთარი overflow-ის
+   * მქონე ჩარჩოა (და არა document-ის დონეზე მოსქროლილი გვერდი) — ამიტომ სქროლი მასზე
+   * პირდაპირ ვწევთ ზემოთ, თორემ დიდი საუბრიდან დაბრუნებისას ის ძველ (ახლა უკვე
+   * შეცვლილ/მოკლე) scroll-პოზიციაზე დარჩება და idle-ის თავი (მისალმება) აღარ ჩანს.
    */
   protected onBack(): void {
     this.messages.set([]);
-    this.showAllTopics.set(false);
-    // setTimeout (და არა პირდაპირი გამოძახება) — Angular-ს DOM-ის განახლება რომ დაასწროს,
-    // თორემ დიდი საუბრიდან დაბრუნებისას გვერდი ძველ (ახლა უკვე შეცვლილ/მოკლე) scroll-პოზიციაზე
-    // დარჩება და idle-ის თავი (მისალმება) აღარ ჩანს.
-    setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }));
+    // setTimeout (და არა პირდაპირი გამოძახება) — Angular-ს DOM-ის განახლება რომ დაასწროს.
+    setTimeout(() => this.aiBody()?.nativeElement.scrollTo({ top: 0, behavior: 'auto' }));
   }
 
   private pushUserMessage(text: string): void {

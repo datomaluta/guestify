@@ -188,7 +188,7 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
 
   // --- AI Concierge (guest tab) ---
   ai_greeting_text: {
-    ka: 'გამარჯობა! მვ ვარ თქვენი AI ასისტენტი. როგორ შემიძლია დაგეხმაროთ თქვენი დარჩენის მაქსიმალურად სასიამოვნოდ წარმართვაში?',
+    ka: 'გამარჯობა! მვ ვარ თქვენი AI ასისტენტი. როგორ შემიძლია დაგეხმაროთ?',
     en: 'Hi there! I’m your AI assistant. How can I help make your stay amazing?',
     ru: 'Привет! Я ваш AI-ассистент. Как я могу сделать ваше пребывание ещё лучше?',
   },
@@ -217,11 +217,6 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ka: 'ხშირად კითხულობენ',
     en: 'People often ask',
     ru: 'Часто спрашивают',
-  },
-  ai_show_more_topics: {
-    ka: 'მეტის ნახვა',
-    en: 'Show more',
-    ru: 'Показать больше',
   },
   ai_contact_host_cta: {
     ka: 'დარეკეთ მიმღებში',

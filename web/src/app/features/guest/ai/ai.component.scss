@@ -1,8 +1,30 @@
-// გვერდის მთავარი კონტენტი (idle ან საუბრის ისტორია) — ქვედა padding საკმარისია, რომ ბოლო
-// ბაბლი/chip არასდროს დაიმალოს ქვემოთ მიმაგრებული .composer-ის მიღმა (რომელიც თავად კიდევ
-// bottom-nav-ის ზემოთაა, იხ. guest-shell.component.scss-ის --bottom-nav-height/--bottom-nav-gap).
+// .app-body (guest-shell) ჩვეულებრივად, document-დონეზე სქროლავს — ეს გვერდი განზრახ
+// გამონაკლისია: header-სა და bottom-nav-ს შორის ხელმისაწვდომ სივრცეს viewport-ზე
+// მიმაგრებული "აპისმაგვარი" პანელივით იკავებს (header/bottom-nav-ის იგივე
+// fixed+centered ხერხით, იხ. guest-shell/bottom-nav), რომ input ზოლი ნამდვილად
+// ჩვეულ flex-შვილად დარჩეს (არა floating პილი კონტენტის ზემოთ) — .ai-body-ს
+// (და არა მთლიან გვერდს) აქვს საკუთარი overflow, .composer კი მის ქვემოთ ჩვეულებრივად დგება.
 .ai-page {
-  padding: 16px 18px 150px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 430px);
+  top: var(--app-header-height, 65px);
+  bottom: calc(
+    var(--bottom-nav-height, 80px) + var(--bottom-nav-gap, 14px) * 2 + env(safe-area-inset-bottom, 0px)
+  );
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  z-index: 3;
+}
+
+.ai-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 18px 10px;
 }
 
 .idle {
@@ -78,25 +100,26 @@
   margin: 4px 0 10px 2px;
 }
 
-// --- chip-სია ---
+// --- chip-სია — ორსვეტიანი grid ბარათებით, მხოლოდ პირველი 4 თემა (იხ. VISIBLE_TOPICS_LIMIT) ---
 .chip-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
 .chip-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  text-align: center;
+  gap: 8px;
+  padding: 14px 8px;
   background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
   font: inherit;
   color: var(--ink);
-  text-align: left;
   cursor: pointer;
   width: 100%;
   animation: guestify-fade-up 0.4s ease both;
@@ -126,41 +149,18 @@
 }
 
 .chip-label {
-  flex: 1;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
+  line-height: 1.3;
 }
 
-.chevron {
-  color: var(--ink-faint);
-  flex-shrink: 0;
-}
-
-// "მეტი თემის ნახვა" — ნამდვილი თემისგან განზრახ განსხვავებული (დაშტრიხული საზღვარი, ჩრდილის
-// გარეშე, chevron-ის გარეშე), რომ ცხადი იყოს — ეს პასუხს კი არ იძლევა, უბრალოდ სიას შლის.
-.chip-more {
-  background: transparent;
-  border-style: dashed;
-  box-shadow: none;
-  justify-content: center;
-
-  .chip-label {
-    flex: none;
-    color: var(--ink-soft);
-  }
-}
-
-// --- საუბრის ხედი ---
+// --- საუბრის ხედი --- .ai-page ახლა თავად ფიქსირებული პანელია (viewport-ზე მიმაგრებული, იხ.
+// ზემოთ), ამიტომ header-ს sticky-ის ხრიკი აღარ სჭირდება — უბრალო flex-შვილია, .ai-body-ს ზემოთ.
 .convo-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 0 16px;
-  position: sticky;
-  top: var(--app-header-height, 0px);
-  z-index: 5;
-  background: var(--paper);
-  margin: -16px -18px 0;
+  flex-shrink: 0;
   padding: 16px 18px;
   border-bottom: 1px solid var(--line-soft);
 }
@@ -197,14 +197,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-top: 16px;
 }
 
 .bottom-marker {
-  // scrollIntoView-ის მიზანი — composer viewport-ის ძირიდან ~168px-ს იკავებს (გაზომილია),
-  // მინდობის მცირე მარაგით 185px ვწერთ, რომ ბოლო ბაბლი composer-ის მიღმა არასდროს დარჩეს
-  // ნახევრად დაფარული.
-  scroll-margin-bottom: 185px;
+  // composer ახლა .ai-body-ს ქვემოთ ჩვეულებრივი flex-შვილია (არა floating/fixed), ამიტომ
+  // კონტენტს არასდროს ედება — მცირე visual breathing room-ი საკმარისია.
+  scroll-margin-bottom: 8px;
   height: 1px;
 }
 
@@ -258,29 +256,15 @@
   text-decoration: none;
 }
 
-// --- ქვედა შეყვანის ზოლი — fixed, bottom-nav-ის ზემოთ (გვერდი document-დონეზე სქროლავს,
-// ამიტომ header/bottom-nav-ის მსგავსად ეს ბლოკიც viewport-ზეა მიმაგრებული, .app-body-ს
-// ჩვეულებრივ დინებას მიღმა — იხ. guest-shell.component.scss; იქვე იხ. კომენტარი იმის შესახებ,
-// თუ რატომ არის .app-body-ს ანიმაციას მხოლოდ opacity, არა transform — ეს swap ზუსტად იმისთვის
-// გაკეთდა, რომ ქვემოთ position:fixed სწორად, viewport-ის მიმართ მუშაობდეს). ---
-// composer-ს (და არა მხოლოდ .input-bar-ს) სჭირდება საკუთარი frosted-glass ფონი — წინააღმდეგ
-// შემთხვევაში .input-bar-ის ირგვლივ დარჩენილ გამჭვირვალე უბანში (helper-text-ის ირგვლივ)
-// ქვემოთ მოსქროლილი chip-ები "გამოსჭვივის", რადგან composer viewport-ზეა მიმაგრებული და
-// გრძელი chip-სია მის ქვეშ თავისუფლად სქროლავს.
+// --- ქვედა შეყვანის ზოლი — .ai-page (ზემოთ position:fixed პანელი) ის ჩვეულებრივი, ბოლო
+// flex-შვილია, .ai-body-ს ქვემოთ. აღარ არის floating პილი კონტენტის ზემოთ — ნამდვილად
+// ვიწოვ სივრცეს, ამიტომ .ai-body-ს კონტენტს არასდროს ედება და საკუთარი frosted-glass ფონიც
+// არ სჭირდება.
 .composer {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(calc(100vw - 28px), 402px);
-  bottom: calc(
-    var(--bottom-nav-height, 80px) + var(--bottom-nav-gap, 14px) + 10px + env(safe-area-inset-bottom, 0px)
-  );
-  z-index: 8;
-  padding: 8px 8px 6px;
-  border-radius: 26px;
-  background: color-mix(in srgb, var(--paper) 90%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  flex-shrink: 0;
+  padding: 10px 18px calc(10px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line-soft);
+  background: var(--paper);
 }
 
 .input-bar {
@@ -289,11 +273,8 @@
   gap: 6px;
   padding: 6px 6px 6px 16px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--paper-raised);
   border: 1px solid var(--line-soft);
-  box-shadow: var(--shadow-lg);
 
   input {
     flex: 1;
@@ -330,11 +311,4 @@
   &:active {
     transform: scale(0.92);
   }
-}
-
-.helper-text {
-  text-align: center;
-  font-size: 10.5px;
-  color: var(--ink-faint);
-  margin: 8px 0 0;
 }
