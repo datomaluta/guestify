@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { resizeImage } from '../utils/image-resize';
-import { HotelService as HotelServiceItem, MenuCategory, MenuItem, GuidePlace, HotelRule, HotelContact } from '../models';
+import { HotelService as HotelServiceItem, MenuCategory, MenuItem, GuidePlace, HotelRule, HotelContact, AiTopic } from '../models';
 
 type Row = Record<string, any>;
 
@@ -153,6 +153,30 @@ export class AdminContentService {
 
   async deleteContact(id: string): Promise<void> {
     const { error } = await this.supabase.client.from('hotel_contacts').delete().eq('id', id);
+    if (error) throw error;
+  }
+
+  // -------------------------------------------------------------- ai topics --
+
+  async listAiTopics(hotelId: string): Promise<AiTopic[]> {
+    const { data, error } = await this.supabase.client
+      .from('ai_topics')
+      .select('*')
+      .eq('hotel_id', hotelId)
+      .order('sort_order');
+    if (error) throw error;
+    return (data ?? []) as AiTopic[];
+  }
+
+  async saveAiTopic(id: string | null, payload: Row): Promise<void> {
+    const { error } = id
+      ? await this.supabase.client.from('ai_topics').update(payload).eq('id', id)
+      : await this.supabase.client.from('ai_topics').insert(payload);
+    if (error) throw error;
+  }
+
+  async deleteAiTopic(id: string): Promise<void> {
+    const { error } = await this.supabase.client.from('ai_topics').delete().eq('id', id);
     if (error) throw error;
   }
 

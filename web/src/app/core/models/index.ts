@@ -5,4 +5,5 @@ export * from './guide-place.model';
 export * from './guide-category';
 export * from './hotel-rule.model';
 export * from './hotel-contact.model';
+export * from './ai-topic.model';
 export * from './localized';
