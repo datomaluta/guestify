@@ -18,7 +18,12 @@
 }
 
 .app-shell {
-  min-height: 100dvh;
+  // ფიქსირებული viewport-სიმაღლის flex სვეტი (header / body / bottom-nav) —
+  // fixed/sticky ტრიუკების ნაცვლად header-ი და bottom-nav ჩვეულებრივი,
+  // არასქროლადი flex-შვილები არიან, .app-body კი მათ შორის დარჩენილ სივრცეს
+  // თავად სქროლავს (overflow-y:auto) — დოკუმენტის დონეზე საერთოდ აღარაფერი სქროლავს.
+  height: 100dvh;
+  overflow: hidden;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
   // დესკტოპზეც კი ტელეფონის სიგანეზე ვჩერდებით და აღარ ვზრდით ფართო layout-ისთვის.
   max-width: 430px;
@@ -27,12 +32,6 @@
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
-  // სქროლი ჩვეულებრივი გვერდის (document) დონეზეა — .app-body-ს საკუთარი
-  // შიდა overflow აღარ აქვს, bottom-nav position:fixed-ითაა viewport-ზე მიბმული
-  // (floating pill), ჰედერი კი ასევე fixed-ითაა (sticky-ს სწრაფ სქროლზე ცანცარება ჰქონდა).
-  --bottom-nav-gap: 14px;
-  --bottom-nav-height: 80px;
-  --app-header-height: 65px;
 }
 
 .app-header {
@@ -41,18 +40,10 @@
   gap: 10px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--line-soft);
-  // sticky-ს სწრაფ სქროლზე (განსაკუთრებით iOS-ზე) ცანცარება/ტიტინი ჰქონდა —
-  // bottom-nav-ის მსგავსად viewport-ზე ვამაგრებთ, .app-shell-ის სვეტს მიყოლებული
-  // (იგივე 430px max-width column ცენტრირებული, უფსკვნის გარეშე, ბოლომდე გვერდზე).
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100vw, 430px);
+  flex-shrink: 0;
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 10;
 }
 
 // Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —
@@ -72,19 +63,10 @@
 
 .app-body {
   flex: 1;
-  // განზრახ მხოლოდ opacity (არა საერთო guestify-fade-up, რომელსაც transform აქვს) — route
-  // entry-ზე transform-იანი ანიმაცია (თუნდაც fill-mode:both-ით დამთავრებული, საბოლოო
-  // მნიშვნელობა transform:none) CSS-ის მიხედვით მაინც აქცევს ამ ელემენტს "containing
-  // block"-ად ნებისმიერი fixed-პოზიციური შვილისთვის (viewport-ის ნაცვლად) — რაც router-outlet-ში
-  // ჩატვირთულ გვერდებს (მაგ. ai.component-ის fixed შეყვანის ზოლს) ამტვრევდა.
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   animation: guestify-fade-in 0.35s ease both;
-  // ჰედერი position:fixed-ითაა viewport-ს მიმაგრებული — ზემოთ სივრცე ვუტოვოთ, რომ
-  // კონტენტს არ დაფაროს. bottom-nav-იც fixed-ითაა (floating pill) — იმასაც სივრცე ვუტოვოთ ქვემოთ.
-  padding-top: var(--app-header-height);
-  padding-bottom: calc(
-    var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 +
-      env(safe-area-inset-bottom, 0px) + 40px
-  );
 }
 
 @keyframes guestify-fade-in {

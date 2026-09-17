@@ -1,22 +1,18 @@
-// .app-body (guest-shell) ჩვეულებრივად, document-დონეზე სქროლავს — ეს გვერდი განზრახ
-// გამონაკლისია: header-სა და bottom-nav-ს შორის ხელმისაწვდომ სივრცეს viewport-ზე
-// მიმაგრებული "აპისმაგვარი" პანელივით იკავებს (header/bottom-nav-ის იგივე
-// fixed+centered ხერხით, იხ. guest-shell/bottom-nav), რომ input ზოლი ნამდვილად
-// ჩვეულ flex-შვილად დარჩეს (არა floating პილი კონტენტის ზემოთ) — .ai-body-ს
-// (და არა მთლიან გვერდს) აქვს საკუთარი overflow, .composer კი მის ქვემოთ ჩვეულებრივად დგება.
+// .app-body (guest-shell) ახლა header-სა და bottom-nav-ს შორის დარჩენილ სივრცეს თავად
+// სქროლავს — ეს გვერდი იმ სივრცეს ზუსტად ავსებს (height:100%, :host-იდან დაწყებული,
+// რადგან კომპონენტის host ელემენტი ნაგულისხმევად display:inline-ია) და საკუთარ შიდა
+// სქროლს მართავს .ai-body-ზე, რომ .app-body-მ არასდროს დაასქროლოს (input ზოლი
+// ყოველთვის ეკრანზე დარჩეს, .ai-body-ს ქვემოთ ჩვეულებრივი flex-შვილივით).
+:host {
+  display: block;
+  height: 100%;
+}
+
 .ai-page {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100vw, 430px);
-  top: var(--app-header-height, 65px);
-  bottom: calc(
-    var(--bottom-nav-height, 80px) + var(--bottom-nav-gap, 14px) * 2 + env(safe-area-inset-bottom, 0px)
-  );
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--paper);
-  z-index: 3;
 }
 
 .ai-body {
