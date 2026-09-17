@@ -1,44 +1,45 @@
-<app-sub-header titleKey="guide_title" />
-
 @if (loading()) {
-  <div class="list">
-    @for (i of skeletonRows; track i) {
-      <div class="place-card">
-        <div class="thumb skel"></div>
-        <div class="skel-lines">
-          <div class="skel skel-line" style="width: 60%"></div>
-          <div class="skel skel-line" style="width: 90%"></div>
-          <div class="skel skel-line" style="width: 40%"></div>
-        </div>
-      </div>
-    }
+  <div class="cat-section">
+    <div class="fav-scroll">
+      @for (i of skeletonRows; track i) {
+        <app-place-card [skeleton]="true" [first]="i === 0" />
+      }
+    </div>
   </div>
 } @else {
-  @if (places().length === 0) {
-    <p class="empty">{{ 'empty_state' | translate }}</p>
+  @if (groups().length === 0) {
+    <p class="empty">{{ "empty_state" | translate }}</p>
+  } @else {
+    <div class="filter-scroll">
+      @for (group of groups(); track group.key) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedCategory() === group.key"
+          (click)="toggleCategory(group.key)"
+        >
+          {{ group.labelKey | translate }}
+        </button>
+      }
+    </div>
   }
 
-  <div class="list">
-    @for (place of places(); track place.id; let i = $index) {
-      <div class="place-card" [style.--i]="i">
-        @if (place.image_url) {
-          <img class="thumb" [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
-        } @else {
-          <div class="thumb placeholder"></div>
+  @for (group of visibleGroups(); track group.key) {
+    <div class="cat-section">
+      <h2 class="cat-title">
+        <app-icon [name]="group.icon" [size]="16" />
+        {{ group.labelKey | translate }}
+      </h2>
+
+      <div class="fav-scroll">
+        @for (place of group.places; track place.id; let i = $index) {
+          <app-place-card [place]="place" [first]="i === 0" />
         }
-        <div class="body">
-          <p class="t">{{ place | localize: 'name' }}</p>
-          @if ((place | localize: 'description'); as desc) {
-            <p class="d">{{ desc }}</p>
-          }
-          @if (place.google_maps_url) {
-            <a class="maps-link" [href]="place.google_maps_url" target="_blank" rel="noopener">
-              <img class="maps-icon" src="icons/google-map-icon.webp" alt="" width="18" height="18" />
-              {{ 'guide_open_maps' | translate }}
-            </a>
-          }
+        <div class="coming-soon-card">
+          <div class="coming-soon-icn"><app-icon name="hourglass_top" [size]="20" /></div>
+          <span class="coming-soon-label">{{ 'guide_more_soon' | translate }}</span>
         </div>
       </div>
-    }
-  </div>
+    </div>
+  }
 }

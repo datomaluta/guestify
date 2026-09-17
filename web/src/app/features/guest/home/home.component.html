@@ -51,47 +51,11 @@
     <p class="fav-subtitle">{{ 'home_favorites_subtitle' | translate }}</p>
 
     <div class="fav-scroll">
-      @for (place of favoritePlaces(); track place.id) {
-        <a
-          class="fav-card"
-          [href]="place.google_maps_url || null"
-          [target]="place.google_maps_url ? '_blank' : null"
-          rel="noopener"
-        >
-          <div class="fav-photo">
-            @if (place.image_url) {
-              <img [src]="place.image_url" [alt]="place | localize: 'name'" loading="lazy" />
-            } @else {
-              <app-icon [name]="guideCategoryMeta(place.category).icon" [size]="26" />
-            }
-          </div>
-          <div class="fav-body">
-            <div class="fav-row">
-              <span class="fav-category">
-                {{ guideCategoryMeta(place.category).labelKey | translate }}
-              </span>
-              @if (place.walk_minutes) {
-                <span class="fav-walk">
-                  <app-icon name="directions_walk" [size]="12" />
-                  {{ place.walk_minutes }} {{ 'home_min_walk_suffix' | translate }}
-                </span>
-              }
-            </div>
-            <p class="fav-name">{{ place | localize: 'name' }}</p>
-            @if (place | localize: 'description'; as desc) {
-              <p class="fav-desc">{{ desc }}</p>
-            }
-            @if (place.google_maps_url) {
-              <span class="fav-maps">
-                <app-icon name="location_on" [size]="13" />
-                {{ 'home_fav_open_maps' | translate }}
-              </span>
-            }
-          </div>
-        </a>
+      @for (place of favoritePlaces(); track place.id; let i = $index) {
+        <app-place-card [place]="place" [showCategory]="true" [first]="i === 0" />
       }
       @if (hasMoreFavorites()) {
-        <a class="fav-card fav-see-all" routerLink="guide">
+        <a class="see-all-card" routerLink="guide">
           <div class="fav-see-all-icn"><app-icon name="arrow_forward" [size]="20" /></div>
           <span class="fav-see-all-label">{{ 'home_fav_see_all' | translate }}</span>
         </a>

@@ -1,0 +1,53 @@
+@if (skeleton()) {
+  <div class="fav-card" [class.is-first]="first()">
+    <div class="fav-photo skel"></div>
+    <div class="fav-body">
+      <div class="skel skel-line" style="width: 30%; height: 12px"></div>
+      <div class="skel skel-line" style="width: 60%; height: 1.25em"></div>
+      <div class="skel skel-line" style="width: 90%; height: 2.8em"></div>
+      <div class="skel skel-line" style="width: 45%; height: 28px"></div>
+    </div>
+  </div>
+} @else {
+  <div class="fav-card" [class.is-first]="first()">
+    <div class="fav-photo">
+      @if (place()!.image_url) {
+        <img
+          [src]="place()!.image_url"
+          [alt]="place() | localize: 'name'"
+          loading="lazy"
+        />
+      } @else {
+        <app-icon
+          [name]="guideCategoryMeta(place()!.category).icon"
+          [size]="26"
+        />
+      }
+    </div>
+    <div class="fav-body">
+      @if (showCategory()) {
+        <span class="fav-category">
+          {{ guideCategoryMeta(place()!.category).labelKey | translate }}
+        </span>
+      }
+      <p class="fav-name">{{ place() | localize: "name" }}</p>
+      <p class="fav-desc">{{ place() | localize: "description" }}</p>
+      <div class="fav-footer">
+        <a
+          class="fav-maps"
+          [class.is-empty]="!place()!.google_maps_url"
+          [href]="place()!.google_maps_url || null"
+          target="_blank"
+          rel="noopener"
+        >
+          <app-icon name="location_on" [size]="13" />
+          {{ "home_fav_open_maps" | translate }}
+        </a>
+        <span class="fav-walk" [class.is-empty]="!place()!.walk_minutes">
+          <app-icon name="footprint" [size]="13" />
+          {{ place()!.walk_minutes }} {{ "home_min_walk_suffix" | translate }}
+        </span>
+      </div>
+    </div>
+  </div>
+}

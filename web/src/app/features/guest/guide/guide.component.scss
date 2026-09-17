@@ -5,97 +5,124 @@
   text-align: center;
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 16px 18px 24px;
+.cat-section {
+  padding: 18px 18px 4px;
+
+  &:first-child {
+    padding-top: 16px;
+  }
 }
 
-.place-card {
+.cat-title {
   display: flex;
-  gap: 12px;
-  padding: 14px;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+
+  app-icon {
+    color: var(--brand-primary);
+  }
+}
+
+// კატეგორიების ფილტრი — ჩიფსების ჰორიზონტალური სქროლი გვერდის თავში. არცერთის
+// მონიშვნისას ყველა სექცია ჩანს (visibleGroups() === groups()); ერთის
+// მონიშვნისას მხოლოდ ის სექციაა ხილული. თავად ჩიფსების სია (groups()) არასდროს
+// იფილტრება — ყოველთვის ყველა კატეგორია რჩება არჩევანად.
+.filter-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 0 0 4px;
+  padding: 16px 18px 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.filter-chip {
+  flex-shrink: 0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
   background: var(--paper-raised);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
-  animation: guestify-fade-up 0.4s ease both;
-  animation-delay: calc(var(--i, 0) * 50ms);
-
-  @media (hover: hover) {
-    &:hover {
-      box-shadow: var(--shadow-md);
-    }
-  }
-}
-
-.thumb {
-  width: 72px;
-  height: 72px;
-  border-radius: 12px;
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--paper-sunk);
-}
-
-.body {
-  flex: 1;
-  min-width: 0;
-}
-
-.t {
-  font-size: 14px;
-  font-weight: 700;
-  margin: 0 0 3px;
-}
-
-.d {
-  font-size: 12px;
-  color: var(--ink-soft);
-  line-height: 1.4;
-  margin: 0 0 8px;
-}
-
-.maps-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px 7px 9px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--brand-secondary);
-  text-decoration: none;
-  background: color-mix(in srgb, var(--brand-secondary) 10%, var(--paper-raised));
-  border: 1px solid var(--line);
   border-radius: 999px;
-  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
-
-  &:hover {
-    border-color: var(--brand-secondary);
-  }
+  padding: 9px 28px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 
   &:active {
     transform: scale(0.96);
   }
 
-  .maps-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
+  &.active {
+    color: #fff;
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
   }
 }
 
-.skel-lines {
-  flex: 1;
-  min-width: 0;
+// იგივე peek-scroll პატერნი, რაც Home-ის Local Favorites-ს აქვს — თავიდან ჩანს
+// ~1.5 ბარათი და დანარჩენი გვერდით სქროლის მიღმაა.
+.fav-scroll {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 4px;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 -18px;
+  padding: 2px 18px 6px 0;
+  scroll-padding-left: 18px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.skel-line {
-  height: 10px;
+// "მალე დაემატება სხვა ლოკაციებიც" — ყოველი კატეგორიის ბოლო ბარათი, სტატიკური
+// შეტყობინება (არაკლიკვადი, ამიტომ hover/active ეფექტების გარეშე) — კურირებული
+// სია არასდროსაა ამომწურავი, ამის გამჭვირვალედ თქმა სჯობს.
+.coming-soon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 0 0 58%;
+  max-width: 220px;
+  padding: 20px 18px;
+  scroll-snap-align: start;
+  border-radius: 18px;
+  border: 1px dashed var(--line);
+  background: color-mix(in srgb, var(--brand-primary) 6%, var(--paper-raised));
+}
+
+.coming-soon-icn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--brand-primary) 16%, var(--paper-raised));
+  color: var(--brand-primary);
+}
+
+.coming-soon-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-align: center;
 }
