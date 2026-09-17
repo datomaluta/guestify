@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal } from '@angular/core';
 import { MenuCategory, MenuItem } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
@@ -15,6 +15,7 @@ import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 export class MenuComponent {
   private readonly hotelService = inject(HotelService);
   private readonly hotelContext = inject(HotelContextService);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   protected readonly categories = signal<MenuCategory[]>([]);
   protected readonly items = signal<MenuItem[]>([]);
@@ -43,8 +44,15 @@ export class MenuComponent {
       .finally(() => this.loading.set(false));
   }
 
+  /**
+   * კატეგორიის გადართვისას სქროლი თავში ვწევთ — .app-body (guest-shell) სქროლავს
+   * გვერდს, არა document-ი, ამიტომ route-ის ცვლილების (და ბრაუზერის ავტომატური
+   * scroll-restoration-ის) მსგავსი ეფექტი აქ თავად უნდა გამოვიწვიოთ, თორემ გრძელი
+   * კატეგორიიდან გადართვისას მომხმარებელი ახალი სიის შუაში/ბოლოში დარჩება ხოლმე.
+   */
   selectCategory(id: string): void {
     this.activeCategoryId.set(id);
+    this.elementRef.nativeElement.scrollIntoView({ behavior: 'auto', block: 'start' });
   }
 
   currencySymbol(code: string): string {

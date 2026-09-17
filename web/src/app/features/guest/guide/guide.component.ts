@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal } from '@angular/core';
 import { GuidePlace, GUIDE_CATEGORIES, guideCategoryMeta } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
@@ -25,6 +25,7 @@ const OTHER_KEY = '__other__';
 export class GuideComponent {
   private readonly hotelService = inject(HotelService);
   private readonly hotelContext = inject(HotelContextService);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   protected readonly places = signal<GuidePlace[]>([]);
   protected readonly loading = signal(true);
@@ -70,8 +71,14 @@ export class GuideComponent {
     return selected ? all.filter((group) => group.key === selected) : all;
   });
 
+  /**
+   * ფილტრის გადართვისას სქროლი თავში ვწევთ — .app-body (guest-shell) სქროლავს გვერდს,
+   * არა document-ი, ამიტომ route-ის ცვლილების მსგავსი ეფექტი აქ თავად უნდა გამოვიწვიოთ,
+   * თორემ გრძელი სიიდან ფილტრის გადართვისას მომხმარებელი ახალი სიის შუაში/ბოლოში დარჩება.
+   */
   protected toggleCategory(key: string): void {
     this.selectedCategory.update((current) => (current === key ? null : key));
+    this.elementRef.nativeElement.scrollIntoView({ behavior: 'auto', block: 'start' });
   }
 
   constructor() {
