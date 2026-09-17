@@ -2,14 +2,13 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { MenuCategory, MenuItem } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
-import { SubHeaderComponent } from '../../../shared/sub-header/sub-header.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [SubHeaderComponent, TranslatePipe, LocalizePipe],
+  imports: [TranslatePipe, LocalizePipe],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
