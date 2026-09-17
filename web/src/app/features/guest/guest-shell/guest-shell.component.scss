@@ -21,9 +21,10 @@
   // ფიქსირებული viewport-სიმაღლის flex სვეტი (body / bottom-nav) — bottom-nav
   // ჩვეულებრივი, არასქროლადი ბოლო flex-შვილია, .app-body კი მის ზემოთ დარჩენილ
   // სივრცეს თავად სქროლავს (overflow-y:auto) — დოკუმენტის დონეზე საერთოდ
-  // აღარაფერი სქროლავს. app-header აღარაა ცალკე flex-შვილი — .app-body-ს შიგნით,
-  // კონტენტის პირველი სტრიქონივითაა, ისე რომ სქროლისას ჩვეულებრივად ზემოთ
-  // "გავარდეს" (კონტენტისთვის მეტი სივრცე რჩება, ვიდრე მუდმივად მიმაგრებული header-ით).
+  // აღარაფერი სქროლავს. app-header .app-body-ს შიგნით, კონტენტის პირველი
+  // სტრიქონივითაა (sticky top:0) — ჩამოსქროლისას იმალება, აწევისას კი მაშინვე
+  // ბრუნდება (Facebook-ის მსგავსად), თავში დაბრუნების გარეშეც (იხ. .app-header-ის
+  // .hidden კლასი და guest-shell.component.ts-ის onBodyScroll).
   height: 100dvh;
   overflow: hidden;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
@@ -42,9 +43,32 @@
   gap: 10px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--line-soft);
-  // ჩვეულებრივი, .app-body-სთან ერთად მოსქროლადი კონტენტია (აღარაფერს ედება ზემოდან) —
-  // აღარც translucent/blur ფონი სჭირდება, უბრალო გვერდის ფონივითაა.
   background: var(--paper);
+  // sticky (და არა fixed) — .app-body-ს scroll-კონტეინერს ეკვრება, ცალკე
+  // viewport-კოორდინატები აღარ სჭირდება. transform-ით (და არა margin-top) მალავს —
+  // ეს ყველა ბრაუზერში/webkit-ში ყველაზე გამოცდილი და საიმედო ტექნიკაა sticky-header
+  // hide/reveal-ისთვის; margin-top-ის ტრიუკი sticky-სთან კომბინაციაში ზოგან
+  // არასტაბილურად იქცევა (განსაკუთრებით webkit-ში).
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  &.hidden {
+    transform: translateY(-100%);
+  }
+}
+
+// route-ის host ელემენტი (router-outlet-ის მომდევნო და-ძმა — routed კომპონენტი ხომ
+// <router-outlet>-ის *გვერდით*, არა შიგნით ჩაისმის) — flex:1, რომ მოკლე გვერდებმაც
+// (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად (header-ის მიმდინარე,
+// dynamic — ჩანს/დამალულია — სიმაღლის მიუხედავად, height:100%-ის მსგავსი მაგიური
+// რიცხვის გარეშე). default min-height:auto შენარჩუნებულია განზრახ — გრძელი გვერდები
+// კვლავ საკუთარ კონტენტ-ზომაზე იზრდებიან და overflow-ს .app-body-ს გადასცემენ.
+router-outlet + * {
+  flex: 1;
 }
 
 // Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —
@@ -67,6 +91,8 @@
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
   animation: guestify-fade-in 0.35s ease both;
 }
 
