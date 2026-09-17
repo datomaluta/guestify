@@ -1,0 +1,155 @@
+// host თავად ბოქსს არ აგენერირებს — მშობლის .fav-scroll (display:flex) რომ ამ
+// კომპონენტის root ელემენტს (.fav-card) აღიქვამდეს პირდაპირ flex-item-ად, ისე
+// როგორც მანამდე, სანამ ეს მარკაპი ცალკე კომპონენტში იყო გატანილი.
+:host {
+  display: contents;
+}
+
+// ბარათი აღარაა მთლიანად კლიკვადი (მხოლოდ ქვემოთ fav-maps ბმულია) — ამიტომ
+// hover/active ლიფტ-ეფექტიც აღარ აქვს, რომ არ მოატყუოს, თითქოს მთელი ბოქსია დაწკაპუნებადი.
+.fav-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 78%;
+  max-width: 300px;
+  scroll-snap-align: start;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+
+  // scroll-padding-left (მშობელში) snap-გამოთვლას სწორად აწესრიგებს სქროლისას, მაგრამ
+  // დაუსქროლავ (საწყის) მდგომარეობაზე არ მოქმედებს — ამიტომ პირველ ბარათს
+  // საკუთარი margin სჭირდება, თორემ ჩატვირთვისას ეკრანის კიდეს ეკვრება.
+  &.is-first {
+    margin-left: 18px;
+  }
+}
+
+.fav-photo {
+  position: relative;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  // ფოტოს არარსებობისას საბუთი აისქონია ბრენდის ერთიან ფერზე — კატეგორიების
+  // მიხედვით აქ ფერი განზრახ არ იცვლება.
+  background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
+  color: var(--brand-primary);
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.fav-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 14px 16px;
+}
+
+// name/desc/footer ბლოკებს ფიქსირებული სიმაღლე აქვს და ყოველთვის რენდერდება
+// (თუნდაც ცარიელი/დამალული) — ასე ბარათის მთლიანი სიმაღლე აღარ არის დამოკიდებული
+// კონკრეტული place-ის კონტენტის რაოდენობაზე (სახელის სიგრძე, აღწერის არსებობა,
+// walk_minutes-ის ან google_maps_url-ის ქონა-არქონა და ა.შ.) — ერთ სექციაშიც და
+// სხვადასხვა სექციებს შორისაც ყველა ბარათი ერთი სიმაღლისაა. showCategory კი
+// გვერდის დონეზე მუდმივია (Home-ზე ყოველთვის ჩანს, Discover-ზე არასდროს), ამიტომ
+// მას per-item დამალვა/რეზერვი არ სჭირდება — უბრალო @if საკმარისია.
+.fav-category {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+}
+
+.fav-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  height: 1.25em;
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fav-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  height: 2.8em;
+  color: var(--ink-soft);
+  margin: 2px 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// walk-time badge და "რუკაზე ნახვა" ერთ ზოლშია, ერთმანეთის საპირისპირო კიდეებზე —
+// walk კვლავ ნეიტრალურ/ნაცრისფერ ტონზეა (მეორეხარისხოვანი ინფო), fav-maps კი
+// ბრენდის ფერზე (მთავარი CTA) — ასე ორივე ერთდროულად კითხვადია და ჩრდილში არ ერევა.
+.fav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 28px;
+  margin-top: auto; // ყოველთვის ბარათის ძირში, აღწერის სიგრძის მიუხედავად
+}
+
+// fav-maps და fav-walk ორივე ერთი ზომისაა (padding/font/height იდენტურია) —
+// განსხვავდება მხოლოდ ფერით: maps ბრენდის ფერზეა (მთავარი CTA), walk კი
+// ნეიტრალურ/ნაცრისფერ ტონზე (მეორეხარისხოვანი ინფო).
+.fav-maps,
+.fav-walk {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  height: 28px;
+  box-sizing: border-box;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 0 13px;
+  border-radius: 999px;
+
+  &.is-empty {
+    visibility: hidden;
+  }
+}
+
+// ბარათზე ერთადერთი ნამდვილად კლიკვადი ელემენტი — საკუთარი tap-feedback აქვს.
+.fav-maps {
+  color: var(--brand-primary);
+  background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:active {
+    background: color-mix(in srgb, var(--brand-primary) 24%, var(--paper-raised));
+  }
+}
+
+.fav-walk {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+}
+
+.skel-line {
+  height: 10px;
+}

@@ -58,7 +58,7 @@
 // Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —
 // hotel-ის საკუთარი ლოგო/სახელი განზრახ აღარ ჩანს, ერთი კონსისტენტური ბრენდი გვინდა ყველა სასტუმროზე.
 .wordmark {
-  font-family: 'Inter', var(--font-ui);
+  font-family: "Inter", var(--font-ui);
   font-weight: 800;
   font-size: 21px;
   letter-spacing: -0.02em;
@@ -81,7 +81,10 @@
   // ჰედერი position:fixed-ითაა viewport-ს მიმაგრებული — ზემოთ სივრცე ვუტოვოთ, რომ
   // კონტენტს არ დაფაროს. bottom-nav-იც fixed-ითაა (floating pill) — იმასაც სივრცე ვუტოვოთ ქვემოთ.
   padding-top: var(--app-header-height);
-  padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(
+    var(--bottom-nav-height) + var(--bottom-nav-gap) * 2 +
+      env(safe-area-inset-bottom, 0px) + 40px
+  );
 }
 
 @keyframes guestify-fade-in {

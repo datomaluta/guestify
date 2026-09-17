@@ -1,11 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { PlaceCardComponent } from '../../../shared/place-card/place-card.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { HotelService } from '../../../core/services/hotel.service';
-import { GuidePlace, guideCategoryMeta } from '../../../core/models';
+import { GuidePlace } from '../../../core/models';
 
 interface IntentCard {
   route: string;
@@ -26,7 +27,7 @@ const HOME_FAVORITES_LIMIT = 5;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, IconComponent, TranslatePipe, LocalizePipe],
+  imports: [RouterLink, IconComponent, PlaceCardComponent, TranslatePipe, LocalizePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -34,7 +35,6 @@ export class HomeComponent {
   protected readonly hotelContext = inject(HotelContextService);
   private readonly hotelService = inject(HotelService);
 
-  protected readonly guideCategoryMeta = guideCategoryMeta;
   protected readonly favoritePlaces = signal<GuidePlace[]>([]);
   protected readonly hasMoreFavorites = signal(false);
 

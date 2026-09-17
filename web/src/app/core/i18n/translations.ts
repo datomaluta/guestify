@@ -77,8 +77,8 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
   home_min_walk_suffix: {
     ka: 'წუთი',
-    en: 'min walk',
-    ru: 'мин. пешком',
+    en: 'min',
+    ru: 'мин',
   },
   home_fav_see_all: {
     ka: 'ყველას ნახვა',
@@ -170,10 +170,10 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Local Guide',
     ru: 'Локальный гид',
   },
-  guide_open_maps: {
-    ka: 'გახსენი Google Maps-ში',
-    en: 'Open in Google Maps',
-    ru: 'Открыть в Google Maps',
+  guide_more_soon: {
+    ka: 'მალე დაემატება სხვა ლოკაციებიც',
+    en: 'More locations coming soon',
+    ru: 'Скоро появятся другие места',
   },
   rules_title: {
     ka: 'წესები და კონტაქტი',
