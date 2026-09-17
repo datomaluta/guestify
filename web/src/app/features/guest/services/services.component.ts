@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { HotelService as HotelServiceItem } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
-import { SubHeaderComponent } from '../../../shared/sub-header/sub-header.component';
 import { IconComponent } from '../../../shared/icon/icon.component';
 import { DEFAULT_ICON } from '../../../shared/icon/icon-options';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
@@ -11,7 +10,7 @@ import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [SubHeaderComponent, IconComponent, TranslatePipe, LocalizePipe],
+  imports: [IconComponent, TranslatePipe, LocalizePipe],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss'
 })

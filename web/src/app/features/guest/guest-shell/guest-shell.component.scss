@@ -18,10 +18,12 @@
 }
 
 .app-shell {
-  // ფიქსირებული viewport-სიმაღლის flex სვეტი (header / body / bottom-nav) —
-  // fixed/sticky ტრიუკების ნაცვლად header-ი და bottom-nav ჩვეულებრივი,
-  // არასქროლადი flex-შვილები არიან, .app-body კი მათ შორის დარჩენილ სივრცეს
-  // თავად სქროლავს (overflow-y:auto) — დოკუმენტის დონეზე საერთოდ აღარაფერი სქროლავს.
+  // ფიქსირებული viewport-სიმაღლის flex სვეტი (body / bottom-nav) — bottom-nav
+  // ჩვეულებრივი, არასქროლადი ბოლო flex-შვილია, .app-body კი მის ზემოთ დარჩენილ
+  // სივრცეს თავად სქროლავს (overflow-y:auto) — დოკუმენტის დონეზე საერთოდ
+  // აღარაფერი სქროლავს. app-header აღარაა ცალკე flex-შვილი — .app-body-ს შიგნით,
+  // კონტენტის პირველი სტრიქონივითაა, ისე რომ სქროლისას ჩვეულებრივად ზემოთ
+  // "გავარდეს" (კონტენტისთვის მეტი სივრცე რჩება, ვიდრე მუდმივად მიმაგრებული header-ით).
   height: 100dvh;
   overflow: hidden;
   // ეს პროდუქტი QR-კოდით იხსნება — მთლიანად მობაილზეა მორგებული, ასე რომ
@@ -40,10 +42,9 @@
   gap: 10px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--line-soft);
-  flex-shrink: 0;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  // ჩვეულებრივი, .app-body-სთან ერთად მოსქროლადი კონტენტია (აღარაფერს ედება ზემოდან) —
+  // აღარც translucent/blur ფონი სჭირდება, უბრალო გვერდის ფონივითაა.
+  background: var(--paper);
 }
 
 // Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —

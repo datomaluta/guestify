@@ -55,7 +55,6 @@ export class AiComponent {
   protected readonly visibleTopics = computed(() => this.topics().slice(0, AiComponent.VISIBLE_TOPICS_LIMIT));
 
   private readonly bottomMarker = viewChild<ElementRef<HTMLElement>>('bottomMarker');
-  private readonly aiBody = viewChild<ElementRef<HTMLElement>>('aiBody');
 
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;
@@ -110,18 +109,6 @@ export class AiComponent {
         showContactHost: true
       };
     });
-  }
-
-  /**
-   * ისევ idle (მისალმება + chip-სია) ეკრანზე დაბრუნება. .ai-body ახლა საკუთარი overflow-ის
-   * მქონე ჩარჩოა (და არა document-ის დონეზე მოსქროლილი გვერდი) — ამიტომ სქროლი მასზე
-   * პირდაპირ ვწევთ ზემოთ, თორემ დიდი საუბრიდან დაბრუნებისას ის ძველ (ახლა უკვე
-   * შეცვლილ/მოკლე) scroll-პოზიციაზე დარჩება და idle-ის თავი (მისალმება) აღარ ჩანს.
-   */
-  protected onBack(): void {
-    this.messages.set([]);
-    // setTimeout (და არა პირდაპირი გამოძახება) — Angular-ს DOM-ის განახლება რომ დაასწროს.
-    setTimeout(() => this.aiBody()?.nativeElement.scrollTo({ top: 0, behavior: 'auto' }));
   }
 
   private pushUserMessage(text: string): void {

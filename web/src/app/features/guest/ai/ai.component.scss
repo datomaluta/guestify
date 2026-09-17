@@ -1,8 +1,14 @@
-// .app-body (guest-shell) ახლა header-სა და bottom-nav-ს შორის დარჩენილ სივრცეს თავად
-// სქროლავს — ეს გვერდი იმ სივრცეს ზუსტად ავსებს (height:100%, :host-იდან დაწყებული,
-// რადგან კომპონენტის host ელემენტი ნაგულისხმევად display:inline-ია) და საკუთარ შიდა
-// სქროლს მართავს .ai-body-ზე, რომ .app-body-მ არასდროს დაასქროლოს (input ზოლი
-// ყოველთვის ეკრანზე დარჩეს, .ai-body-ს ქვემოთ ჩვეულებრივი flex-შვილივით).
+// app-header ახლა .app-body-სთან ერთად ჩვეულებრივად სქროლავს (აღარაა მუდმივად
+// მიმაგრებული), ამიტომ ეს გვერდიც აღარ არის ცალკე ფიქსირებული პანელი — მაგრამ
+// height:100% + flex კვლავ სჭირდება: შინაარსი (idle მისალმება) ხშირად ეკრანს ვერ
+// ავსებს, და .composer-ის position:sticky მარტო საკმარისი არაა — sticky მხოლოდ
+// სქროლისას "ეკვრება", მოკლე კონტენტზე კი უბრალოდ კონტენტის ბოლოში დარჩებოდა,
+// ეკრანის შუაში "მოკიდებული". height:100% (და არა min-height — პროცენტული
+// min-height არ გამოითვლება, თუ მშობელს თავად height კი არა, მხოლოდ
+// min-height აქვს "სპეციფიცირებული") სვეტს ზუსტად ავსებინებს, flex:1
+// .ai-body-ზე კი (overflow-ის გარეშე, რომ საკუთარი კონტენტის სიმაღლეზე დაბლა
+// არ შეიკუმშოს) აიძულებს დარჩენილ სივრცეს გასწვდეს მოკლე კონტენტზე, გრძელზე კი
+// საკუთარი კონტენტის ზომაზე გაიზარდოს და overflow .app-body-ს გადაეცეს.
 :host {
   display: block;
   height: 100%;
@@ -17,19 +23,13 @@
 
 .ai-body {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   padding: 16px 18px 10px;
-}
-
-.idle {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-// --- ბაბლები (idle-ის მისალმებაც და საუბრის ისტორიაც ერთ სტილს იზიარებს) ---
+// --- ბაბლები (მისალმებაც და საუბრის ისტორიაც ერთ სტილს იზიარებს) ---
 .bubble {
   max-width: 86%;
   padding: 12px 14px;
@@ -150,45 +150,6 @@
   line-height: 1.3;
 }
 
-// --- საუბრის ხედი --- .ai-page ახლა თავად ფიქსირებული პანელია (viewport-ზე მიმაგრებული, იხ.
-// ზემოთ), ამიტომ header-ს sticky-ის ხრიკი აღარ სჭირდება — უბრალო flex-შვილია, .ai-body-ს ზემოთ.
-.convo-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.back-btn {
-  width: 30px;
-  height: 30px;
-  padding: 7px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: var(--paper-raised);
-  color: var(--ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: box-shadow 0.15s ease, color 0.15s ease;
-
-  @media (hover: hover) {
-    &:hover {
-      box-shadow: var(--shadow-sm);
-      color: var(--brand-primary);
-    }
-  }
-}
-
-.convo-header h1 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
-}
-
 .convo {
   display: flex;
   flex-direction: column;
@@ -196,9 +157,9 @@
 }
 
 .bottom-marker {
-  // composer ახლა .ai-body-ს ქვემოთ ჩვეულებრივი flex-შვილია (არა floating/fixed), ამიტომ
-  // კონტენტს არასდროს ედება — მცირე visual breathing room-ი საკმარისია.
-  scroll-margin-bottom: 8px;
+  // composer ახლა sticky-ითაა ეკრანის ბოლოში მიმაგრებული და კონტენტს ედება (იხ. ქვემოთ) —
+  // scroll-margin-bottom რჩება, რომ ბოლო ბუშტი composer-ს არ ეფარებოდეს.
+  scroll-margin-bottom: 90px;
   height: 1px;
 }
 
@@ -252,15 +213,20 @@
   text-decoration: none;
 }
 
-// --- ქვედა შეყვანის ზოლი — .ai-page (ზემოთ position:fixed პანელი) ის ჩვეულებრივი, ბოლო
-// flex-შვილია, .ai-body-ს ქვემოთ. აღარ არის floating პილი კონტენტის ზემოთ — ნამდვილად
-// ვიწოვ სივრცეს, ამიტომ .ai-body-ს კონტენტს არასდროს ედება და საკუთარი frosted-glass ფონიც
-// არ სჭირდება.
+// --- ქვედა შეყვანის ზოლი — საუბრის ისტორია ახლა .app-body-სთან ერთად ჩვეულებრივად
+// სქროლავს, ამიტომ input ზოლმა უნდა შეინარჩუნოს ადგილი ეკრანის ბოლოში (bottom-nav-ის
+// თავზე) მიუხედავად სქროლისა — sticky (და არა fixed, .app-body-ს scroll-container-ს
+// მიმართ ეკვრება, ცალკე viewport-კოორდინატები აღარ სჭირდება). frosted-glass ფონი
+// სჭირდება, რომ ქვემოდან გამვლელი ბუშტები input-ს არ აერიოს.
 .composer {
   flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
   padding: 10px 18px calc(10px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line-soft);
-  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .input-bar {
