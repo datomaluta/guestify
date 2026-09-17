@@ -1,22 +1,16 @@
 .bottom-nav {
   display: flex;
   align-items: stretch;
-  // position:fixed — გვერდი ჩვეულებრივად (document-ის დონეზე) სქროლავს, ამიტომ
-  // ნავიგაცია viewport-ზეა მიმაგრებული და არა .app-shell-ზე (რომელსაც კონტენტთან ერთად სიმაღლე ეზრდება).
-  // სიგანე იმეორებს .app-shell-ის max-width 430px + 14px გვერდითი შეწოვას.
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(calc(100vw - 28px), 402px);
-  bottom: calc(var(--bottom-nav-gap, 14px) + env(safe-area-inset-bottom, 0px));
-  height: var(--bottom-nav-height, 60px);
-  border-radius: 20px;
-  border: 1px solid var(--line-soft);
+  // .app-shell-ის ჩვეულებრივი, არასქროლადი ბოლო flex-შვილია (viewport-ზე ცალკე
+  // მიმაგრებული აღარაა, ამიტომ floating pill-ის მსგავსად აღარც შევიწროებულა და
+  // აღარც მომრგვალებულია) — .app-body თავად იკავებს header-სა და ამას შორის დარჩენილ სივრცეს.
+  flex-shrink: 0;
+  height: calc(70px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--line-soft);
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow-lg);
-  z-index: 10;
 }
 
 .tab {
