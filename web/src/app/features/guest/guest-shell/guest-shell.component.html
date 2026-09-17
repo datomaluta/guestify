@@ -9,8 +9,8 @@
   </div>
 } @else {
   <div class="app-shell">
-    <main #appBody class="app-body">
-      <header class="app-header">
+    <main #appBody class="app-body" (scroll)="onBodyScroll()">
+      <header class="app-header" [class.hidden]="headerHidden()">
         <span class="wordmark">check<span class="accent">it</span></span>
         <app-lang-dropdown />
       </header>
