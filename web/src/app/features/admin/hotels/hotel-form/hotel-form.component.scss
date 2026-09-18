@@ -77,7 +77,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   font-family: inherit;
   font-size: 13.5px;
   padding: 9px 11px;
@@ -85,6 +86,7 @@ select {
   border: 1px solid var(--line);
   background: var(--paper);
   color: var(--ink);
+  resize: vertical;
 
   &:focus-visible {
     outline: 2px solid var(--brand-primary);

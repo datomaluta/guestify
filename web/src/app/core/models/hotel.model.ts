@@ -19,6 +19,24 @@ export interface Hotel {
   whatsapp: string | null;
   is_active: boolean;
   package: HotelPackage;
+  wifi_network: string | null;
+  wifi_password: string | null;
+  checkin_time_ka: string | null;
+  checkin_time_en: string | null;
+  checkin_time_ru: string | null;
+  checkin_note_ka: string | null;
+  checkin_note_en: string | null;
+  checkin_note_ru: string | null;
+  checkout_time_ka: string | null;
+  checkout_time_en: string | null;
+  checkout_time_ru: string | null;
+  checkout_note_ka: string | null;
+  checkout_note_en: string | null;
+  checkout_note_ru: string | null;
+  airport_maps_url: string | null;
+  parking_info_ka: string | null;
+  parking_info_en: string | null;
+  parking_info_ru: string | null;
   created_at: string;
   updated_at: string;
 }

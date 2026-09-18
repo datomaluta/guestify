@@ -1,0 +1,113 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (error()) {
+    <p class="error-banner">{{ error() }}</p>
+  }
+
+  <p class="hint">
+    ეს ველები სტუმრის Essentials გვერდზე ჩანს — Wi-Fi, Check-in/Check-out, აეროპორტი და პარკინგი.
+    ცარიელი ველის შესაბამისი ბლოკი სტუმარს საერთოდ არ უჩნდება.
+  </p>
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>Wi-Fi</h2>
+    <div class="grid">
+      <label>
+        <span>ქსელი</span>
+        <input name="wifi_network" [(ngModel)]="form.wifi_network" />
+      </label>
+      <label>
+        <span>პაროლი</span>
+        <input name="wifi_password" [(ngModel)]="form.wifi_password" />
+      </label>
+    </div>
+
+    <h2>Check-in</h2>
+    <div class="lang-grid">
+      <label>
+        <span>დრო (ქარ) — მაგ. "15:00-დან"</span>
+        <input name="checkin_time_ka" [(ngModel)]="form.checkin_time_ka" />
+      </label>
+      <label>
+        <span>Time (EN)</span>
+        <input name="checkin_time_en" [(ngModel)]="form.checkin_time_en" />
+      </label>
+      <label>
+        <span>Время (RU)</span>
+        <input name="checkin_time_ru" [(ngModel)]="form.checkin_time_ru" />
+      </label>
+
+      <label>
+        <span>აღწერა (ქარ)</span>
+        <textarea name="checkin_note_ka" rows="2" [(ngModel)]="form.checkin_note_ka"></textarea>
+      </label>
+      <label>
+        <span>Description (EN)</span>
+        <textarea name="checkin_note_en" rows="2" [(ngModel)]="form.checkin_note_en"></textarea>
+      </label>
+      <label>
+        <span>Описание (RU)</span>
+        <textarea name="checkin_note_ru" rows="2" [(ngModel)]="form.checkin_note_ru"></textarea>
+      </label>
+    </div>
+
+    <h2>Check-out</h2>
+    <div class="lang-grid">
+      <label>
+        <span>დრო (ქარ) — მაგ. "11:00-მდე"</span>
+        <input name="checkout_time_ka" [(ngModel)]="form.checkout_time_ka" />
+      </label>
+      <label>
+        <span>Time (EN)</span>
+        <input name="checkout_time_en" [(ngModel)]="form.checkout_time_en" />
+      </label>
+      <label>
+        <span>Время (RU)</span>
+        <input name="checkout_time_ru" [(ngModel)]="form.checkout_time_ru" />
+      </label>
+
+      <label>
+        <span>აღწერა (ქარ)</span>
+        <textarea name="checkout_note_ka" rows="2" [(ngModel)]="form.checkout_note_ka"></textarea>
+      </label>
+      <label>
+        <span>Description (EN)</span>
+        <textarea name="checkout_note_en" rows="2" [(ngModel)]="form.checkout_note_en"></textarea>
+      </label>
+      <label>
+        <span>Описание (RU)</span>
+        <textarea name="checkout_note_ru" rows="2" [(ngModel)]="form.checkout_note_ru"></textarea>
+      </label>
+    </div>
+
+    <h2>აეროპორტი და პარკინგი</h2>
+    <div class="grid">
+      <label class="span-2">
+        <span>აეროპორტის Google Maps ბმული</span>
+        <input name="airport_maps_url" [(ngModel)]="form.airport_maps_url" placeholder="https://maps.google.com/..." />
+      </label>
+    </div>
+    <div class="lang-grid">
+      <label>
+        <span>პარკინგის აღწერა (ქარ)</span>
+        <textarea name="parking_info_ka" rows="2" [(ngModel)]="form.parking_info_ka"></textarea>
+      </label>
+      <label>
+        <span>Parking info (EN)</span>
+        <textarea name="parking_info_en" rows="2" [(ngModel)]="form.parking_info_en"></textarea>
+      </label>
+      <label>
+        <span>Описание парковки (RU)</span>
+        <textarea name="parking_info_ru" rows="2" [(ngModel)]="form.parking_info_ru"></textarea>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : 'შენახვა' }}</button>
+      @if (saved()) {
+        <span class="saved-flag">შენახულია ✓</span>
+      }
+    </div>
+  </form>
+}

@@ -12,9 +12,6 @@ interface RuleForm {
   title_ka: string;
   title_en: string;
   title_ru: string;
-  content_ka: string;
-  content_en: string;
-  content_ru: string;
   sort_order: number;
 }
 
@@ -23,9 +20,6 @@ const BLANK: RuleForm = {
   title_ka: '',
   title_en: '',
   title_ru: '',
-  content_ka: '',
-  content_en: '',
-  content_ru: '',
   sort_order: 0
 };
 
@@ -68,9 +62,6 @@ export class RulesEditorComponent {
       title_ka: item.title_ka,
       title_en: item.title_en || '',
       title_ru: item.title_ru || '',
-      content_ka: item.content_ka || '',
-      content_en: item.content_en || '',
-      content_ru: item.content_ru || '',
       sort_order: item.sort_order
     };
   }

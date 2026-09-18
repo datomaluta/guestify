@@ -155,11 +155,6 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
 
   back: { ka: 'უკან', en: 'Back', ru: 'Назад' },
 
-  services_title: {
-    ka: 'სასტუმროს სერვისები',
-    en: 'Hotel Services',
-    ru: 'Услуги отеля',
-  },
   menu_title: {
     ka: 'რესტორნის მენიუ',
     en: 'Restaurant Menu',
@@ -175,17 +170,6 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'More locations coming soon',
     ru: 'Скоро появятся другие места',
   },
-  rules_title: {
-    ka: 'წესები და კონტაქტი',
-    en: 'Rules & Contact',
-    ru: 'Правила и контакты',
-  },
-  rules_contacts_heading: {
-    ka: 'საკონტაქტო ხაზები',
-    en: 'Contact numbers',
-    ru: 'Контактные номера',
-  },
-
   // --- AI Concierge (guest tab) ---
   ai_greeting_text: {
     ka: 'გამარჯობა! მვ ვარ თქვენი AI ასისტენტი. როგორ შემიძლია დაგეხმაროთ?',
@@ -230,6 +214,33 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ka: 'ინფორმაცია მალე დაემატება',
     en: 'Information coming soon',
     ru: 'Информация появится позже',
+  },
+
+  // --- Essentials (guest tab) ---
+  essentials_wifi_title: { ka: 'Wi-Fi', en: 'Wi-Fi', ru: 'Wi-Fi' },
+  essentials_wifi_subtitle: { ka: 'საჭიროებები', en: 'Essentials', ru: 'Полезное' },
+  essentials_wifi_network_label: { ka: 'ქსელი', en: 'Network', ru: 'Сеть' },
+  essentials_wifi_password_label: { ka: 'პაროლი', en: 'Password', ru: 'Пароль' },
+  essentials_copy_button: { ka: 'კოპირება', en: 'Copy', ru: 'Копировать' },
+  essentials_copied_button: { ka: 'დაკოპირდა', en: 'Copied', ru: 'Скопировано' },
+  essentials_checkin_title: { ka: 'Check-in', en: 'Check-in', ru: 'Заезд' },
+  essentials_checkout_title: { ka: 'Check-out', en: 'Check-out', ru: 'Выезд' },
+  essentials_call_title: { ka: 'დარეკვა', en: 'Call', ru: 'Позвонить' },
+  essentials_whatsapp_title: { ka: 'WhatsApp', en: 'WhatsApp', ru: 'WhatsApp' },
+  essentials_whatsapp_subtitle: { ka: 'მიწერეთ მასპინძელს', en: 'Write host', ru: 'Написать хозяину' },
+  essentials_airport_title: { ka: 'აეროპორტი', en: 'Airport', ru: 'Аэропорт' },
+  essentials_airport_subtitle: {
+    ka: 'გახსენით აეროპორტი რუკაზე',
+    en: 'Open airport in Maps',
+    ru: 'Открыть аэропорт на карте',
+  },
+  essentials_rules_title: { ka: 'სახლის წესები', en: 'House rules', ru: 'Правила дома' },
+  essentials_services_title: { ka: 'სერვისები', en: 'Services', ru: 'Услуги' },
+  essentials_parking_title: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
+  essentials_emergency_general: {
+    ka: 'ზოგადი საგანგებო დახმარება',
+    en: 'General emergency',
+    ru: 'Общая экстренная служба',
   },
 
   admin_login_title: {

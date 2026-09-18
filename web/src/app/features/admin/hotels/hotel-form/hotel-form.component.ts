@@ -21,7 +21,25 @@ const BLANK_FORM: HotelFormModel = {
   email: '',
   whatsapp: '',
   is_active: true,
-  package: 'standard'
+  package: 'standard',
+  wifi_network: '',
+  wifi_password: '',
+  checkin_time_ka: '',
+  checkin_time_en: '',
+  checkin_time_ru: '',
+  checkin_note_ka: '',
+  checkin_note_en: '',
+  checkin_note_ru: '',
+  checkout_time_ka: '',
+  checkout_time_en: '',
+  checkout_time_ru: '',
+  checkout_note_ka: '',
+  checkout_note_en: '',
+  checkout_note_ru: '',
+  airport_maps_url: '',
+  parking_info_ka: '',
+  parking_info_en: '',
+  parking_info_ru: ''
 };
 
 @Component({
@@ -110,7 +128,25 @@ export class HotelFormComponent {
         email: hotel.email || '',
         whatsapp: hotel.whatsapp || '',
         is_active: hotel.is_active,
-        package: hotel.package
+        package: hotel.package,
+        wifi_network: hotel.wifi_network || '',
+        wifi_password: hotel.wifi_password || '',
+        checkin_time_ka: hotel.checkin_time_ka || '',
+        checkin_time_en: hotel.checkin_time_en || '',
+        checkin_time_ru: hotel.checkin_time_ru || '',
+        checkin_note_ka: hotel.checkin_note_ka || '',
+        checkin_note_en: hotel.checkin_note_en || '',
+        checkin_note_ru: hotel.checkin_note_ru || '',
+        checkout_time_ka: hotel.checkout_time_ka || '',
+        checkout_time_en: hotel.checkout_time_en || '',
+        checkout_time_ru: hotel.checkout_time_ru || '',
+        checkout_note_ka: hotel.checkout_note_ka || '',
+        checkout_note_en: hotel.checkout_note_en || '',
+        checkout_note_ru: hotel.checkout_note_ru || '',
+        airport_maps_url: hotel.airport_maps_url || '',
+        parking_info_ka: hotel.parking_info_ka || '',
+        parking_info_en: hotel.parking_info_en || '',
+        parking_info_ru: hotel.parking_info_ru || ''
       };
       this.admins.set(await this.adminHotel.listHotelAdmins(id));
     } catch (e) {

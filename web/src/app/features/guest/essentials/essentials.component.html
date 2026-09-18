@@ -1,1 +1,175 @@
-<p class="empty">{{ 'empty_state' | translate }}</p>
+@if (hasStayCard()) {
+  <div class="essentials-card">
+    @if (hasWifi()) {
+      <div class="row-head">
+        <div class="icn"><app-icon name="wifi" [size]="18" /></div>
+        <div class="row-text">
+          <p class="t">{{ 'essentials_wifi_title' | translate }}</p>
+          <p class="d">{{ 'essentials_wifi_subtitle' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="wifi-fields">
+        @if (wifiNetwork(); as network) {
+          <div class="wifi-field">
+            <div class="wifi-field-text">
+              <span class="label">{{ 'essentials_wifi_network_label' | translate }}</span>
+              <span class="value">{{ network }}</span>
+            </div>
+            <button type="button" class="copy-btn" (click)="copy('network', network)">
+              <app-icon [name]="copiedField() === 'network' ? 'check' : 'content_copy'" [size]="15" />
+              {{ (copiedField() === 'network' ? 'essentials_copied_button' : 'essentials_copy_button') | translate }}
+            </button>
+          </div>
+        }
+        @if (wifiPassword(); as password) {
+          <div class="wifi-field">
+            <div class="wifi-field-text">
+              <span class="label">{{ 'essentials_wifi_password_label' | translate }}</span>
+              <span class="value">{{ password }}</span>
+            </div>
+            <button type="button" class="copy-btn" (click)="copy('password', password)">
+              <app-icon [name]="copiedField() === 'password' ? 'check' : 'content_copy'" [size]="15" />
+              {{ (copiedField() === 'password' ? 'essentials_copied_button' : 'essentials_copy_button') | translate }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    @for (item of stayItems(); track item.key; let i = $index) {
+      @if (hasWifi() || i > 0) {
+        <div class="divider"></div>
+      }
+      <button type="button" class="row-head clickable" (click)="toggle(item.key)">
+        <div class="icn"><app-icon [name]="item.icon" [size]="18" /></div>
+        <div class="row-text">
+          <p class="t">{{ item.titleKey | translate }}</p>
+          <p class="d">{{ hotelContext.hotel() | localize: item.metaField }}</p>
+        </div>
+        <app-icon class="chevron" [class.open]="isExpanded(item.key)" name="expand_more" [size]="20" />
+      </button>
+      <div class="stay-body-outer" [class.open]="isExpanded(item.key)">
+        <div class="stay-body-inner">
+          <p class="stay-body">{{ hotelContext.hotel() | localize: item.descriptionField }}</p>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+@if (hotelContext.hotel()?.phone || whatsappLink()) {
+  <div class="contact-grid">
+    @if (hotelContext.hotel()?.phone; as phone) {
+      <a class="pill-card" [href]="'tel:' + phone">
+        <div class="pill-icn"><app-icon name="call" [size]="18" /></div>
+        <div class="pill-text">
+          <p class="pill-t">{{ 'essentials_call_title' | translate }}</p>
+          <p class="pill-d">{{ phone }}</p>
+        </div>
+      </a>
+    }
+    @if (whatsappLink(); as link) {
+      <a class="pill-card" [href]="link" target="_blank" rel="noopener">
+        <div class="pill-icn"><app-icon name="chat" [size]="18" /></div>
+        <div class="pill-text">
+          <p class="pill-t">{{ 'essentials_whatsapp_title' | translate }}</p>
+          <p class="pill-d">{{ 'essentials_whatsapp_subtitle' | translate }}</p>
+        </div>
+      </a>
+    }
+  </div>
+}
+
+<div class="contact-grid single">
+  <a class="emergency-row" href="tel:112">
+    <div class="emergency-left">
+      <div class="emergency-icn"><app-icon name="emergency" [size]="18" /></div>
+      <span class="emergency-label">{{ 'essentials_emergency_general' | translate }}</span>
+    </div>
+    <span class="emergency-number"><app-icon name="call" [size]="15" />112</span>
+  </a>
+</div>
+
+@if (airportMapsUrl() || hasParkingInfo()) {
+  <div class="info-card standalone">
+    @if (airportMapsUrl(); as mapsUrl) {
+      <a class="row-head clickable" [href]="mapsUrl" target="_blank" rel="noopener">
+        <div class="icn"><app-icon name="flight" [size]="18" /></div>
+        <div class="row-text">
+          <p class="t">{{ 'essentials_airport_title' | translate }}</p>
+          <p class="d accent">{{ 'essentials_airport_subtitle' | translate }}</p>
+        </div>
+      </a>
+    }
+    @if (airportMapsUrl() && hasParkingInfo()) {
+      <div class="divider"></div>
+    }
+    @if (hasParkingInfo()) {
+      <div class="row-head tight">
+        <div class="icn"><app-icon name="local_parking" [size]="18" /></div>
+        <div class="row-text">
+          <p class="t">{{ 'essentials_parking_title' | translate }}</p>
+        </div>
+      </div>
+      <p class="stay-body">{{ hotelContext.hotel() | localize: 'parking_info' }}</p>
+    }
+  </div>
+}
+
+@if (rulesLoading()) {
+  <div class="info-section">
+    <p class="section-title skel" style="width: 40%; height: 20px;"></p>
+    <div class="chip-list">
+      @for (i of ruleSkeletons; track i) {
+        <span class="chip skel" style="width: 90px; height: 34px;"></span>
+      }
+    </div>
+  </div>
+} @else if (rules().length > 0) {
+  <div class="info-section">
+    <p class="section-title">{{ 'essentials_rules_title' | translate }}</p>
+    <div class="chip-list">
+      @for (rule of rules(); track rule.id) {
+        <span class="chip">
+          <app-icon [name]="iconOrDefault(rule.icon)" [size]="16" />
+          {{ rule | localize: 'title' }}
+        </span>
+      }
+    </div>
+  </div>
+}
+
+@if (servicesLoading()) {
+  <div class="info-section">
+    <p class="section-title skel" style="width: 40%; height: 20px;"></p>
+    <div class="service-list">
+      @for (i of serviceSkeletons; track i) {
+        <div class="service-row">
+          <div class="icn skel"></div>
+          <div class="skel-lines">
+            <div class="skel skel-line" style="width: 50%"></div>
+            <div class="skel skel-line" style="width: 80%"></div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+} @else if (services().length > 0) {
+  <div class="info-section">
+    <p class="section-title">{{ 'essentials_services_title' | translate }}</p>
+    <div class="service-list">
+      @for (service of services(); track service.id) {
+        <div class="service-row">
+          <div class="icn"><app-icon [name]="iconOrDefault(service.icon)" [size]="18" /></div>
+          <div class="row-text">
+            <p class="t">{{ service | localize: 'title' }}</p>
+            @if ((service | localize: 'description'); as desc) {
+              <p class="d">{{ desc }}</p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

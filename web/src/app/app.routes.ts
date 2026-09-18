@@ -21,12 +21,6 @@ export const routes: Routes = [
         loadComponent: () => import('./features/guest/home/home.component').then((m) => m.HomeComponent)
       },
       {
-        path: 'services',
-        loadComponent: () =>
-          import('./features/guest/services/services.component').then((m) => m.ServicesComponent),
-        data: { preload: true }
-      },
-      {
         path: 'menu',
         loadComponent: () => import('./features/guest/menu/menu.component').then((m) => m.MenuComponent),
         data: { preload: true }
@@ -34,11 +28,6 @@ export const routes: Routes = [
       {
         path: 'guide',
         loadComponent: () => import('./features/guest/guide/guide.component').then((m) => m.GuideComponent),
-        data: { preload: true }
-      },
-      {
-        path: 'rules',
-        loadComponent: () => import('./features/guest/rules/rules.component').then((m) => m.RulesComponent),
         data: { preload: true }
       },
       {
@@ -109,6 +98,13 @@ export const routes: Routes = [
             path: 'rules',
             loadComponent: () =>
               import('./features/admin/content/rules-editor/rules-editor.component').then((m) => m.RulesEditorComponent)
+          },
+          {
+            path: 'essentials',
+            loadComponent: () =>
+              import('./features/admin/content/essentials-editor/essentials-editor.component').then(
+                (m) => m.EssentialsEditorComponent
+              )
           },
           {
             path: 'contacts',
