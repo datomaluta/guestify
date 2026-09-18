@@ -10,7 +10,6 @@
       <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="16" /></div>
       <div class="info">
         <p class="t">{{ item.title_ka }}</p>
-        <p class="d">{{ item.content_ka }}</p>
       </div>
       <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
       <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
@@ -38,19 +37,6 @@
       <label>
         <span>Название (RU)</span>
         <input name="title_ru" [(ngModel)]="form.title_ru" />
-      </label>
-
-      <label>
-        <span>ტექსტი (ქარ)</span>
-        <textarea name="content_ka" [(ngModel)]="form.content_ka" rows="2"></textarea>
-      </label>
-      <label>
-        <span>Text (EN)</span>
-        <textarea name="content_en" [(ngModel)]="form.content_en" rows="2"></textarea>
-      </label>
-      <label>
-        <span>Текст (RU)</span>
-        <textarea name="content_ru" [(ngModel)]="form.content_ru" rows="2"></textarea>
       </label>
     </div>
 

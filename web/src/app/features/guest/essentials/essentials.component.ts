@@ -1,15 +1,142 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { LocalizePipe } from '../../../core/i18n/localize.pipe';
+import { IconComponent } from '../../../shared/icon/icon.component';
+import { DEFAULT_ICON } from '../../../shared/icon/icon-options';
+import { HotelContextService } from '../../../core/services/hotel-context.service';
+import { HotelService } from '../../../core/services/hotel.service';
+import { HotelRule, HotelService as HotelServiceItem } from '../../../core/models';
 
-/**
- * Bottom nav-ის "Essentials" ტაბი — მომავალში აქ გაერთიანდება rules/services
- * (და host-ის საკონტაქტო ინფო). ჯერჯერობით ჩონჩხია, კონტენტი მოგვიანებით მოემატება.
- */
+interface StayInfoItem {
+  key: string;
+  icon: string;
+  titleKey: string;
+  /** localize()-ის 'field' არგუმენტი (მაგ. 'checkin_time') — თარგმანი პირდაპირ template-ში, LocalizePipe-ით */
+  metaField: string;
+  descriptionField: string;
+}
+
+/** hotel-ის ობიექტზე მოცემულ prefix-ს რომელიმე ენაზე (ka/en/ru) აქვს თუ არა შევსებული მნიშვნელობა. */
+function hasLocalizedValue(hotel: Record<string, any>, field: string): boolean {
+  return !!(hotel[`${field}_ka`] || hotel[`${field}_en`] || hotel[`${field}_ru`]);
+}
+
+type CopiedField = 'network' | 'password' | null;
+
+/** Bottom nav-ის "Essentials" ტაბი — Wi-Fi, Check-in/out, საკონტაქტო, წესები, სერვისები, პარკინგი, საგანგებო ზარები. */
 @Component({
   selector: 'app-essentials',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, LocalizePipe, IconComponent],
   templateUrl: './essentials.component.html',
   styleUrl: './essentials.component.scss'
 })
-export class EssentialsComponent {}
+export class EssentialsComponent {
+  protected readonly hotelContext = inject(HotelContextService);
+  private readonly hotelService = inject(HotelService);
+
+  protected readonly rules = signal<HotelRule[]>([]);
+  protected readonly rulesLoading = signal(true);
+  protected readonly ruleSkeletons = [0, 1, 2, 3];
+
+  protected readonly services = signal<HotelServiceItem[]>([]);
+  protected readonly servicesLoading = signal(true);
+  protected readonly serviceSkeletons = [0, 1, 2, 3];
+
+  constructor() {
+    const hotelId = this.hotelContext.hotel()?.id;
+    if (hotelId) {
+      Promise.all([this.hotelService.getRules(hotelId), this.hotelService.getServices(hotelId)])
+        .then(([rules, services]) => {
+          this.rules.set(rules);
+          this.services.set(services);
+        })
+        .finally(() => {
+          this.rulesLoading.set(false);
+          this.servicesLoading.set(false);
+        });
+    } else {
+      this.rulesLoading.set(false);
+      this.servicesLoading.set(false);
+    }
+  }
+
+  iconOrDefault(icon: string | null): string {
+    return icon || DEFAULT_ICON;
+  }
+
+  protected readonly wifiNetwork = computed(() => this.hotelContext.hotel()?.wifi_network ?? null);
+  protected readonly wifiPassword = computed(() => this.hotelContext.hotel()?.wifi_password ?? null);
+  protected readonly hasWifi = computed(() => !!(this.wifiNetwork() || this.wifiPassword()));
+
+  protected readonly stayItems = computed<StayInfoItem[]>(() => {
+    const hotel = this.hotelContext.hotel();
+    if (!hotel) return [];
+    const items: StayInfoItem[] = [];
+    if (hasLocalizedValue(hotel, 'checkin_time') || hasLocalizedValue(hotel, 'checkin_note')) {
+      items.push({
+        key: 'checkin',
+        icon: 'key',
+        titleKey: 'essentials_checkin_title',
+        metaField: 'checkin_time',
+        descriptionField: 'checkin_note'
+      });
+    }
+    if (hasLocalizedValue(hotel, 'checkout_time') || hasLocalizedValue(hotel, 'checkout_note')) {
+      items.push({
+        key: 'checkout',
+        icon: 'logout',
+        titleKey: 'essentials_checkout_title',
+        metaField: 'checkout_time',
+        descriptionField: 'checkout_note'
+      });
+    }
+    return items;
+  });
+
+  protected readonly hasStayCard = computed(() => this.hasWifi() || this.stayItems().length > 0);
+
+  protected readonly copiedField = signal<CopiedField>(null);
+  private copyResetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private readonly expandedKeys = signal<ReadonlySet<string>>(new Set());
+
+  isExpanded(key: string): boolean {
+    return this.expandedKeys().has(key);
+  }
+
+  toggle(key: string): void {
+    const next = new Set(this.expandedKeys());
+    if (next.has(key)) {
+      next.delete(key);
+    } else {
+      next.add(key);
+    }
+    this.expandedKeys.set(next);
+  }
+
+  // wa.me-ს მხოლოდ ციფრები სჭირდება — hotels.whatsapp ველში ფორმატირებული ნომერიც (+393...) დასაშვებია
+  protected readonly whatsappLink = computed(() => {
+    const raw = this.hotelContext.hotel()?.whatsapp;
+    if (!raw) return null;
+    const digits = raw.replace(/\D/g, '');
+    return digits ? `https://wa.me/${digits}` : null;
+  });
+
+  protected readonly airportMapsUrl = computed(() => this.hotelContext.hotel()?.airport_maps_url ?? null);
+  protected readonly hasParkingInfo = computed(() => {
+    const hotel = this.hotelContext.hotel();
+    return !!hotel && hasLocalizedValue(hotel, 'parking_info');
+  });
+
+  copy(field: 'network' | 'password', value: string): void {
+    navigator.clipboard
+      ?.writeText(value)
+      .then(() => {
+        this.copiedField.set(field);
+        if (this.copyResetTimer) clearTimeout(this.copyResetTimer);
+        this.copyResetTimer = setTimeout(() => this.copiedField.set(null), 1800);
+      })
+      .catch(() => {});
+  }
+}
