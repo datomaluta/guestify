@@ -4,11 +4,12 @@ import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
+import { MenuItemSheetComponent } from './menu-item-sheet/menu-item-sheet.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [TranslatePipe, LocalizePipe],
+  imports: [TranslatePipe, LocalizePipe, MenuItemSheetComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -21,6 +22,7 @@ export class MenuComponent {
   protected readonly items = signal<MenuItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly activeCategoryId = signal<string | null>(null);
+  protected readonly selectedItem = signal<MenuItem | null>(null);
   protected readonly skeletonTabs = [0, 1, 2];
   protected readonly skeletonRows = [0, 1, 2, 3, 4];
 
@@ -57,5 +59,13 @@ export class MenuComponent {
 
   currencySymbol(code: string): string {
     return { GEL: '₾', USD: '$', EUR: '€' }[code] ?? code;
+  }
+
+  openItem(item: MenuItem): void {
+    this.selectedItem.set(item);
+  }
+
+  closeItem(): void {
+    this.selectedItem.set(null);
   }
 }
