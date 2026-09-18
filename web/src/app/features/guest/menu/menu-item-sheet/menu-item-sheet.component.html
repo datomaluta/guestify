@@ -1,0 +1,40 @@
+<div class="backdrop" [class.closing]="closing()" (click)="requestClose()"></div>
+
+<div class="sheet" [class.closing]="closing()" role="dialog" aria-modal="true" (animationend)="onSheetAnimationEnd()">
+  @if (item().image_url) {
+    <img class="photo" [src]="item().image_url" [alt]="item() | localize: 'name'" />
+  } @else {
+    <div class="photo placeholder"></div>
+  }
+
+  <button type="button" class="close-btn" (click)="requestClose()" aria-label="Close">✕</button>
+
+  <div class="body">
+    <p class="name">{{ item() | localize: 'name' }}</p>
+
+    @if ((item() | localize: 'description'); as desc) {
+      <p class="desc">{{ desc }}</p>
+    }
+
+    @if ((item() | localize: 'ingredients'); as ingredients) {
+      <div class="section">
+        <p class="label">{{ 'menu_item_ingredients' | translate }}</p>
+        <p class="text">{{ ingredients }}</p>
+      </div>
+    }
+
+    @if (item().allergens.length > 0) {
+      <div class="section">
+        <p class="label">{{ 'menu_item_allergens' | translate }}</p>
+        <div class="allergen-list">
+          @for (key of item().allergens; track key) {
+            <span class="allergen-chip">
+              <span class="icon">{{ allergenIcons.get(key) }}</span>
+              {{ 'allergen_' + key | translate }}
+            </span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MenuCategory, MenuItem } from '../../../../core/models';
+import { ALLERGENS, MenuCategory, MenuItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
@@ -19,6 +19,10 @@ interface ItemForm {
   description_ka: string;
   description_en: string;
   description_ru: string;
+  ingredients_ka: string;
+  ingredients_en: string;
+  ingredients_ru: string;
+  allergens: string[];
   price: number;
   currency: string;
   is_available: boolean;
@@ -35,6 +39,10 @@ const BLANK_ITEM: ItemForm = {
   description_ka: '',
   description_en: '',
   description_ru: '',
+  ingredients_ka: '',
+  ingredients_en: '',
+  ingredients_ru: '',
+  allergens: [],
   price: 0,
   currency: 'GEL',
   is_available: true,
@@ -68,6 +76,8 @@ export class MenuEditorComponent {
   protected readonly savingItem = signal(false);
   protected readonly uploadingImage = signal(false);
   protected readonly itemError = signal<string | null>(null);
+
+  protected readonly allergens = ALLERGENS;
 
   protected readonly itemsByCategory = computed(() => {
     const map = new Map<string, MenuItem[]>();
@@ -142,6 +152,10 @@ export class MenuEditorComponent {
       description_ka: item.description_ka || '',
       description_en: item.description_en || '',
       description_ru: item.description_ru || '',
+      ingredients_ka: item.ingredients_ka || '',
+      ingredients_en: item.ingredients_en || '',
+      ingredients_ru: item.ingredients_ru || '',
+      allergens: [...item.allergens],
       price: item.price,
       currency: item.currency,
       is_available: item.is_available,
@@ -172,6 +186,12 @@ export class MenuEditorComponent {
     } finally {
       this.savingItem.set(false);
     }
+  }
+
+  toggleAllergen(key: string): void {
+    const set = new Set(this.itemForm.allergens);
+    set.has(key) ? set.delete(key) : set.add(key);
+    this.itemForm.allergens = [...set];
   }
 
   async onImageSelected(event: Event): Promise<void> {

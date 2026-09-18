@@ -122,7 +122,37 @@
           <span>Описание (RU)</span>
           <input name="item_description_ru" [(ngModel)]="itemForm.description_ru" />
         </label>
+
+        <label>
+          <span>შემადგენლობა (ქარ)</span>
+          <input name="item_ingredients_ka" [(ngModel)]="itemForm.ingredients_ka" />
+        </label>
+        <label>
+          <span>Ingredients (EN)</span>
+          <input name="item_ingredients_en" [(ngModel)]="itemForm.ingredients_en" />
+        </label>
+        <label>
+          <span>Состав (RU)</span>
+          <input name="item_ingredients_ru" [(ngModel)]="itemForm.ingredients_ru" />
+        </label>
       </div>
+
+      <label class="allergens">
+        <span>ალერგენები</span>
+        <div class="allergen-picker">
+          @for (a of allergens; track a.key) {
+            <button
+              type="button"
+              class="allergen-chip"
+              [class.active]="itemForm.allergens.includes(a.key)"
+              (click)="toggleAllergen(a.key)"
+            >
+              <span class="icon">{{ a.icon }}</span>
+              {{ a.label }}
+            </button>
+          }
+        </div>
+      </label>
 
       <div class="row-fields">
         <label class="sort">
