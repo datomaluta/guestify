@@ -91,29 +91,25 @@
   </a>
 </div>
 
-@if (airportMapsUrl() || hasParkingInfo()) {
-  <div class="info-card standalone">
-    @if (airportMapsUrl(); as mapsUrl) {
-      <a class="row-head clickable" [href]="mapsUrl" target="_blank" rel="noopener">
-        <div class="icn"><app-icon name="flight" [size]="18" /></div>
-        <div class="row-text">
-          <p class="t">{{ 'essentials_airport_title' | translate }}</p>
-          <p class="d accent">{{ 'essentials_airport_subtitle' | translate }}</p>
-        </div>
-      </a>
-    }
-    @if (airportMapsUrl() && hasParkingInfo()) {
-      <div class="divider"></div>
-    }
-    @if (hasParkingInfo()) {
-      <div class="row-head tight">
-        <div class="icn"><app-icon name="local_parking" [size]="18" /></div>
-        <div class="row-text">
-          <p class="t">{{ 'essentials_parking_title' | translate }}</p>
-        </div>
+@if (airportMapsUrl(); as mapsUrl) {
+  <div class="contact-grid single">
+    <a class="pill-card" [href]="mapsUrl" target="_blank" rel="noopener">
+      <div class="pill-icn"><app-icon name="flight" [size]="18" /></div>
+      <div class="pill-text">
+        <p class="pill-t">{{ 'essentials_airport_title' | translate }}</p>
+        <p class="pill-d accent">{{ 'essentials_airport_subtitle' | translate }}</p>
       </div>
-      <p class="stay-body">{{ hotelContext.hotel() | localize: 'parking_info' }}</p>
-    }
+    </a>
+  </div>
+}
+
+@if (hasParkingInfo()) {
+  <div class="parking-card">
+    <div class="parking-head">
+      <div class="parking-icn"><app-icon name="directions_car" [size]="18" /></div>
+      <p class="parking-title">{{ 'essentials_parking_title' | translate }}</p>
+    </div>
+    <p class="parking-text">{{ hotelContext.hotel() | localize: 'parking_info' }}</p>
   </div>
 }
 
