@@ -6,6 +6,11 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
 import { MenuItemSheetComponent } from './menu-item-sheet/menu-item-sheet.component';
 
+interface MenuGroup {
+  category: MenuCategory;
+  items: MenuItem[];
+}
+
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -21,14 +26,34 @@ export class MenuComponent {
   protected readonly categories = signal<MenuCategory[]>([]);
   protected readonly items = signal<MenuItem[]>([]);
   protected readonly loading = signal(true);
+  // null = ფილტრი არაა მონიშნული, ყველა კატეგორია ჩანს.
   protected readonly activeCategoryId = signal<string | null>(null);
   protected readonly selectedItem = signal<MenuItem | null>(null);
   protected readonly skeletonTabs = [0, 1, 2];
   protected readonly skeletonRows = [0, 1, 2, 3, 4];
 
-  protected readonly visibleItems = computed(() =>
-    this.items().filter((item) => item.category_id === this.activeCategoryId())
-  );
+  // categories()-ის რიგით (sort_order) ჯგუფდება; ცარიელი კატეგორია საერთოდ არ გამოჩნდება.
+  protected readonly groups = computed<MenuGroup[]>(() => {
+    const allItems = this.items();
+    const groups: MenuGroup[] = [];
+
+    for (const category of this.categories()) {
+      const categoryItems = allItems.filter((item) => item.category_id === category.id);
+      if (categoryItems.length) {
+        groups.push({ category, items: categoryItems });
+      }
+    }
+
+    return groups;
+  });
+
+  // ფილტრის ჩიფსების დაწკაპუნებაზე ჩანს მხოლოდ არჩეული კატეგორია — თუ ისევ იმავეს
+  // დააჭერს, მონიშვნა იხსნება და ისევ ყველა კატეგორია ჩნდება.
+  protected readonly visibleGroups = computed<MenuGroup[]>(() => {
+    const selected = this.activeCategoryId();
+    const all = this.groups();
+    return selected ? all.filter((group) => group.category.id === selected) : all;
+  });
 
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;
@@ -41,19 +66,18 @@ export class MenuComponent {
       .then(([categories, items]) => {
         this.categories.set(categories);
         this.items.set(items);
-        this.activeCategoryId.set(categories[0]?.id ?? null);
       })
       .finally(() => this.loading.set(false));
   }
 
   /**
-   * კატეგორიის გადართვისას სქროლი თავში ვწევთ — .app-body (guest-shell) სქროლავს
+   * ფილტრის გადართვისას სქროლი თავში ვწევთ — .app-body (guest-shell) სქროლავს
    * გვერდს, არა document-ი, ამიტომ route-ის ცვლილების (და ბრაუზერის ავტომატური
    * scroll-restoration-ის) მსგავსი ეფექტი აქ თავად უნდა გამოვიწვიოთ, თორემ გრძელი
-   * კატეგორიიდან გადართვისას მომხმარებელი ახალი სიის შუაში/ბოლოში დარჩება ხოლმე.
+   * სიიდან ფილტრის გადართვისას მომხმარებელი ახალი სიის შუაში/ბოლოში დარჩება ხოლმე.
    */
   selectCategory(id: string): void {
-    this.activeCategoryId.set(id);
+    this.activeCategoryId.update((current) => (current === id ? null : id));
     this.elementRef.nativeElement.scrollIntoView({ behavior: 'auto', block: 'start' });
   }
 

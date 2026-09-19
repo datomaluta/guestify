@@ -36,31 +36,37 @@
       }
     </div>
 
-    <div class="menu-list">
-      @for (item of visibleItems(); track item.id; let i = $index) {
-        <div
-          class="menu-row"
-          [style.--i]="i"
-          role="button"
-          tabindex="0"
-          (click)="openItem(item)"
-          (keydown.enter)="openItem(item)"
-        >
-          @if (item.image_url) {
-            <img class="thumb" [src]="item.image_url" [alt]="item | localize: 'name'" loading="lazy" width="68" height="68" />
-          } @else {
-            <div class="thumb placeholder"></div>
+    @for (group of visibleGroups(); track group.category.id) {
+      <div class="cat-section">
+        <h2 class="cat-title">{{ group.category | localize: 'name' }}</h2>
+
+        <div class="menu-list">
+          @for (item of group.items; track item.id; let i = $index) {
+            <div
+              class="menu-row"
+              [style.--i]="i"
+              role="button"
+              tabindex="0"
+              (click)="openItem(item)"
+              (keydown.enter)="openItem(item)"
+            >
+              @if (item.image_url) {
+                <img class="thumb" [src]="item.image_url" [alt]="item | localize: 'name'" loading="lazy" width="68" height="68" />
+              } @else {
+                <div class="thumb placeholder"></div>
+              }
+              <div class="info">
+                <p class="t">{{ item | localize: 'name' }}</p>
+                @if ((item | localize: 'description'); as desc) {
+                  <p class="d">{{ desc }}</p>
+                }
+              </div>
+              <div class="price">{{ item.price }} {{ currencySymbol(item.currency) }}</div>
+            </div>
           }
-          <div class="info">
-            <p class="t">{{ item | localize: 'name' }}</p>
-            @if ((item | localize: 'description'); as desc) {
-              <p class="d">{{ desc }}</p>
-            }
-          </div>
-          <div class="price">{{ item.price }} {{ currencySymbol(item.currency) }}</div>
         </div>
-      }
-    </div>
+      </div>
+    }
   }
 }
 
