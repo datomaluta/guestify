@@ -196,8 +196,17 @@ a {
 // flex:1 — მოკლე გვერდებმაც (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად.
 // view-transition-name — ცალკე view-transition ჯგუფად გამოაცალკევებს (იხ. ზემოთ
 // ::view-transition-*(guest-page)) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
-// მხოლოდ ეს ცვდება fade+slide ეფექტით.
+// მხოლოდ ეს ცვდება fade+slide-ით. **მაგრამ**: view-transition-name spec-ის
+// მიხედვით ავტომატურად აქცევს ელემენტს ახალ stacking context-ად — ამან ჩაკეტა
+// menu-item-sheet-ის (position:fixed, z-index:41) ლოკალურად ამ ახალ კონტექსტში,
+// და header-ის (z-index:10, .app-body-ის იმავე დონეზე) ქვემოთ დარჩა მთლიანად app-menu-ს
+// ქვე-ხე — sheet ვეღარ გადადიოდა header-ზე. ფიქსი: აქაც z-index, header-ისაზე
+// (10) მაღლა, რომ ეს ახალი stacking context მთლიანად header-ს ზემოთ დარჩეს
+// (ჩვეულებრივ ვიზუალურად არაფერს ცვლის — routed კონტენტი header-ს არ ეფარება,
+// მხოლოდ fixed overlay-ების შემთხვევაში აქვს მნიშვნელობა).
 .app-shell router-outlet + * {
   flex: 1;
+  position: relative;
+  z-index: 20;
   view-transition-name: guest-page;
 }
