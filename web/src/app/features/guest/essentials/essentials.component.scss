@@ -272,13 +272,29 @@
 
 .service-row {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 14px;
+  flex-direction: column;
   background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.service-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+
+  &.clickable {
+    cursor: pointer;
+  }
 }
 
 .skel-lines {
