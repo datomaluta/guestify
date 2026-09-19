@@ -20,14 +20,14 @@
   width: 100%;
   max-width: 430px;
   max-height: calc(82% - 70px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--paper);
   border-radius: 20px 20px 0 0;
   box-shadow: var(--shadow-lg);
   z-index: 41;
   animation: amenity-sheet-slide-up 0.25s ease both;
-  padding-bottom: 20px;
 
   &.closing {
     animation: amenity-sheet-slide-down 0.22s ease both;
@@ -59,6 +59,7 @@
   height: 220px;
   object-fit: cover;
   display: block;
+  flex-shrink: 0;
   border-radius: 20px 20px 0 0;
 
   &.placeholder {
@@ -84,6 +85,10 @@
 }
 
 .body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 18px 20px 28px;
 }
 

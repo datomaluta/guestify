@@ -1,4 +1,4 @@
-import { Component, HostListener, input, output, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 import { ALLERGENS, MenuItem } from '../../../../core/models';
 import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../../core/i18n/localize.pipe';
@@ -27,6 +27,20 @@ export class MenuItemSheetComponent {
 
   protected readonly allergenIcons = new Map(ALLERGENS.map((a) => [a.key, a.icon]));
   protected readonly closing = signal(false);
+
+  /** sheet-ის ღიაობისას .app-body-ს (ნამდვილი scroll-container, იხ. scss-ის კომენტარი) ვბლოკავთ, რომ ფონზე არ ისქროლოს. */
+  constructor() {
+    const appBody = inject(ElementRef).nativeElement.closest('.app-body') as HTMLElement | null;
+    const previousOverflow = appBody?.style.overflow ?? '';
+    if (appBody) {
+      appBody.style.overflow = 'hidden';
+    }
+    inject(DestroyRef).onDestroy(() => {
+      if (appBody) {
+        appBody.style.overflow = previousOverflow;
+      }
+    });
+  }
 
   @HostListener('document:keydown.escape')
   protected onEscape(): void {
