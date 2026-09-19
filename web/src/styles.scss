@@ -106,16 +106,16 @@ a {
 // withViewTransitions()-ით ჩართული ბრაუზერის View Transitions API, დასახელებული
 // მხოლოდ მიმდინარე route-ის host-ელემენტზე (`view-transition-name: guest-page`,
 // იხ. guest-shell.component.scss) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
-// მხოლოდ კონტენტი გამოცოცხლდება fade+slide-ით. ძველი გვერდი სწრაფად ქრება, ახალი
-// ოდნავ ქვემოდან იწევს და თანდათან ჩნდება.
+// მხოლოდ კონტენტი გამოცოცხლდება. თავიდან fade+slide-up იყო — slide მიმართულება
+// აზრს კარგავს ბრტყელ ტაბებს შორის გადართვისას (არაფერი "ქვემოდან არ მოდის"),
+// ამიტომ სუფთა crossfade-ზე გადავედით; ორივე მიმართულებას ერთი ხანგრძლივობა აქვს
+// (ძველი/ახალი ერთდროულად ერევა), 320ms — ნელა და შესამჩნევად ტელეფონზეც.
 @keyframes guestify-page-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -129,13 +129,12 @@ a {
 }
 
 ::view-transition-group(guest-page) {
-  animation-duration: 220ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-duration: 320ms;
+  animation-timing-function: ease;
 }
 
 ::view-transition-old(guest-page) {
   animation-name: guestify-page-out;
-  animation-duration: 120ms;
 }
 
 ::view-transition-new(guest-page) {
