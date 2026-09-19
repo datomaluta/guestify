@@ -188,7 +188,9 @@
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: inherit;
-  transition: box-shadow 0.18s ease, transform 0.18s ease;
+  transition:
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 
   @media (hover: hover) {
     &:hover {
@@ -245,7 +247,7 @@
 .section-title {
   font-size: 15px;
   font-weight: 700;
-  margin: 0 0 4px;
+  margin: 0 0 8px;
 }
 
 .section-subtitle {
@@ -279,6 +281,25 @@
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
+}
+
+// იგივე ჰორიზონტალური სქროლის პატერნი, რაც .fav-scroll-ს აქვს Home/Guide-ზე
+// (guide.component.scss/home.component.scss) — flex + scroll-snap + დამალული
+// სქროლბარი + ეკრანის კიდეებამდე "peek" bleed.
+.amenity-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 -18px;
+  padding: 2px 18px 6px 0;
+  scroll-padding-left: 18px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .skel-lines {
@@ -368,7 +389,9 @@
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: inherit;
-  transition: box-shadow 0.18s ease, transform 0.18s ease;
+  transition:
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 
   @media (hover: hover) {
     &:hover {

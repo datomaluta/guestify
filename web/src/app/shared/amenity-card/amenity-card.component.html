@@ -1,0 +1,26 @@
+@if (skeleton()) {
+  <div class="amenity-card" [class.is-first]="first()">
+    <div class="amenity-photo skel"></div>
+    <div class="amenity-body">
+      <div class="skel skel-line" style="width: 55%; height: 1.3em"></div>
+      <div class="skel skel-line" style="width: 95%; height: 4.5em"></div>
+    </div>
+  </div>
+} @else {
+  <div
+    class="amenity-card"
+    [class.is-first]="first()"
+    role="button"
+    tabindex="0"
+    (click)="onOpen()"
+    (keydown.enter)="onOpen()"
+  >
+    <div class="amenity-photo">
+      <img [src]="amenity()!.image_url" [alt]="amenity() | localize: 'title'" loading="lazy" />
+    </div>
+    <div class="amenity-body">
+      <p class="amenity-name">{{ amenity() | localize: "title" }}</p>
+      <p class="amenity-desc">{{ amenity() | localize: "description" }}</p>
+    </div>
+  </div>
+}

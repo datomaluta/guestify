@@ -1,0 +1,126 @@
+// იგივე overlay მექანიკა, რაც menu-item-sheet.component.scss-ს აქვს — იხ. იქაური
+// კომენტარი position: fixed-ის მიზეზზე (.app-body-ის overflow-ს გვერდს უვლის) და
+// 430px max-width-ზე (.app-shell-ის ტელეფონის ჩარჩოს დესკტოპზეც რომ მისდიოს).
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  z-index: 40;
+  animation: amenity-sheet-backdrop-in 0.2s ease both;
+
+  &.closing {
+    animation: amenity-sheet-backdrop-out 0.22s ease both;
+  }
+}
+
+.sheet {
+  position: fixed;
+  left: 50%;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  width: 100%;
+  max-width: 430px;
+  max-height: calc(82% - 70px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--paper);
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--shadow-lg);
+  z-index: 41;
+  animation: amenity-sheet-slide-up 0.25s ease both;
+  padding-bottom: 20px;
+
+  &.closing {
+    animation: amenity-sheet-slide-down 0.22s ease both;
+  }
+}
+
+@keyframes amenity-sheet-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes amenity-sheet-backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes amenity-sheet-slide-up {
+  from { transform: translate(-50%, 100%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+@keyframes amenity-sheet-slide-down {
+  from { transform: translate(-50%, 0); opacity: 1; }
+  to { transform: translate(-50%, 100%); opacity: 0; }
+}
+
+.photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px 20px 0 0;
+
+  &.placeholder {
+    background: var(--paper-sunk);
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(17, 24, 39, 0.55);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.body {
+  padding: 18px 20px 28px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin: 0 0 18px;
+  white-space: pre-line;
+}
+
+.section {
+  margin-bottom: 18px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  margin: 0 0 8px;
+}
+
+.text {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 0;
+}

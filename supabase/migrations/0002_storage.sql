@@ -6,6 +6,7 @@
 --   {hotel_id}/logo.{ext}
 --   {hotel_id}/menu/{menu_item_id}.{ext}
 --   {hotel_id}/guide/{place_id}.{ext}
+--   {hotel_id}/amenities/{amenity_id}.{ext}
 --
 -- bucket public-ია (სტუმარი კითხულობს ლოგინის გარეშე, პირდაპირი CDN URL-ით),
 -- ატვირთვა/წაშლა კი მხოლოდ საკუთარი hotel_id-ის საქაღალდეშია დაშვებული.

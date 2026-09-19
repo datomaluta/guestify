@@ -6,7 +6,8 @@ import {
   MenuCategory,
   MenuItem,
   GuidePlace,
-  HotelRule
+  HotelRule,
+  FeaturedAmenity
 } from '../models';
 
 /**
@@ -110,6 +111,23 @@ export class HotelService {
 
       if (error) throw error;
       return (data ?? []) as HotelRule[];
+    });
+  }
+
+  // is_active + image_url არარსებობა ორივე გამორიცხავს ჩანაწერს სტუმრის მხრიდან — ადმინს
+  // შეუძლია row შექმნას ფოტოს ატვირთვამდე, სტუმარს კი მხოლოდ სრულად მზა ჩანაწერი უჩანს.
+  getFeaturedAmenities(hotelId: string): Promise<FeaturedAmenity[]> {
+    return this.cached(`featured_amenities:${hotelId}`, async () => {
+      const { data, error } = await this.supabase.client
+        .from('featured_amenities')
+        .select('*')
+        .eq('hotel_id', hotelId)
+        .eq('is_active', true)
+        .not('image_url', 'is', null)
+        .order('sort_order');
+
+      if (error) throw error;
+      return (data ?? []) as FeaturedAmenity[];
     });
   }
 

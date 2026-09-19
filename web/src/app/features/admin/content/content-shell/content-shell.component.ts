@@ -14,6 +14,7 @@ export class ContentShellComponent {
 
   protected readonly tabs = [
     { path: 'services', label: 'სერვისები' },
+    { path: 'amenities', label: 'გამორჩეული სერვისი' },
     { path: 'menu', label: 'მენიუ' },
     { path: 'guide', label: 'გზამკვლევი' },
     { path: 'rules', label: 'წესები' },

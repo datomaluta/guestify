@@ -8,7 +8,8 @@ import {
   GuidePlace,
   HotelRule,
   AiTopic,
-  AiTopicTemplate
+  AiTopicTemplate,
+  FeaturedAmenity
 } from '../models';
 
 type Row = Record<string, any>;
@@ -116,6 +117,32 @@ export class AdminContentService {
     if (error) throw error;
   }
 
+  // ------------------------------------------------------- featured amenities --
+
+  async listFeaturedAmenities(hotelId: string): Promise<FeaturedAmenity[]> {
+    const { data, error } = await this.supabase.client
+      .from('featured_amenities')
+      .select('*')
+      .eq('hotel_id', hotelId)
+      .order('sort_order');
+    if (error) throw error;
+    return (data ?? []) as FeaturedAmenity[];
+  }
+
+  async saveFeaturedAmenity(id: string | null, payload: Row): Promise<FeaturedAmenity> {
+    const query = id
+      ? this.supabase.client.from('featured_amenities').update(payload).eq('id', id)
+      : this.supabase.client.from('featured_amenities').insert(payload);
+    const { data, error } = await query.select().single();
+    if (error) throw error;
+    return data as FeaturedAmenity;
+  }
+
+  async deleteFeaturedAmenity(id: string): Promise<void> {
+    const { error } = await this.supabase.client.from('featured_amenities').delete().eq('id', id);
+    if (error) throw error;
+  }
+
   // ---------------------------------------------------------------- rules --
 
   async listRules(hotelId: string): Promise<HotelRule[]> {
@@ -189,9 +216,11 @@ export class AdminContentService {
 
   // ----------------------------------------------------------------- images --
 
-  /** ატვირთვამდე resize/compress (~480px WebP), `{hotel_id}/{relativePath}` კონვენციით. */
-  async uploadEntityImage(hotelId: string, relativePath: string, file: File): Promise<string> {
-    const blob = await resizeImage(file, 480, 0.82);
+  /** ატვირთვამდე resize/compress (ნაგულისხმევად ~480px WebP), `{hotel_id}/{relativePath}` კონვენციით.
+   * maxDimension გადაწერადია იმ შემთხვევებისთვის, სადაც ბარათი უფრო დიდ ფოტოს აჩვენებს
+   * (მაგ. გამორჩეული სერვისების 170px-იანი ბარათი 480px-ზე შესამჩნევად რბილი გამოვიდოდა). */
+  async uploadEntityImage(hotelId: string, relativePath: string, file: File, maxDimension = 480): Promise<string> {
+    const blob = await resizeImage(file, maxDimension, 0.82);
     const path = `${hotelId}/${relativePath}`;
 
     const { error } = await this.supabase.client.storage

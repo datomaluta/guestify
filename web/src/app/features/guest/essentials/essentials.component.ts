@@ -5,7 +5,9 @@ import { IconComponent } from '../../../shared/icon/icon.component';
 import { DEFAULT_ICON } from '../../../shared/icon/icon-options';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { HotelService } from '../../../core/services/hotel.service';
-import { HotelRule, HotelService as HotelServiceItem } from '../../../core/models';
+import { HotelRule, HotelService as HotelServiceItem, FeaturedAmenity } from '../../../core/models';
+import { AmenityCardComponent } from '../../../shared/amenity-card/amenity-card.component';
+import { AmenityDetailSheetComponent } from '../../../shared/amenity-detail-sheet/amenity-detail-sheet.component';
 
 interface StayInfoItem {
   key: string;
@@ -27,7 +29,7 @@ type CopiedField = 'network' | 'password' | null;
 @Component({
   selector: 'app-essentials',
   standalone: true,
-  imports: [TranslatePipe, LocalizePipe, IconComponent],
+  imports: [TranslatePipe, LocalizePipe, IconComponent, AmenityCardComponent, AmenityDetailSheetComponent],
   templateUrl: './essentials.component.html',
   styleUrl: './essentials.component.scss'
 })
@@ -43,26 +45,46 @@ export class EssentialsComponent {
   protected readonly servicesLoading = signal(true);
   protected readonly serviceSkeletons = [0, 1, 2, 3];
 
+  protected readonly featuredAmenities = signal<FeaturedAmenity[]>([]);
+  protected readonly featuredAmenitiesLoading = signal(true);
+  protected readonly amenitySkeletons = [0, 1, 2];
+  protected readonly selectedAmenity = signal<FeaturedAmenity | null>(null);
+
   constructor() {
     const hotelId = this.hotelContext.hotel()?.id;
     if (hotelId) {
-      Promise.all([this.hotelService.getRules(hotelId), this.hotelService.getServices(hotelId)])
-        .then(([rules, services]) => {
+      Promise.all([
+        this.hotelService.getRules(hotelId),
+        this.hotelService.getServices(hotelId),
+        this.hotelService.getFeaturedAmenities(hotelId)
+      ])
+        .then(([rules, services, featuredAmenities]) => {
           this.rules.set(rules);
           this.services.set(services);
+          this.featuredAmenities.set(featuredAmenities);
         })
         .finally(() => {
           this.rulesLoading.set(false);
           this.servicesLoading.set(false);
+          this.featuredAmenitiesLoading.set(false);
         });
     } else {
       this.rulesLoading.set(false);
       this.servicesLoading.set(false);
+      this.featuredAmenitiesLoading.set(false);
     }
   }
 
   iconOrDefault(icon: string | null): string {
     return icon || DEFAULT_ICON;
+  }
+
+  openAmenity(amenity: FeaturedAmenity): void {
+    this.selectedAmenity.set(amenity);
+  }
+
+  closeAmenity(): void {
+    this.selectedAmenity.set(null);
   }
 
   protected readonly wifiNetwork = computed(() => this.hotelContext.hotel()?.wifi_network ?? null);

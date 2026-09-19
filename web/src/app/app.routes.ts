@@ -95,6 +95,13 @@ export const routes: Routes = [
               )
           },
           {
+            path: 'amenities',
+            loadComponent: () =>
+              import('./features/admin/content/amenities-editor/amenities-editor.component').then(
+                (m) => m.AmenitiesEditorComponent
+              )
+          },
+          {
             path: 'menu',
             loadComponent: () =>
               import('./features/admin/content/menu-editor/menu-editor.component').then((m) => m.MenuEditorComponent)

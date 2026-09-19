@@ -1,0 +1,107 @@
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">გამორჩეული სერვისები ჯერ არ დამატებულა</p>
+  }
+
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingId() === item.id" cdkDrag>
+        <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+        @if (item.image_url) {
+          <img class="thumb" [src]="item.image_url" alt="" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="info">
+          <p class="t">{{ item.title_ka }}</p>
+          <p class="d">{{ item.description_ka }}</p>
+        </div>
+        @if (!item.is_active) {
+          <span class="status-off">გამორთული</span>
+        }
+        <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
+      </div>
+    }
+  </div>
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'სერვისის რედაქტირება' : 'ახალი გამორჩეული სერვისი' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <div class="lang-grid">
+      <label>
+        <span>სათაური (ქარ) *</span>
+        <input name="title_ka" [(ngModel)]="form.title_ka" required />
+      </label>
+      <label>
+        <span>Title (EN)</span>
+        <input name="title_en" [(ngModel)]="form.title_en" />
+      </label>
+      <label>
+        <span>Название (RU)</span>
+        <input name="title_ru" [(ngModel)]="form.title_ru" />
+      </label>
+
+      <label>
+        <span>აღწერა (ქარ) *</span>
+        <textarea name="description_ka" [(ngModel)]="form.description_ka" rows="4" required></textarea>
+      </label>
+      <label>
+        <span>Description (EN)</span>
+        <textarea name="description_en" [(ngModel)]="form.description_en" rows="4"></textarea>
+      </label>
+      <label>
+        <span>Описание (RU)</span>
+        <textarea name="description_ru" [(ngModel)]="form.description_ru" rows="4"></textarea>
+      </label>
+
+      <label>
+        <span>სამუშაო საათები (ქარ)</span>
+        <input name="hours_ka" [(ngModel)]="form.hours_ka" placeholder="მაგ. ყოველდღე 08:00–20:00" />
+      </label>
+      <label>
+        <span>Working hours (EN)</span>
+        <input name="hours_en" [(ngModel)]="form.hours_en" />
+      </label>
+      <label>
+        <span>Часы работы (RU)</span>
+        <input name="hours_ru" [(ngModel)]="form.hours_ru" />
+      </label>
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+      <span>აქტიურია</span>
+    </label>
+
+    @if (editingId()) {
+      <div class="image-row">
+        @if (editingImageUrl()) {
+          <img class="preview" [src]="editingImageUrl()" alt="" />
+        }
+        <label class="upload-btn">
+          {{ uploadingImage() ? 'იტვირთება…' : editingImageUrl() ? 'ფოტოს შეცვლა' : 'ფოტოს არჩევა' }}
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="uploadingImage()" hidden />
+        </label>
+        @if (editingImageUrl()) {
+          <button type="button" class="remove-btn" (click)="removeImage()" [disabled]="uploadingImage()">ფოტოს წაშლა</button>
+        }
+      </div>
+    } @else {
+      <p class="hint">ფოტო დამატების შემდეგ აიტვირთება — ჯერ შეავსეთ ველები და დააჭირეთ "დამატება".</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">დახურვა</button>
+      }
+    </div>
+  </form>
+}

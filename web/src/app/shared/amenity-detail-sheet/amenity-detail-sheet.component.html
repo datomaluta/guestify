@@ -1,0 +1,23 @@
+<div class="backdrop" [class.closing]="closing()" (click)="requestClose()"></div>
+
+<div class="sheet" [class.closing]="closing()" role="dialog" aria-modal="true" (animationend)="onSheetAnimationEnd()">
+  @if (amenity().image_url) {
+    <img class="photo" [src]="amenity().image_url" [alt]="amenity() | localize: 'title'" />
+  } @else {
+    <div class="photo placeholder"></div>
+  }
+
+  <button type="button" class="close-btn" (click)="requestClose()" aria-label="Close">✕</button>
+
+  <div class="body">
+    <p class="name">{{ amenity() | localize: 'title' }}</p>
+    <p class="desc">{{ amenity() | localize: 'description' }}</p>
+
+    @if ((amenity() | localize: 'hours'); as hours) {
+      <div class="section">
+        <p class="label">{{ 'featured_amenity_hours_label' | translate }}</p>
+        <p class="text">{{ hours }}</p>
+      </div>
+    }
+  </div>
+</div>
