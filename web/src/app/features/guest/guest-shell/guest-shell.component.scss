@@ -55,21 +55,23 @@
   z-index: 10;
   transition: transform 0.25s ease;
   will-change: transform;
+  // View Transitions-ის root ჯგუფისგან ცალკე, სახელიანი ჯგუფი (animation: none —
+  // იხ. styles.scss) — თორემ header ნავიგაციაზე root-თან ერთად ჯვარედინად
+  // გამქრალიყო/გამოჩენილიყო, თუმცა არაფერი მასში არ იცვლება.
+  view-transition-name: guest-chrome-header;
 
   &.hidden {
     transform: translateY(-100%);
   }
 }
 
-// route-ის host ელემენტი (router-outlet-ის მომდევნო და-ძმა — routed კომპონენტი ხომ
-// <router-outlet>-ის *გვერდით*, არა შიგნით ჩაისმის) — flex:1, რომ მოკლე გვერდებმაც
-// (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად (header-ის მიმდინარე,
-// dynamic — ჩანს/დამალულია — სიმაღლის მიუხედავად, height:100%-ის მსგავსი მაგიური
-// რიცხვის გარეშე). default min-height:auto შენარჩუნებულია განზრახ — გრძელი გვერდები
-// კვლავ საკუთარ კონტენტ-ზომაზე იზრდებიან და overflow-ს .app-body-ს გადასცემენ.
-router-outlet + * {
-  flex: 1;
-}
+// route-ის host ელემენტისთვის (router-outlet-ის მომდევნო და-ძმა) განკუთვნილი წესები
+// გატანილია გლობალურ styles.scss-ში (.app-shell router-outlet + *) — Angular-ის
+// emulated view encapsulation-ის გამო routed კომპონენტს საკუთარი _nghost-ატრიბუტი
+// აქვს და არა guest-shell-ის _ngcontent-ატრიბუტი, ამიტომ აქ (component-scoped
+// styles-ში) დაწერილი sibling-selector წესი პრაქტიკულად არასდროს ვრცელდებოდა
+// (მათ შორის ეს ძველი flex:1 წესიც — Playwright-ით დადასტურდა, computed flex
+// ყოველთვის default `0 1 auto` იყო, არა `1`).
 
 // Checkit-ის wordmark (landing.component.scss-ის იგივე ტრეიდმარკი, ჰედერისთვის დაპატარავებული) —
 // hotel-ის საკუთარი ლოგო/სახელი განზრახ აღარ ჩანს, ერთი კონსისტენტური ბრენდი გვინდა ყველა სასტუმროზე.
@@ -103,4 +105,13 @@ router-outlet + * {
   to {
     opacity: 1;
   }
+}
+
+app-bottom-nav {
+  // ბოთომ ნავი — ტაბის active-ფერი ნავიგაციაზე იცვლება, ანუ root ჯგუფში რომ
+  // დარჩენილიყო, ეს ცვლილება (ძველი/ახალი active-სთვის) root-ის ჯვარედინ-გამქრალვას
+  // მთელ ნავის "გამოჩენა-გაქრობის" შთაბეჭდილებას უქმნიდა (მომხმარებელმა შენიშნა).
+  // ცალკე სახელიან ჯგუფადაა გატანილი და animation: none-ითაა გაყინული (styles.scss) —
+  // მყისიერად გადადის ახალ active-მდგომარეობაზე, არანაირი fade/ციმციმის გარეშე.
+  view-transition-name: guest-chrome-nav;
 }

@@ -101,3 +101,76 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+// guest ტაბებს შორის ნავიგაციის (bottom-nav) ანიმაცია — Angular Router-ის
+// withViewTransitions()-ით ჩართული ბრაუზერის View Transitions API, დასახელებული
+// მხოლოდ მიმდინარე route-ის host-ელემენტზე (`view-transition-name: guest-page`,
+// იხ. guest-shell.component.scss) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
+// მხოლოდ კონტენტი გამოცოცხლდება fade+slide-ით. ძველი გვერდი სწრაფად ქრება, ახალი
+// ოდნავ ქვემოდან იწევს და თანდათან ჩნდება.
+@keyframes guestify-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes guestify-page-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-group(guest-page) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(guest-page) {
+  animation-name: guestify-page-out;
+  animation-duration: 120ms;
+}
+
+::view-transition-new(guest-page) {
+  animation-name: guestify-page-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(guest-page),
+  ::view-transition-old(guest-page),
+  ::view-transition-new(guest-page) {
+    animation: none !important;
+  }
+}
+
+// header (guest-chrome-header) და bottom-nav (guest-chrome-nav) — ეს ორივე
+// static "chrome"-ია (route-ს არ ეკუთვნის), მაგრამ მათი ვიზუალური მდგომარეობა
+// მაინც შეიძლება ოდნავ შეიცვალოს ნავიგაციაზე (bottom-nav-ის active-ტაბის ფერი,
+// header-ის scroll-hidden მდგომარეობა) — animation:none, რომ browser-ის default
+// root-ის ჯვარედინ-გამქრალვის ნაცვლად უბრალოდ მყისიერად გადავიდნენ ახალ
+// მდგომარეობაზე (guest-shell.component.scss).
+::view-transition-group(guest-chrome-header),
+::view-transition-group(guest-chrome-nav) {
+  animation: none;
+}
+
+// route-ის host ელემენტი (router-outlet-ის მომდევნო და-ძმა — routed კომპონენტი ხომ
+// <router-outlet>-ის *გვერდით*, არა შიგნით ჩაისმის). გლობალურ styles.scss-ში წერია
+// (და არა guest-shell.component.scss-ში), რადგან Angular-ის emulated view
+// encapsulation routed კომპონენტს საკუთარ _nghost-ატრიბუტს ანიჭებს — component-scoped
+// წესი, რომელიც router-outlet-ს და მის და-ძმას ერთად ითხოვს, ვერასდროს ემთხვევა.
+// flex:1 — მოკლე გვერდებმაც (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად.
+// view-transition-name — ცალკე view-transition ჯგუფად გამოაცალკევებს (იხ. ზემოთ
+// ::view-transition-*(guest-page)) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
+// მხოლოდ ეს ცვდება fade+slide ეფექტით.
+.app-shell router-outlet + * {
+  flex: 1;
+  view-transition-name: guest-page;
+}
