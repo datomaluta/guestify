@@ -16,15 +16,15 @@ export class AdminHomeComponent {
   protected readonly auth = inject(AuthService);
   private readonly adminHotel = inject(AdminHotelService);
 
-  protected readonly hotel = signal<Hotel | null>(null);
+  protected readonly hotels = signal<Hotel[]>([]);
   protected readonly loadingHotel = signal(true);
 
   constructor() {
-    const hotelId = this.auth.profile()?.hotel_id;
-    if (this.auth.profile()?.role === 'hotel_admin' && hotelId) {
+    const profile = this.auth.profile();
+    if (profile?.role === 'hotel_admin') {
       this.adminHotel
-        .getHotel(hotelId)
-        .then((hotel) => this.hotel.set(hotel))
+        .listMyHotels(profile.id)
+        .then((hotels) => this.hotels.set(hotels))
         .finally(() => this.loadingHotel.set(false));
     } else {
       this.loadingHotel.set(false);

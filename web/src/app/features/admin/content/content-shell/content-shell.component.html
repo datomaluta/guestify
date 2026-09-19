@@ -1,3 +1,9 @@
+<a class="back" routerLink="/admin">← ადმინის მთავარი</a>
+
+@if (hotelContext.hotel(); as hotel) {
+  <h1 class="hotel-name">{{ hotel.name }}</h1>
+}
+
 <nav class="tabs">
   @for (tab of tabs; track tab.path) {
     <a [routerLink]="tab.path" routerLinkActive="active">{{ tab.label }}</a>

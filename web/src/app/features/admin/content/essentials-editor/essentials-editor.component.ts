@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminHotelService, HotelWritePayload } from '../../../../core/services/admin-hotel.service';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AdminHotelContextService } from '../../../../core/services/admin-hotel-context.service';
 
 type EssentialsForm = Pick<
   HotelWritePayload,
@@ -65,8 +65,7 @@ const BLANK: EssentialsForm = {
 })
 export class EssentialsEditorComponent {
   private readonly adminHotel = inject(AdminHotelService);
-  private readonly auth = inject(AuthService);
-  private readonly hotelId = this.auth.profile()!.hotel_id!;
+  private readonly hotelId = inject(AdminHotelContextService).hotel()!.id;
 
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);

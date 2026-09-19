@@ -18,6 +18,19 @@
   }
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cta {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--brand-secondary);
+  text-decoration: none;
+}
+
 .empty {
   color: var(--ink-soft);
   font-size: 13.5px;

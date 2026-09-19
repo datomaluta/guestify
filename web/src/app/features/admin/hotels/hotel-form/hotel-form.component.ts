@@ -259,7 +259,7 @@ export class HotelFormComponent {
   async unlinkAdmin(profileId: string): Promise<void> {
     const id = this.hotelId();
     if (!id) return;
-    await this.adminHotel.unlinkHotelAdmin(profileId);
+    await this.adminHotel.unlinkHotelAdmin(profileId, id);
     this.admins.set(await this.adminHotel.listHotelAdmins(id));
   }
 

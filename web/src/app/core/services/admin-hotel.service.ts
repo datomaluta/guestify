@@ -6,7 +6,6 @@ import { resizeImage } from '../utils/image-resize';
 export interface HotelAdminProfile {
   id: string;
   role: 'superadmin' | 'hotel_admin';
-  hotel_id: string | null;
   full_name: string | null;
 }
 
@@ -93,28 +92,55 @@ export class AdminHotelService {
 
   async listHotelAdmins(hotelId: string): Promise<HotelAdminProfile[]> {
     const { data, error } = await this.supabase.client
-      .from('profiles')
-      .select('*')
-      .eq('hotel_id', hotelId)
-      .eq('role', 'hotel_admin');
+      .from('hotel_admins')
+      .select('profiles(id, role, full_name)')
+      .eq('hotel_id', hotelId);
     if (error) throw error;
-    return (data ?? []) as HotelAdminProfile[];
+    return (data ?? []).map((row: any) => row.profiles) as HotelAdminProfile[];
   }
 
   /**
    * არსებულ Supabase Auth user-ს (Dashboard → Authentication-ში წინასწარ შექმნილს)
    * უკავშირებს hotel_admin როლს ამ სასტუმროზე. ახალი auth user-ის შექმნა
    * service_role-ს მოითხოვს — ეს frontend-იდან ვერ კეთდება (იხ. README).
+   * profiles row მხოლოდ პირველად იქმნება — იგივე user-ის მეორე სასტუმროზე მიბმისას
+   * (hotel_admins-ში ახალი row) აღარ იქმნება, პროფილი ერთია, hotel_id-ები კი მრავალი.
    */
   async linkHotelAdmin(userId: string, hotelId: string, fullName: string): Promise<void> {
-    const { error } = await this.supabase.client
+    const { data: existing, error: lookupError } = await this.supabase.client
       .from('profiles')
-      .insert({ id: userId, role: 'hotel_admin', hotel_id: hotelId, full_name: fullName });
+      .select('id')
+      .eq('id', userId)
+      .maybeSingle();
+    if (lookupError) throw lookupError;
+
+    if (!existing) {
+      const { error } = await this.supabase.client
+        .from('profiles')
+        .insert({ id: userId, role: 'hotel_admin', full_name: fullName });
+      if (error) throw error;
+    }
+
+    const { error } = await this.supabase.client.from('hotel_admins').insert({ profile_id: userId, hotel_id: hotelId });
     if (error) throw error;
   }
 
-  async unlinkHotelAdmin(profileId: string): Promise<void> {
-    const { error } = await this.supabase.client.from('profiles').delete().eq('id', profileId);
+  async unlinkHotelAdmin(profileId: string, hotelId: string): Promise<void> {
+    const { error } = await this.supabase.client
+      .from('hotel_admins')
+      .delete()
+      .eq('profile_id', profileId)
+      .eq('hotel_id', hotelId);
     if (error) throw error;
+  }
+
+  /** მოცემული admin-ის ყველა მიბმული სასტუმრო — admin-home-ის picker-ისთვის, თუ ერთზე მეტს მართავს. */
+  async listMyHotels(profileId: string): Promise<Hotel[]> {
+    const { data, error } = await this.supabase.client
+      .from('hotel_admins')
+      .select('hotels(*)')
+      .eq('profile_id', profileId);
+    if (error) throw error;
+    return (data ?? []).map((row: any) => row.hotels) as Hotel[];
   }
 }

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HotelService as HotelServiceItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AdminHotelContextService } from '../../../../core/services/admin-hotel-context.service';
 import { IconComponent } from '../../../../shared/icon/icon.component';
 import { DEFAULT_ICON } from '../../../../shared/icon/icon-options';
 import { IconPickerComponent } from '../../../../shared/icon-picker/icon-picker.component';
@@ -41,8 +41,7 @@ const BLANK: ServiceForm = {
 })
 export class ServicesEditorComponent {
   private readonly content = inject(AdminContentService);
-  private readonly auth = inject(AuthService);
-  private readonly hotelId = this.auth.profile()!.hotel_id!;
+  private readonly hotelId = inject(AdminHotelContextService).hotel()!.id;
 
   protected readonly items = signal<HotelServiceItem[]>([]);
   protected readonly loading = signal(true);

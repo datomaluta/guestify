@@ -6,7 +6,10 @@
   <div class="header-row">
     <h1>{{ isNew() ? 'ახალი სასტუმრო' : form.name }}</h1>
     @if (!isNew()) {
-      <button type="button" class="danger" (click)="deleteHotel()">სასტუმროს წაშლა</button>
+      <div class="header-actions">
+        <a class="cta" [routerLink]="['/admin/content', hotelId()]">კონტენტის მართვა →</a>
+        <button type="button" class="danger" (click)="deleteHotel()">სასტუმროს წაშლა</button>
+      </div>
     }
   </div>
 
