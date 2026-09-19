@@ -7,20 +7,18 @@
     </div>
   </div>
 } @else {
-  <div
-    class="amenity-card"
-    [class.is-first]="first()"
-    role="button"
-    tabindex="0"
-    (click)="onOpen()"
-    (keydown.enter)="onOpen()"
-  >
+  <div class="amenity-card" [class.is-first]="first()">
     <div class="amenity-photo">
       <img [src]="amenity()!.image_url" [alt]="amenity() | localize: 'title'" loading="lazy" />
     </div>
     <div class="amenity-body">
       <p class="amenity-name">{{ amenity() | localize: "title" }}</p>
       <p class="amenity-desc">{{ amenity() | localize: "description" }}</p>
+      <div class="amenity-footer">
+        <button type="button" class="amenity-detail-btn" (click)="onOpen()">
+          {{ "featured_amenity_view_details" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 }
