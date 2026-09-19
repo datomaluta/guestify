@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { hotelResolver } from './core/services/hotel.resolver';
+import { adminHotelResolver } from './core/services/admin-hotel.resolver';
 import { authGuard } from './core/services/auth.guard';
 import { superadminGuard } from './core/services/superadmin.guard';
 import { hotelAdminGuard } from './core/services/hotel-admin.guard';
@@ -79,8 +80,9 @@ export const routes: Routes = [
           )
       },
       {
-        path: 'content',
+        path: 'content/:hotelId',
         canActivate: [hotelAdminGuard],
+        resolve: { hotel: adminHotelResolver },
         loadComponent: () =>
           import('./features/admin/content/content-shell/content-shell.component').then((m) => m.ContentShellComponent),
         children: [

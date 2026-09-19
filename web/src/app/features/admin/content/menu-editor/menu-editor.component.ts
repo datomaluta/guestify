@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ALLERGENS, MenuCategory, MenuItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AdminHotelContextService } from '../../../../core/services/admin-hotel-context.service';
 import { IconComponent } from '../../../../shared/icon/icon.component';
 
 interface CategoryForm {
@@ -59,8 +59,7 @@ const BLANK_ITEM: ItemForm = {
 })
 export class MenuEditorComponent {
   private readonly content = inject(AdminContentService);
-  private readonly auth = inject(AuthService);
-  private readonly hotelId = this.auth.profile()!.hotel_id!;
+  private readonly hotelId = inject(AdminHotelContextService).hotel()!.id;
 
   protected readonly categories = signal<MenuCategory[]>([]);
   protected readonly items = signal<MenuItem[]>([]);

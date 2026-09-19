@@ -7,9 +7,9 @@
         <a routerLink="/admin/hotels" routerLinkActive="active">სასტუმროები</a>
         <a routerLink="/admin/ai-topic-templates" routerLinkActive="active">AI თემების ბიბლიოთეკა</a>
       </nav>
-    } @else if (auth.profile()?.role === 'hotel_admin') {
+    } @else if (auth.profile()?.role === 'hotel_admin' && auth.adminHotelIds().length === 1) {
       <nav class="nav">
-        <a routerLink="/admin/content" routerLinkActive="active">ჩემი კონტენტი</a>
+        <a [routerLink]="['/admin/content', auth.adminHotelIds()[0]]" routerLinkActive="active">ჩემი კონტენტი</a>
       </nav>
     }
 

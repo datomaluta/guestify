@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AdminHotelContextService } from '../../../../core/services/admin-hotel-context.service';
 
 @Component({
   selector: 'app-content-shell',
@@ -9,6 +10,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './content-shell.component.scss'
 })
 export class ContentShellComponent {
+  protected readonly hotelContext = inject(AdminHotelContextService);
+
   protected readonly tabs = [
     { path: 'services', label: 'სერვისები' },
     { path: 'menu', label: 'მენიუ' },
