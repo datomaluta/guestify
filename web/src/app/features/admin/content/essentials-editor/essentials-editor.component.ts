@@ -19,10 +19,8 @@ type EssentialsForm = Pick<
   | 'checkout_note_ka'
   | 'checkout_note_en'
   | 'checkout_note_ru'
-  | 'airport_maps_url'
-  | 'parking_info_ka'
-  | 'parking_info_en'
-  | 'parking_info_ru'
+  | 'pharmacy_maps_url'
+  | 'atm_maps_url'
 >;
 
 const BLANK: EssentialsForm = {
@@ -40,21 +38,19 @@ const BLANK: EssentialsForm = {
   checkout_note_ka: '',
   checkout_note_en: '',
   checkout_note_ru: '',
-  airport_maps_url: '',
-  parking_info_ka: '',
-  parking_info_en: '',
-  parking_info_ru: ''
+  pharmacy_maps_url: '',
+  atm_maps_url: ''
 };
 
 /**
- * hotel_admin-ის საკუთარი Wi-Fi/Check-in/Check-out/Airport/Parking ველების რედაქტორი —
+ * hotel_admin-ის საკუთარი Wi-Fi/Check-in/Check-out/Pharmacy/ATM ველების რედაქტორი —
  * ეს ფაქტობრივად ოპერაციული დეტალებია (ხშირად იცვლება), ამიტომ hotel_admin-ის content
  * პანელშია, superadmin-ის hotel-form-ის (branding/slug/package) მაგივრად. RLS-ს უკვე
  * აქვს "hotels: own hotel_admin or superadmin can update" policy, ასე რომ hotel_admin-ს
  * საკუთარი hotels row-ის ამ ველების ჩაწერა DB-დონეზეც ეკუთვნის.
  *
- * Check-in/Check-out დრო+აღწერა და Parking აღწერა მრავალენოვანია (guest UI ka/en/ru-ს
- * შორის გადართავს) — Wi-Fi ქსელი/პაროლი და Maps ბმული კი ენისგან დამოუკიდებელია.
+ * Check-in/Check-out დრო+აღწერა მრავალენოვანია (guest UI ka/en/ru-ს შორის გადართავს) —
+ * Wi-Fi ქსელი/პაროლი და Maps ბმულები კი ენისგან დამოუკიდებელია.
  */
 @Component({
   selector: 'app-essentials-editor',
@@ -98,10 +94,8 @@ export class EssentialsEditorComponent {
           checkout_note_ka: hotel.checkout_note_ka || '',
           checkout_note_en: hotel.checkout_note_en || '',
           checkout_note_ru: hotel.checkout_note_ru || '',
-          airport_maps_url: hotel.airport_maps_url || '',
-          parking_info_ka: hotel.parking_info_ka || '',
-          parking_info_en: hotel.parking_info_en || '',
-          parking_info_ru: hotel.parking_info_ru || ''
+          pharmacy_maps_url: hotel.pharmacy_maps_url || '',
+          atm_maps_url: hotel.atm_maps_url || ''
         };
       }
     } catch (e) {

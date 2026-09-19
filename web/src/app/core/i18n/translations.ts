@@ -271,14 +271,8 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Write host',
     ru: 'Написать хозяину',
   },
-  essentials_airport_title: { ka: 'აეროპორტი', en: 'Airport', ru: 'Аэропорт' },
-  essentials_airport_subtitle: {
-    ka: 'გახსენით აეროპორტი რუკაზე',
-    en: 'Open airport in Maps',
-    ru: 'Открыть аэропорт на карте',
-  },
   essentials_rules_title: {
-    ka: 'სახლის წესები',
+    ka: 'წესები',
     en: 'House rules',
     ru: 'Правила дома',
   },
@@ -298,7 +292,8 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'View details',
     ru: 'Подробнее',
   },
-  essentials_parking_title: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
+  essentials_pharmacy_title: { ka: 'აფთიაქი', en: 'Pharmacy', ru: 'Аптека' },
+  essentials_atm_title: { ka: 'ATM', en: 'ATM', ru: 'ATM' },
   essentials_emergency_general: {
     ka: 'ზოგადი საგანგებო დახმარება',
     en: 'General emergency',
