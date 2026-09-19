@@ -145,11 +145,8 @@ export class EssentialsComponent {
     return digits ? `https://wa.me/${digits}` : null;
   });
 
-  protected readonly airportMapsUrl = computed(() => this.hotelContext.hotel()?.airport_maps_url ?? null);
-  protected readonly hasParkingInfo = computed(() => {
-    const hotel = this.hotelContext.hotel();
-    return !!hotel && hasLocalizedValue(hotel, 'parking_info');
-  });
+  protected readonly pharmacyMapsUrl = computed(() => this.hotelContext.hotel()?.pharmacy_maps_url ?? null);
+  protected readonly atmMapsUrl = computed(() => this.hotelContext.hotel()?.atm_maps_url ?? null);
 
   copy(field: 'network' | 'password', value: string): void {
     navigator.clipboard

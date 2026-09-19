@@ -6,7 +6,7 @@
   }
 
   <p class="hint">
-    ეს ველები სტუმრის Essentials გვერდზე ჩანს — Wi-Fi, Check-in/Check-out, აეროპორტი და პარკინგი.
+    ეს ველები სტუმრის Essentials გვერდზე ჩანს — Wi-Fi, Check-in/Check-out, აფთიაქი და ბანკომატი.
     ცარიელი ველის შესაბამისი ბლოკი სტუმარს საერთოდ არ უჩნდება.
   </p>
 
@@ -81,25 +81,15 @@
       </label>
     </div>
 
-    <h2>აეროპორტი და პარკინგი</h2>
+    <h2>აფთიაქი და ბანკომატი</h2>
     <div class="grid">
       <label class="span-2">
-        <span>აეროპორტის Google Maps ბმული</span>
-        <input name="airport_maps_url" [(ngModel)]="form.airport_maps_url" placeholder="https://maps.google.com/..." />
+        <span>უახლოესი აფთიაქის Google Maps ბმული</span>
+        <input name="pharmacy_maps_url" [(ngModel)]="form.pharmacy_maps_url" placeholder="https://maps.google.com/..." />
       </label>
-    </div>
-    <div class="lang-grid">
-      <label>
-        <span>პარკინგის აღწერა (ქარ)</span>
-        <textarea name="parking_info_ka" rows="2" [(ngModel)]="form.parking_info_ka"></textarea>
-      </label>
-      <label>
-        <span>Parking info (EN)</span>
-        <textarea name="parking_info_en" rows="2" [(ngModel)]="form.parking_info_en"></textarea>
-      </label>
-      <label>
-        <span>Описание парковки (RU)</span>
-        <textarea name="parking_info_ru" rows="2" [(ngModel)]="form.parking_info_ru"></textarea>
+      <label class="span-2">
+        <span>უახლოესი ბანკომატის Google Maps ბმული</span>
+        <input name="atm_maps_url" [(ngModel)]="form.atm_maps_url" placeholder="https://maps.google.com/..." />
       </label>
     </div>
 

@@ -33,10 +33,8 @@ export interface Hotel {
   checkout_note_ka: string | null;
   checkout_note_en: string | null;
   checkout_note_ru: string | null;
-  airport_maps_url: string | null;
-  parking_info_ka: string | null;
-  parking_info_en: string | null;
-  parking_info_ru: string | null;
+  pharmacy_maps_url: string | null;
+  atm_maps_url: string | null;
   created_at: string;
   updated_at: string;
 }

@@ -36,10 +36,8 @@ const BLANK_FORM: HotelFormModel = {
   checkout_note_ka: '',
   checkout_note_en: '',
   checkout_note_ru: '',
-  airport_maps_url: '',
-  parking_info_ka: '',
-  parking_info_en: '',
-  parking_info_ru: ''
+  pharmacy_maps_url: '',
+  atm_maps_url: ''
 };
 
 @Component({
@@ -143,10 +141,8 @@ export class HotelFormComponent {
         checkout_note_ka: hotel.checkout_note_ka || '',
         checkout_note_en: hotel.checkout_note_en || '',
         checkout_note_ru: hotel.checkout_note_ru || '',
-        airport_maps_url: hotel.airport_maps_url || '',
-        parking_info_ka: hotel.parking_info_ka || '',
-        parking_info_en: hotel.parking_info_en || '',
-        parking_info_ru: hotel.parking_info_ru || ''
+        pharmacy_maps_url: hotel.pharmacy_maps_url || '',
+        atm_maps_url: hotel.atm_maps_url || ''
       };
       this.admins.set(await this.adminHotel.listHotelAdmins(id));
     } catch (e) {
