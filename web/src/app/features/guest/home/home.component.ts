@@ -4,6 +4,7 @@ import { IconComponent } from '../../../shared/icon/icon.component';
 import { PlaceCardComponent } from '../../../shared/place-card/place-card.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
+import { ImgFadeInDirective } from '../../../shared/directives/img-fade-in.directive';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { HotelService } from '../../../core/services/hotel.service';
 import { GuidePlace } from '../../../core/models';
@@ -27,7 +28,7 @@ const HOME_FAVORITES_LIMIT = 5;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, IconComponent, PlaceCardComponent, TranslatePipe, LocalizePipe],
+  imports: [RouterLink, IconComponent, PlaceCardComponent, TranslatePipe, LocalizePipe, ImgFadeInDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

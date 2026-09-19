@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { FeaturedAmenity } from '../../core/models';
 import { LocalizePipe } from '../../core/i18n/localize.pipe';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { ImgFadeInDirective } from '../directives/img-fade-in.directive';
 
 /**
  * "გამორჩეული სერვისი" ბარათი Essentials-ზე — PlaceCardComponent-ის ფორკია
@@ -14,7 +15,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
 @Component({
   selector: 'app-amenity-card',
   standalone: true,
-  imports: [LocalizePipe, TranslatePipe],
+  imports: [LocalizePipe, TranslatePipe, ImgFadeInDirective],
   templateUrl: './amenity-card.component.html',
   styleUrl: './amenity-card.component.scss'
 })

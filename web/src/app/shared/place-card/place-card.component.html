@@ -13,6 +13,7 @@
     <div class="fav-photo">
       @if (place()!.image_url) {
         <img
+          appFadeIn
           [src]="place()!.image_url"
           [alt]="place() | localize: 'name'"
           loading="lazy"

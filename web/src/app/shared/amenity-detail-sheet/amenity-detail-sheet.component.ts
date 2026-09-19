@@ -2,6 +2,7 @@ import { Component, DestroyRef, ElementRef, HostListener, inject, input, output,
 import { FeaturedAmenity } from '../../core/models';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../core/i18n/localize.pipe';
+import { ImgFadeInDirective } from '../directives/img-fade-in.directive';
 
 /**
  * "გამორჩეული სერვისის" დეტალების bottom sheet — ფოტო, სრული აღწერა და
@@ -13,7 +14,7 @@ import { LocalizePipe } from '../../core/i18n/localize.pipe';
 @Component({
   selector: 'app-amenity-detail-sheet',
   standalone: true,
-  imports: [TranslatePipe, LocalizePipe],
+  imports: [TranslatePipe, LocalizePipe, ImgFadeInDirective],
   templateUrl: './amenity-detail-sheet.component.html',
   styleUrl: './amenity-detail-sheet.component.scss'
 })
