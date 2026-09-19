@@ -39,7 +39,8 @@ export const routes: Routes = [
       },
       {
         path: 'ai',
-        loadComponent: () => import('./features/guest/ai/ai.component').then((m) => m.AiComponent)
+        loadComponent: () => import('./features/guest/ai/ai.component').then((m) => m.AiComponent),
+        data: { preload: true }
       }
     ]
   },
