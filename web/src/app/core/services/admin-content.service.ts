@@ -7,7 +7,6 @@ import {
   MenuItem,
   GuidePlace,
   HotelRule,
-  HotelContact,
   AiTopic,
   AiTopicTemplate
 } from '../models';
@@ -138,30 +137,6 @@ export class AdminContentService {
 
   async deleteRule(id: string): Promise<void> {
     const { error } = await this.supabase.client.from('hotel_rules').delete().eq('id', id);
-    if (error) throw error;
-  }
-
-  // ------------------------------------------------------------- contacts --
-
-  async listContacts(hotelId: string): Promise<HotelContact[]> {
-    const { data, error } = await this.supabase.client
-      .from('hotel_contacts')
-      .select('*')
-      .eq('hotel_id', hotelId)
-      .order('sort_order');
-    if (error) throw error;
-    return (data ?? []) as HotelContact[];
-  }
-
-  async saveContact(id: string | null, payload: Row): Promise<void> {
-    const { error } = id
-      ? await this.supabase.client.from('hotel_contacts').update(payload).eq('id', id)
-      : await this.supabase.client.from('hotel_contacts').insert(payload);
-    if (error) throw error;
-  }
-
-  async deleteContact(id: string): Promise<void> {
-    const { error } = await this.supabase.client.from('hotel_contacts').delete().eq('id', id);
     if (error) throw error;
   }
 

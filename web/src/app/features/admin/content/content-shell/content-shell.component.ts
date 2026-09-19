@@ -15,7 +15,6 @@ export class ContentShellComponent {
     { path: 'guide', label: 'გზამკვლევი' },
     { path: 'rules', label: 'წესები' },
     { path: 'essentials', label: 'Essentials' },
-    { path: 'contacts', label: 'კონტაქტები' },
     { path: 'ai-topics', label: 'AI თემები' }
   ];
 }
