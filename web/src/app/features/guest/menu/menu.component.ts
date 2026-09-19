@@ -4,6 +4,7 @@ import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../core/i18n/localize.pipe';
+import { ImgFadeInDirective } from '../../../shared/directives/img-fade-in.directive';
 import { MenuItemSheetComponent } from './menu-item-sheet/menu-item-sheet.component';
 
 interface MenuGroup {
@@ -14,7 +15,7 @@ interface MenuGroup {
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [TranslatePipe, LocalizePipe, MenuItemSheetComponent],
+  imports: [TranslatePipe, LocalizePipe, MenuItemSheetComponent, ImgFadeInDirective],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })

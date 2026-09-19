@@ -2,6 +2,7 @@ import { Component, DestroyRef, ElementRef, HostListener, inject, input, output,
 import { ALLERGENS, MenuItem } from '../../../../core/models';
 import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../../core/i18n/localize.pipe';
+import { ImgFadeInDirective } from '../../../../shared/directives/img-fade-in.directive';
 
 /**
  * მენიუს კერძის დეტალების bottom sheet — ფოტო, სრული აღწერა, შემადგენლობა
@@ -17,7 +18,7 @@ import { LocalizePipe } from '../../../../core/i18n/localize.pipe';
 @Component({
   selector: 'app-menu-item-sheet',
   standalone: true,
-  imports: [TranslatePipe, LocalizePipe],
+  imports: [TranslatePipe, LocalizePipe, ImgFadeInDirective],
   templateUrl: './menu-item-sheet.component.html',
   styleUrl: './menu-item-sheet.component.scss'
 })

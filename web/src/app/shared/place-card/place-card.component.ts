@@ -3,6 +3,7 @@ import { GuidePlace, guideCategoryMeta } from '../../core/models';
 import { IconComponent } from '../icon/icon.component';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../core/i18n/localize.pipe';
+import { ImgFadeInDirective } from '../directives/img-fade-in.directive';
 
 /**
  * ერთი ადგილობრივი რჩევის ბარათი (ფოტო/badge-ები/სახელი/აღწერა/Maps-ლინკი) —
@@ -12,7 +13,7 @@ import { LocalizePipe } from '../../core/i18n/localize.pipe';
 @Component({
   selector: 'app-place-card',
   standalone: true,
-  imports: [IconComponent, TranslatePipe, LocalizePipe],
+  imports: [IconComponent, TranslatePipe, LocalizePipe, ImgFadeInDirective],
   templateUrl: './place-card.component.html',
   styleUrl: './place-card.component.scss'
 })

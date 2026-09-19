@@ -2,7 +2,7 @@
 
 <div class="sheet" [class.closing]="closing()" role="dialog" aria-modal="true" (animationend)="onSheetAnimationEnd()">
   @if (item().image_url) {
-    <img class="photo" [src]="item().image_url" [alt]="item() | localize: 'name'" />
+    <img appFadeIn class="photo" [src]="item().image_url" [alt]="item() | localize: 'name'" />
   } @else {
     <div class="photo placeholder"></div>
   }

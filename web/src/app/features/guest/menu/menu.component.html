@@ -51,7 +51,7 @@
               (keydown.enter)="openItem(item)"
             >
               @if (item.image_url) {
-                <img class="thumb" [src]="item.image_url" [alt]="item | localize: 'name'" loading="lazy" width="68" height="68" />
+                <img appFadeIn class="thumb" [src]="item.image_url" [alt]="item | localize: 'name'" loading="lazy" width="68" height="68" />
               } @else {
                 <div class="thumb placeholder"></div>
               }

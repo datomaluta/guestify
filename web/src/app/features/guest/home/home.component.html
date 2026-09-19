@@ -1,5 +1,6 @@
 @if (hotelContext.hotel()?.hero_image_url) {
-  <div class="hero" [style.background-image]="'url(' + hotelContext.hotel()!.hero_image_url + ')'">
+  <div class="hero">
+    <img appFadeIn class="hero-photo" [src]="hotelContext.hotel()!.hero_image_url" alt="" />
     <div class="hero-content">
       <span class="eyebrow">{{ 'home_welcome_to' | translate }}</span>
       <h1>{{ hotelContext.hotel()?.name }}</h1>

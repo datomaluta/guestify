@@ -9,7 +9,7 @@
 } @else {
   <div class="amenity-card" [class.is-first]="first()">
     <div class="amenity-photo">
-      <img [src]="amenity()!.image_url" [alt]="amenity() | localize: 'title'" loading="lazy" />
+      <img appFadeIn [src]="amenity()!.image_url" [alt]="amenity() | localize: 'title'" loading="lazy" />
     </div>
     <div class="amenity-body">
       <p class="amenity-name">{{ amenity() | localize: "title" }}</p>

@@ -126,6 +126,17 @@ a {
   border-radius: 8px;
 }
 
+img[appFadeIn] {
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+
+  &.is-loaded {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
