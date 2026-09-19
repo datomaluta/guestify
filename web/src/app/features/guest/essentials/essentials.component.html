@@ -135,6 +135,26 @@
   </div>
 }
 
+@if (featuredAmenitiesLoading()) {
+  <div class="info-section">
+    <p class="section-title skel" style="width: 50%; height: 20px;"></p>
+    <div class="amenity-scroll">
+      @for (i of amenitySkeletons; track i) {
+        <app-amenity-card [skeleton]="true" [first]="i === 0" />
+      }
+    </div>
+  </div>
+} @else if (featuredAmenities().length > 0) {
+  <div class="info-section">
+    <p class="section-title">{{ 'essentials_featured_amenities_title' | translate }}</p>
+    <div class="amenity-scroll">
+      @for (amenity of featuredAmenities(); track amenity.id; let i = $index) {
+        <app-amenity-card [amenity]="amenity" [first]="i === 0" (open)="openAmenity($event)" />
+      }
+    </div>
+  </div>
+}
+
 @if (servicesLoading()) {
   <div class="info-section">
     <p class="section-title skel" style="width: 40%; height: 20px;"></p>
@@ -164,26 +184,6 @@
             }
           </div>
         </div>
-      }
-    </div>
-  </div>
-}
-
-@if (featuredAmenitiesLoading()) {
-  <div class="info-section">
-    <p class="section-title skel" style="width: 50%; height: 20px;"></p>
-    <div class="amenity-scroll">
-      @for (i of amenitySkeletons; track i) {
-        <app-amenity-card [skeleton]="true" [first]="i === 0" />
-      }
-    </div>
-  </div>
-} @else if (featuredAmenities().length > 0) {
-  <div class="info-section">
-    <p class="section-title">{{ 'essentials_featured_amenities_title' | translate }}</p>
-    <div class="amenity-scroll">
-      @for (amenity of featuredAmenities(); track amenity.id; let i = $index) {
-        <app-amenity-card [amenity]="amenity" [first]="i === 0" (open)="openAmenity($event)" />
       }
     </div>
   </div>

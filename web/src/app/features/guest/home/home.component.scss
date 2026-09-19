@@ -274,3 +274,21 @@
   color: var(--ink);
   text-align: center;
 }
+
+// გამორჩეული სერვისები — იგივე peek-scroll პატერნი, რაც .fav-scroll-ს აქვს ზემოთ
+// (იხ. amenity-scroll-ის იგივე კომენტარი essentials.component.scss-ში).
+.amenity-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 -18px;
+  padding: 2px 18px 6px 0;
+  scroll-padding-left: 18px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -44,6 +44,7 @@
   </div>
 </div>
 
+<!--
 @if (favoritePlaces().length > 0) {
   <div class="intent-section">
     <h2 class="intent-title fav-title">
@@ -63,4 +64,29 @@
       }
     </div>
   </div>
+}
+-->
+
+@if (featuredAmenitiesLoading()) {
+  <div class="intent-section">
+    <h2 class="intent-title">{{ 'essentials_featured_amenities_title' | translate }}</h2>
+    <div class="amenity-scroll">
+      @for (i of amenitySkeletons; track i) {
+        <app-amenity-card [skeleton]="true" [first]="i === 0" />
+      }
+    </div>
+  </div>
+} @else if (featuredAmenities().length > 0) {
+  <div class="intent-section">
+    <h2 class="intent-title">{{ 'essentials_featured_amenities_title' | translate }}</h2>
+    <div class="amenity-scroll">
+      @for (amenity of featuredAmenities(); track amenity.id; let i = $index) {
+        <app-amenity-card [amenity]="amenity" [first]="i === 0" (open)="openAmenity($event)" />
+      }
+    </div>
+  </div>
+}
+
+@if (selectedAmenity(); as amenity) {
+  <app-amenity-detail-sheet [amenity]="amenity" (close)="closeAmenity()" />
 }
