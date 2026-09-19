@@ -1,3 +1,19 @@
+.intro {
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 60ch;
+  }
+}
+
 .empty {
   color: var(--ink-soft);
   font-size: 13.5px;
@@ -64,6 +80,15 @@
   font-size: 13.5px;
   font-weight: 700;
   margin: 0 0 2px;
+}
+
+.d {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .link-btn {

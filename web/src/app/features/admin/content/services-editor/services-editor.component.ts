@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HotelService as HotelServiceItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -15,7 +16,6 @@ interface ServiceForm {
   description_ka: string;
   description_en: string;
   description_ru: string;
-  sort_order: number;
   is_active: boolean;
 }
 
@@ -27,14 +27,15 @@ const BLANK: ServiceForm = {
   description_ka: '',
   description_en: '',
   description_ru: '',
-  sort_order: 0,
   is_active: true
 };
 
+/** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
+ * გადალაგდება, drop()-ზე კი reindex-ული sort_order მთელი სიისთვის ერთბაშად ინახება. */
 @Component({
   selector: 'app-services-editor',
   standalone: true,
-  imports: [FormsModule, IconComponent, IconPickerComponent],
+  imports: [FormsModule, IconComponent, IconPickerComponent, CdkDropList, CdkDrag, CdkDragHandle],
   templateUrl: './services-editor.component.html',
   styleUrl: './services-editor.component.scss'
 })
@@ -73,9 +74,24 @@ export class ServicesEditorComponent {
       description_ka: item.description_ka || '',
       description_en: item.description_en || '',
       description_ru: item.description_ru || '',
-      sort_order: item.sort_order,
       is_active: item.is_active
     };
+  }
+
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async drop(event: CdkDragDrop<HotelServiceItem[]>): Promise<void> {
+    const reordered = [...this.items()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.items.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(changed.map(({ item, index }) => this.content.saveService(item.id, { sort_order: index })));
+    this.refresh();
   }
 
   cancelEdit(): void {
@@ -87,7 +103,9 @@ export class ServicesEditorComponent {
     this.saving.set(true);
     this.error.set(null);
     try {
-      await this.content.saveService(this.editingId(), { ...this.form, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.form, hotel_id: this.hotelId };
+      if (!this.editingId()) payload['sort_order'] = this.items().length;
+      await this.content.saveService(this.editingId(), payload);
       this.cancelEdit();
       this.refresh();
     } catch (e) {

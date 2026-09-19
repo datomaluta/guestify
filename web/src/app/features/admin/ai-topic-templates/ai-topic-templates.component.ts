@@ -1,17 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AiTopic, AiTopicTemplate } from '../../../../core/models';
-import { AdminContentService } from '../../../../core/services/admin-content.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { IconComponent } from '../../../../shared/icon/icon.component';
-import { DEFAULT_ICON } from '../../../../shared/icon/icon-options';
-import { IconPickerComponent } from '../../../../shared/icon-picker/icon-picker.component';
+import { AiTopicTemplate } from '../../../core/models';
+import { AdminContentService } from '../../../core/services/admin-content.service';
+import { IconComponent } from '../../../shared/icon/icon.component';
+import { DEFAULT_ICON } from '../../../shared/icon/icon-options';
+import { IconPickerComponent } from '../../../shared/icon-picker/icon-picker.component';
 
-/** keywords_* ფორმაში მძიმით გამოყოფილი ერთი ველია (არა მასივი) — არცერთ სხვა admin
- * ფორმას string[]-ის შესაყვანი კომპონენტი არ აქვს, ეს უმარტივესი გზაა ახლისი გამოგონების
- * გარეშე. submit()-ზე იშლება მასივად, edit()-ზე კი უკან join(', ')-ით იკრიბება. */
-interface AiTopicForm {
+/** ai-topics-editor.component.ts-ის იგივე keywords CSV-კონვენცია. */
+interface AiTopicTemplateForm {
   icon: string;
   title_ka: string;
   title_en: string;
@@ -24,7 +21,7 @@ interface AiTopicForm {
   answer_ru: string;
 }
 
-const BLANK: AiTopicForm = {
+const BLANK: AiTopicTemplateForm = {
   icon: DEFAULT_ICON,
   title_ka: '',
   title_en: '',
@@ -48,69 +45,41 @@ function toKeywordCsv(list: string[]): string {
   return list.join(', ');
 }
 
-/** AI კონსიერჟის (features/guest/ai) თემების admin რედაქტორი — rules-editor-ის იგივე
- * (list + ერთი inline ფორმა) პატერნი, keywords_ka/en/ru-ის დამატებითი ველებით. რიგითობა
- * აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop) გადალაგდება. */
+/** Superadmin-ის მართული, hotel_id-ის გარეშე AI თემების შაბლონების ბიბლიოთეკა
+ * (Supabase `ai_topic_templates`, 0013) — hotel_admin-ები ai-topics-editor-დან
+ * "დაამატე ბიბლიოთეკიდან" ღილაკით საკუთარ თემად აკოპირებენ. ai-topics-editor-ის
+ * იგივე (list + ერთი inline ფორმა) პატერნი, hotel_id-ის გარეშე. */
 @Component({
-  selector: 'app-ai-topics-editor',
+  selector: 'app-ai-topic-templates',
   standalone: true,
   imports: [FormsModule, IconComponent, IconPickerComponent, CdkDropList, CdkDrag, CdkDragHandle],
-  templateUrl: './ai-topics-editor.component.html',
-  styleUrl: './ai-topics-editor.component.scss'
+  templateUrl: './ai-topic-templates.component.html',
+  styleUrl: './ai-topic-templates.component.scss'
 })
-export class AiTopicsEditorComponent {
+export class AiTopicTemplatesComponent {
   private readonly content = inject(AdminContentService);
-  private readonly auth = inject(AuthService);
-  private readonly hotelId = this.auth.profile()!.hotel_id!;
 
-  protected readonly items = signal<AiTopic[]>([]);
+  protected readonly items = signal<AiTopicTemplate[]>([]);
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
   protected readonly error = signal<string | null>(null);
   protected readonly editingId = signal<string | null>(null);
 
-  protected readonly templates = signal<AiTopicTemplate[]>([]);
-  protected readonly showTemplates = signal(false);
-
-  protected form: AiTopicForm = { ...BLANK };
+  protected form: AiTopicTemplateForm = { ...BLANK };
 
   constructor() {
     this.refresh();
-    this.content.listAiTopicTemplates().then((templates) => this.templates.set(templates));
   }
 
   private refresh(): void {
     this.loading.set(true);
     this.content
-      .listAiTopics(this.hotelId)
+      .listAiTopicTemplates()
       .then((items) => this.items.set(items))
       .finally(() => this.loading.set(false));
   }
 
-  toggleTemplates(): void {
-    this.showTemplates.update((v) => !v);
-  }
-
-  /** შაბლონს ფორმაში აწვდის რედაქტირებისთვის (editingId რჩება null, submit() ახალ
-   * hotel-სპეციფიკურ AiTopic-ს შექმნის) — admin-ს შეუძლია submit-მდე შეცვალოს. */
-  useTemplate(template: AiTopicTemplate): void {
-    this.editingId.set(null);
-    this.form = {
-      icon: this.iconFor(template.icon),
-      title_ka: template.title_ka,
-      title_en: template.title_en || '',
-      title_ru: template.title_ru || '',
-      keywords_ka: toKeywordCsv(template.keywords_ka),
-      keywords_en: toKeywordCsv(template.keywords_en),
-      keywords_ru: toKeywordCsv(template.keywords_ru),
-      answer_ka: template.answer_ka,
-      answer_en: template.answer_en || '',
-      answer_ru: template.answer_ru || ''
-    };
-    this.showTemplates.set(false);
-  }
-
-  edit(item: AiTopic): void {
+  edit(item: AiTopicTemplate): void {
     this.editingId.set(item.id);
     this.form = {
       icon: this.iconFor(item.icon),
@@ -133,7 +102,7 @@ export class AiTopicsEditorComponent {
 
   /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
    * რომელთა პოზიცია რეალურად შეიცვალა. */
-  async drop(event: CdkDragDrop<AiTopic[]>): Promise<void> {
+  async drop(event: CdkDragDrop<AiTopicTemplate[]>): Promise<void> {
     const reordered = [...this.items()];
     moveItemInArray(reordered, event.previousIndex, event.currentIndex);
     this.items.set(reordered);
@@ -143,7 +112,9 @@ export class AiTopicsEditorComponent {
       .filter(({ item, index }) => item.sort_order !== index);
     if (changed.length === 0) return;
 
-    await Promise.all(changed.map(({ item, index }) => this.content.saveAiTopic(item.id, { sort_order: index })));
+    await Promise.all(
+      changed.map(({ item, index }) => this.content.saveAiTopicTemplate(item.id, { sort_order: index }))
+    );
     this.refresh();
   }
 
@@ -152,7 +123,6 @@ export class AiTopicsEditorComponent {
     this.error.set(null);
     try {
       const payload: Record<string, unknown> = {
-        hotel_id: this.hotelId,
         icon: this.form.icon,
         title_ka: this.form.title_ka,
         title_en: this.form.title_en,
@@ -165,7 +135,7 @@ export class AiTopicsEditorComponent {
         answer_ru: this.form.answer_ru
       };
       if (!this.editingId()) payload['sort_order'] = this.items().length;
-      await this.content.saveAiTopic(this.editingId(), payload);
+      await this.content.saveAiTopicTemplate(this.editingId(), payload);
       this.cancelEdit();
       this.refresh();
     } catch (e) {
@@ -176,8 +146,8 @@ export class AiTopicsEditorComponent {
   }
 
   async remove(id: string): Promise<void> {
-    if (!confirm('წავშალოთ ეს თემა?')) return;
-    await this.content.deleteAiTopic(id);
+    if (!confirm('წავშალოთ ეს შაბლონი?')) return;
+    await this.content.deleteAiTopicTemplate(id);
     if (this.editingId() === id) this.cancelEdit();
     this.refresh();
   }

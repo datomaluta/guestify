@@ -71,6 +71,14 @@ export const routes: Routes = [
           import('./features/admin/hotels/hotel-form/hotel-form.component').then((m) => m.HotelFormComponent)
       },
       {
+        path: 'ai-topic-templates',
+        canActivate: [superadminGuard],
+        loadComponent: () =>
+          import('./features/admin/ai-topic-templates/ai-topic-templates.component').then(
+            (m) => m.AiTopicTemplatesComponent
+          )
+      },
+      {
         path: 'content',
         canActivate: [hotelAdminGuard],
         loadComponent: () =>

@@ -1,8 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { GuidePlace } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { IconComponent } from '../../../../shared/icon/icon.component';
 
 interface PlaceForm {
   category: string;
@@ -14,7 +16,6 @@ interface PlaceForm {
   description_ru: string;
   google_maps_url: string;
   walk_minutes: number | null;
-  sort_order: number;
 }
 
 const BLANK: PlaceForm = {
@@ -26,14 +27,15 @@ const BLANK: PlaceForm = {
   description_en: '',
   description_ru: '',
   google_maps_url: '',
-  walk_minutes: null,
-  sort_order: 0
+  walk_minutes: null
 };
 
+/** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
+ * გადალაგდება, drop()-ზე კი reindex-ული sort_order მთელი სიისთვის ერთბაშად ინახება. */
 @Component({
   selector: 'app-guide-editor',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, IconComponent, CdkDropList, CdkDrag, CdkDragHandle],
   templateUrl: './guide-editor.component.html',
   styleUrl: './guide-editor.component.scss'
 })
@@ -78,8 +80,7 @@ export class GuideEditorComponent {
       description_en: item.description_en || '',
       description_ru: item.description_ru || '',
       google_maps_url: item.google_maps_url || '',
-      walk_minutes: item.walk_minutes,
-      sort_order: item.sort_order
+      walk_minutes: item.walk_minutes
     };
   }
 
@@ -89,11 +90,29 @@ export class GuideEditorComponent {
     this.form = { ...BLANK };
   }
 
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async drop(event: CdkDragDrop<GuidePlace[]>): Promise<void> {
+    const reordered = [...this.items()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.items.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(changed.map(({ item, index }) => this.content.saveGuidePlace(item.id, { sort_order: index })));
+    this.refresh();
+  }
+
   async submit(): Promise<void> {
     this.saving.set(true);
     this.error.set(null);
     try {
-      const saved = await this.content.saveGuidePlace(this.editingId(), { ...this.form, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.form, hotel_id: this.hotelId };
+      if (!this.editingId()) payload['sort_order'] = this.items().length;
+      const saved = await this.content.saveGuidePlace(this.editingId(), payload);
       this.edit(saved); // ახალი ჩანაწერისთვისაც edit-ში გადავდივართ, რომ პირდაპირ ფოტოც აიტვირთოს
       this.refresh();
     } catch (e) {

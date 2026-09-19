@@ -5,21 +5,24 @@
     <p class="empty">გზამკვლევის ადგილები ჯერ არ დამატებულა</p>
   }
 
-  @for (item of items(); track item.id) {
-    <div class="row" [class.editing]="editingId() === item.id">
-      @if (item.image_url) {
-        <img class="thumb" [src]="item.image_url" alt="" />
-      } @else {
-        <div class="thumb placeholder"></div>
-      }
-      <div class="info">
-        <p class="t">{{ item.name_ka }}</p>
-        <p class="d">{{ item.category }}</p>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingId() === item.id" cdkDrag>
+        <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+        @if (item.image_url) {
+          <img class="thumb" [src]="item.image_url" alt="" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="info">
+          <p class="t">{{ item.name_ka }}</p>
+          <p class="d">{{ item.category }}</p>
+        </div>
+        <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
       </div>
-      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
-      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
-    </div>
-  }
+    }
+  </div>
 
   <form class="panel" (ngSubmit)="submit()">
     <h2>{{ editingId() ? 'ადგილის რედაქტირება' : 'ახალი ადგილი' }}</h2>
@@ -73,10 +76,6 @@
       <label class="sort">
         <span>ფეხით (წუთი)</span>
         <input type="number" name="walk_minutes" [(ngModel)]="form.walk_minutes" min="0" placeholder="მაგ. 3" />
-      </label>
-      <label class="sort">
-        <span>რიგითობა</span>
-        <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
       </label>
     </div>
 

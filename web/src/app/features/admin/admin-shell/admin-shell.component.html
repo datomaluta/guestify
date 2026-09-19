@@ -5,6 +5,7 @@
     @if (auth.profile()?.role === 'superadmin') {
       <nav class="nav">
         <a routerLink="/admin/hotels" routerLinkActive="active">სასტუმროები</a>
+        <a routerLink="/admin/ai-topic-templates" routerLinkActive="active">AI თემების ბიბლიოთეკა</a>
       </nav>
     } @else if (auth.profile()?.role === 'hotel_admin') {
       <nav class="nav">
