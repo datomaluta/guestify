@@ -293,6 +293,11 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Working hours',
     ru: 'Часы работы',
   },
+  featured_amenity_view_details: {
+    ka: 'დეტალურად ნახვა',
+    en: 'View details',
+    ru: 'Подробнее',
+  },
   essentials_parking_title: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
   essentials_emergency_general: {
     ka: 'ზოგადი საგანგებო დახმარება',

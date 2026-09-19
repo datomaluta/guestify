@@ -1,18 +1,20 @@
 import { Component, input, output } from '@angular/core';
 import { FeaturedAmenity } from '../../core/models';
 import { LocalizePipe } from '../../core/i18n/localize.pipe';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 /**
  * "გამორჩეული სერვისი" ბარათი Essentials-ზე — PlaceCardComponent-ის ფორკია
  * (არა გენერალიზაცია), რადგან footer-ი (Maps-ლინკი/ფეხით-დრო) აქ საერთოდ არ
  * გამოიყენება. ბარათზე მხოლოდ სახელი + 2-სტრიქონიანი აღწერაა (bare, ellipsis-ით
- * მოკვეცილი) — დაწკაპუნებაზე `open`-ს ასხივებს, მშობელი კი menu-item-sheet-ის
- * მსგავს bottom sheet-ს (app-amenity-detail-sheet) ხსნის სრული დეტალებით.
+ * მოკვეცილი) და "დეტალურად ნახვა" ღილაკი ბოლოში მარჯვნივ — დაწკაპუნებაზე `open`-ს
+ * ასხივებს, მშობელი კი menu-item-sheet-ის მსგავს bottom sheet-ს
+ * (app-amenity-detail-sheet) ხსნის სრული დეტალებით.
  */
 @Component({
   selector: 'app-amenity-card',
   standalone: true,
-  imports: [LocalizePipe],
+  imports: [LocalizePipe, TranslatePipe],
   templateUrl: './amenity-card.component.html',
   styleUrl: './amenity-card.component.scss'
 })
