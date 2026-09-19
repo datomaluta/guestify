@@ -130,14 +130,22 @@ a {
   }
 }
 
-// guest ტაბებს შორის ნავიგაციის (bottom-nav) ანიმაცია — Angular Router-ის
-// withViewTransitions()-ით ჩართული ბრაუზერის View Transitions API, დასახელებული
-// მხოლოდ მიმდინარე route-ის host-ელემენტზე (`view-transition-name: guest-page`,
-// იხ. guest-shell.component.scss) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
-// მხოლოდ კონტენტი გამოცოცხლდება. თავიდან fade+slide-up იყო — slide მიმართულება
-// აზრს კარგავს ბრტყელ ტაბებს შორის გადართვისას (არაფერი "ქვემოდან არ მოდის"),
-// ამიტომ სუფთა crossfade-ზე გადავედით; ორივე მიმართულებას ერთი ხანგრძლივობა აქვს
-// (ძველი/ახალი ერთდროულად ერევა), 320ms — ნელა და შესამჩნევად ტელეფონზეც.
+// guest ტაბებს შორის ნავიგაციის ანიმაცია — **არა** browser-ის View Transitions API
+// (withViewTransitions() ვცადეთ და მოვხსენით, იხ. app.config.ts-ის კომენტარი
+// მიზეზისთვის), უბრალო CSS `animation`, რომელიც ავტომატურად ეშვება ყოველ ჯერზე,
+// როცა Angular routed კომპონენტის ახალ host-ელემენტს DOM-ში ჩასვამს. ძველი კონტენტი
+// Angular-ს მყისვე გააქვს DOM-იდან (route-ებს გარდამავალი state/resolver არა აქვთ),
+// ამიტომ fade-out ვერ ხერხდება — მხოლოდ ახალი კონტენტის fade-in.
+//
+// **მნიშვნელოვანი**: `animation-fill-mode: both/forwards` **არ** გვაქვს განზრახ —
+// spec-ის მიხედვით ასეთი animation "მიმდინარედ" (current) ითვლება animation-ის
+// დასრულების მერეც (სამუდამოდ, სანამ CSS-ითვე არ მოიხსნება), რაც — view-transition-name-ის
+// იდენტურად — ამ ელემენტს სამუდამო ცალკე stacking context-ად აქცევდა (დადასტურებულია
+// Playwright-ით: menu-item-sheet-ის overlay ვეღარ გადადიოდა header-ზე, ზუსტად იმავე
+// მიზეზით, რაც view-transition-name-მა გამოიწვია). `both`-ის გარეშე, ანიმაციის
+// დასრულებისთანავე ის აღარ ითვლება "მიმდინარედ", stacking context ქრება და routed
+// კონტენტი ისევ ჩვეულებრივად ედარება header-ს (opacity საბოლოო კადრიც (1) და
+// ელემენტის ჩვეულებრივი დასვენების მდგომარეობაც ხომ ისედაც 1-ია — "ხტუნვა" არ ხდება).
 @keyframes guestify-page-in {
   from {
     opacity: 0;
@@ -147,66 +155,13 @@ a {
   }
 }
 
-@keyframes guestify-page-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-::view-transition-group(guest-page) {
-  animation-duration: 320ms;
-  animation-timing-function: ease;
-}
-
-::view-transition-old(guest-page) {
-  animation-name: guestify-page-out;
-}
-
-::view-transition-new(guest-page) {
-  animation-name: guestify-page-in;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(guest-page),
-  ::view-transition-old(guest-page),
-  ::view-transition-new(guest-page) {
-    animation: none !important;
-  }
-}
-
-// header (guest-chrome-header) და bottom-nav (guest-chrome-nav) — ეს ორივე
-// static "chrome"-ია (route-ს არ ეკუთვნის), მაგრამ მათი ვიზუალური მდგომარეობა
-// მაინც შეიძლება ოდნავ შეიცვალოს ნავიგაციაზე (bottom-nav-ის active-ტაბის ფერი,
-// header-ის scroll-hidden მდგომარეობა) — animation:none, რომ browser-ის default
-// root-ის ჯვარედინ-გამქრალვის ნაცვლად უბრალოდ მყისიერად გადავიდნენ ახალ
-// მდგომარეობაზე (guest-shell.component.scss).
-::view-transition-group(guest-chrome-header),
-::view-transition-group(guest-chrome-nav) {
-  animation: none;
-}
-
 // route-ის host ელემენტი (router-outlet-ის მომდევნო და-ძმა — routed კომპონენტი ხომ
 // <router-outlet>-ის *გვერდით*, არა შიგნით ჩაისმის). გლობალურ styles.scss-ში წერია
 // (და არა guest-shell.component.scss-ში), რადგან Angular-ის emulated view
 // encapsulation routed კომპონენტს საკუთარ _nghost-ატრიბუტს ანიჭებს — component-scoped
 // წესი, რომელიც router-outlet-ს და მის და-ძმას ერთად ითხოვს, ვერასდროს ემთხვევა.
 // flex:1 — მოკლე გვერდებმაც (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად.
-// view-transition-name — ცალკე view-transition ჯგუფად გამოაცალკევებს (იხ. ზემოთ
-// ::view-transition-*(guest-page)) — header/bottom-nav (root ჯგუფი) უცვლელი რჩება,
-// მხოლოდ ეს ცვდება fade+slide-ით. **მაგრამ**: view-transition-name spec-ის
-// მიხედვით ავტომატურად აქცევს ელემენტს ახალ stacking context-ად — ამან ჩაკეტა
-// menu-item-sheet-ის (position:fixed, z-index:41) ლოკალურად ამ ახალ კონტექსტში,
-// და header-ის (z-index:10, .app-body-ის იმავე დონეზე) ქვემოთ დარჩა მთლიანად app-menu-ს
-// ქვე-ხე — sheet ვეღარ გადადიოდა header-ზე. ფიქსი: აქაც z-index, header-ისაზე
-// (10) მაღლა, რომ ეს ახალი stacking context მთლიანად header-ს ზემოთ დარჩეს
-// (ჩვეულებრივ ვიზუალურად არაფერს ცვლის — routed კონტენტი header-ს არ ეფარება,
-// მხოლოდ fixed overlay-ების შემთხვევაში აქვს მნიშვნელობა).
 .app-shell router-outlet + * {
   flex: 1;
-  position: relative;
-  z-index: 20;
-  view-transition-name: guest-page;
+  animation: guestify-page-in 0.28s ease;
 }

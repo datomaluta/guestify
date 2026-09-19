@@ -161,7 +161,11 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Меню ресторана',
   },
   // --- Menu item detail sheet (guest tab) ---
-  menu_item_ingredients: { ka: 'შემადგენლობა', en: 'Ingredients', ru: 'Состав' },
+  menu_item_ingredients: {
+    ka: 'შემადგენლობა',
+    en: 'Ingredients',
+    ru: 'Состав',
+  },
   menu_item_allergens: { ka: 'ალერგენები', en: 'Allergens', ru: 'Аллергены' },
   allergen_gluten: { ka: 'გლუტენი', en: 'Gluten', ru: 'Глютен' },
   allergen_dairy: { ka: 'რძის პროდუქტი', en: 'Dairy', ru: 'Молочные продукты' },
@@ -170,7 +174,11 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   allergen_egg: { ka: 'კვერცხი', en: 'Egg', ru: 'Яйцо' },
   allergen_soy: { ka: 'სოია', en: 'Soy', ru: 'Соя' },
   allergen_fish: { ka: 'თევზი', en: 'Fish', ru: 'Рыба' },
-  allergen_shellfish: { ka: 'ზღვის პროდუქტები', en: 'Shellfish', ru: 'Морепродукты' },
+  allergen_shellfish: {
+    ka: 'ზღვის პროდუქტები',
+    en: 'Shellfish',
+    ru: 'Морепродукты',
+  },
   allergen_molluscs: { ka: 'მოლუსკები', en: 'Molluscs', ru: 'Моллюски' },
   allergen_celery: { ka: 'ნიახური', en: 'Celery', ru: 'Сельдерей' },
   allergen_mustard: { ka: 'მდოგვი', en: 'Mustard', ru: 'Горчица' },
@@ -237,24 +245,54 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
 
   // --- Essentials (guest tab) ---
   essentials_wifi_title: { ka: 'Wi-Fi', en: 'Wi-Fi', ru: 'Wi-Fi' },
-  essentials_wifi_subtitle: { ka: 'საჭიროებები', en: 'Essentials', ru: 'Полезное' },
+  essentials_wifi_subtitle: {
+    ka: 'საჭიროებები',
+    en: 'Essentials',
+    ru: 'Полезное',
+  },
   essentials_wifi_network_label: { ka: 'ქსელი', en: 'Network', ru: 'Сеть' },
-  essentials_wifi_password_label: { ka: 'პაროლი', en: 'Password', ru: 'Пароль' },
+  essentials_wifi_password_label: {
+    ka: 'პაროლი',
+    en: 'Password',
+    ru: 'Пароль',
+  },
   essentials_copy_button: { ka: 'კოპირება', en: 'Copy', ru: 'Копировать' },
-  essentials_copied_button: { ka: 'დაკოპირდა', en: 'Copied', ru: 'Скопировано' },
+  essentials_copied_button: {
+    ka: 'დაკოპირდა',
+    en: 'Copied',
+    ru: 'Скопировано',
+  },
   essentials_checkin_title: { ka: 'Check-in', en: 'Check-in', ru: 'Заезд' },
   essentials_checkout_title: { ka: 'Check-out', en: 'Check-out', ru: 'Выезд' },
   essentials_call_title: { ka: 'დარეკვა', en: 'Call', ru: 'Позвонить' },
   essentials_whatsapp_title: { ka: 'WhatsApp', en: 'WhatsApp', ru: 'WhatsApp' },
-  essentials_whatsapp_subtitle: { ka: 'მიწერეთ მასპინძელს', en: 'Write host', ru: 'Написать хозяину' },
+  essentials_whatsapp_subtitle: {
+    ka: 'მიწერეთ მასპინძელს',
+    en: 'Write host',
+    ru: 'Написать хозяину',
+  },
   essentials_airport_title: { ka: 'აეროპორტი', en: 'Airport', ru: 'Аэропорт' },
   essentials_airport_subtitle: {
     ka: 'გახსენით აეროპორტი რუკაზე',
     en: 'Open airport in Maps',
     ru: 'Открыть аэропорт на карте',
   },
-  essentials_rules_title: { ka: 'სახლის წესები', en: 'House rules', ru: 'Правила дома' },
+  essentials_rules_title: {
+    ka: 'სახლის წესები',
+    en: 'House rules',
+    ru: 'Правила дома',
+  },
   essentials_services_title: { ka: 'სერვისები', en: 'Services', ru: 'Услуги' },
+  essentials_featured_amenities_title: {
+    ka: 'გამორჩეული სერვისები',
+    en: 'Featured Amenities',
+    ru: 'Особые удобства',
+  },
+  featured_amenity_hours_label: {
+    ka: 'სამუშაო საათები',
+    en: 'Working hours',
+    ru: 'Часы работы',
+  },
   essentials_parking_title: { ka: 'პარკინგი', en: 'Parking', ru: 'Парковка' },
   essentials_emergency_general: {
     ka: 'ზოგადი საგანგებო დახმარება',

@@ -55,10 +55,6 @@
   z-index: 10;
   transition: transform 0.25s ease;
   will-change: transform;
-  // View Transitions-ის root ჯგუფისგან ცალკე, სახელიანი ჯგუფი (animation: none —
-  // იხ. styles.scss) — თორემ header ნავიგაციაზე root-თან ერთად ჯვარედინად
-  // გამქრალიყო/გამოჩენილიყო, თუმცა არაფერი მასში არ იცვლება.
-  view-transition-name: guest-chrome-header;
 
   &.hidden {
     transform: translateY(-100%);
@@ -105,13 +101,4 @@
   to {
     opacity: 1;
   }
-}
-
-app-bottom-nav {
-  // ბოთომ ნავი — ტაბის active-ფერი ნავიგაციაზე იცვლება, ანუ root ჯგუფში რომ
-  // დარჩენილიყო, ეს ცვლილება (ძველი/ახალი active-სთვის) root-ის ჯვარედინ-გამქრალვას
-  // მთელ ნავის "გამოჩენა-გაქრობის" შთაბეჭდილებას უქმნიდა (მომხმარებელმა შენიშნა).
-  // ცალკე სახელიან ჯგუფადაა გატანილი და animation: none-ითაა გაყინული (styles.scss) —
-  // მყისიერად გადადის ახალ active-მდგომარეობაზე, არანაირი fade/ციმციმის გარეშე.
-  view-transition-name: guest-chrome-nav;
 }
