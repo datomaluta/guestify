@@ -5,17 +5,20 @@
     <p class="empty">კონტაქტები ჯერ არ დამატებულა</p>
   }
 
-  @for (item of items(); track item.id) {
-    <div class="row" [class.editing]="editingId() === item.id">
-      <div class="icn"><app-icon name="call" [size]="16" /></div>
-      <div class="info">
-        <p class="t">{{ item.label_ka }}</p>
-        <p class="d">{{ item.phone }}</p>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingId() === item.id" cdkDrag>
+        <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+        <div class="icn"><app-icon name="call" [size]="16" /></div>
+        <div class="info">
+          <p class="t">{{ item.label_ka }}</p>
+          <p class="d">{{ item.phone }}</p>
+        </div>
+        <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
       </div>
-      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
-      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
-    </div>
-  }
+    }
+  </div>
 
   <form class="panel" (ngSubmit)="submit()">
     <h2>{{ editingId() ? 'კონტაქტის რედაქტირება' : 'ახალი კონტაქტი' }}</h2>
@@ -39,16 +42,10 @@
       </label>
     </div>
 
-    <div class="row-fields">
-      <label>
-        <span>ტელეფონი *</span>
-        <input name="phone" [(ngModel)]="form.phone" required placeholder="+995 32 200 00 00" />
-      </label>
-      <label class="sort">
-        <span>რიგითობა</span>
-        <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
-      </label>
-    </div>
+    <label>
+      <span>ტელეფონი *</span>
+      <input name="phone" [(ngModel)]="form.phone" required placeholder="+995 32 200 00 00" />
+    </label>
 
     <div class="actions">
       <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>

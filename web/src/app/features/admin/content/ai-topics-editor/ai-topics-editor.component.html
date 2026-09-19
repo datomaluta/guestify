@@ -5,16 +5,40 @@
     <p class="empty">თემები ჯერ არ დამატებულა</p>
   }
 
-  @for (item of items(); track item.id) {
-    <div class="row" [class.editing]="editingId() === item.id">
-      <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="16" /></div>
-      <div class="info">
-        <p class="t">{{ item.title_ka }}</p>
-        <p class="d">{{ item.answer_ka }}</p>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingId() === item.id" cdkDrag>
+        <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+        <div class="icn"><app-icon [name]="iconFor(item.icon)" [size]="16" /></div>
+        <div class="info">
+          <p class="t">{{ item.title_ka }}</p>
+          <p class="d">{{ item.answer_ka }}</p>
+        </div>
+        <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
       </div>
-      <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
-      <button type="button" class="link-btn danger" (click)="remove(item.id)">წაშლა</button>
-    </div>
+    }
+  </div>
+
+  @if (templates().length > 0) {
+    <button type="button" class="ghost templates-toggle" (click)="toggleTemplates()">
+      {{ showTemplates() ? 'დამალვა' : 'დაამატე ბიბლიოთეკიდან' }}
+    </button>
+
+    @if (showTemplates()) {
+      <div class="templates-list">
+        @for (template of templates(); track template.id) {
+          <div class="row">
+            <div class="icn"><app-icon [name]="iconFor(template.icon)" [size]="16" /></div>
+            <div class="info">
+              <p class="t">{{ template.title_ka }}</p>
+              <p class="d">{{ template.answer_ka }}</p>
+            </div>
+            <button type="button" class="link-btn" (click)="useTemplate(template)">გამოყენება</button>
+          </div>
+        }
+      </div>
+    }
   }
 
   <form class="panel" (ngSubmit)="submit()">
@@ -66,11 +90,6 @@
         <textarea name="answer_ru" [(ngModel)]="form.answer_ru" rows="3"></textarea>
       </label>
     </div>
-
-    <label class="sort">
-      <span>რიგითობა</span>
-      <input type="number" name="sort_order" [(ngModel)]="form.sort_order" />
-    </label>
 
     <div class="actions">
       <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>

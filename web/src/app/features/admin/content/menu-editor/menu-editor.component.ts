@@ -1,14 +1,15 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ALLERGENS, MenuCategory, MenuItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { IconComponent } from '../../../../shared/icon/icon.component';
 
 interface CategoryForm {
   name_ka: string;
   name_en: string;
   name_ru: string;
-  sort_order: number;
 }
 
 interface ItemForm {
@@ -26,10 +27,9 @@ interface ItemForm {
   price: number;
   currency: string;
   is_available: boolean;
-  sort_order: number;
 }
 
-const BLANK_CATEGORY: CategoryForm = { name_ka: '', name_en: '', name_ru: '', sort_order: 0 };
+const BLANK_CATEGORY: CategoryForm = { name_ka: '', name_en: '', name_ru: '' };
 
 const BLANK_ITEM: ItemForm = {
   category_id: '',
@@ -45,14 +45,15 @@ const BLANK_ITEM: ItemForm = {
   allergens: [],
   price: 0,
   currency: 'GEL',
-  is_available: true,
-  sort_order: 0
+  is_available: true
 };
 
+/** რიგითობა აღარ ჩაიწერება ხელით — ორივე სია (კატეგორიები, კერძები) drag-and-drop-ით
+ * (@angular/cdk/drag-drop) გადალაგდება, drop()-ზე კი reindex-ული sort_order ერთბაშად ინახება. */
 @Component({
   selector: 'app-menu-editor',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, IconComponent, CdkDropList, CdkDrag, CdkDragHandle],
   templateUrl: './menu-editor.component.html',
   styleUrl: './menu-editor.component.scss'
 })
@@ -110,7 +111,7 @@ export class MenuEditorComponent {
 
   editCategory(cat: MenuCategory): void {
     this.editingCategoryId.set(cat.id);
-    this.categoryForm = { name_ka: cat.name_ka, name_en: cat.name_en || '', name_ru: cat.name_ru || '', sort_order: cat.sort_order };
+    this.categoryForm = { name_ka: cat.name_ka, name_en: cat.name_en || '', name_ru: cat.name_ru || '' };
   }
 
   cancelCategoryEdit(): void {
@@ -118,11 +119,31 @@ export class MenuEditorComponent {
     this.categoryForm = { ...BLANK_CATEGORY };
   }
 
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async dropCategory(event: CdkDragDrop<MenuCategory[]>): Promise<void> {
+    const reordered = [...this.categories()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.categories.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(
+      changed.map(({ item, index }) => this.content.saveMenuCategory(item.id, { sort_order: index }))
+    );
+    this.refresh();
+  }
+
   async submitCategory(): Promise<void> {
     this.savingCategory.set(true);
     this.categoryError.set(null);
     try {
-      await this.content.saveMenuCategory(this.editingCategoryId(), { ...this.categoryForm, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.categoryForm, hotel_id: this.hotelId };
+      if (!this.editingCategoryId()) payload['sort_order'] = this.categories().length;
+      await this.content.saveMenuCategory(this.editingCategoryId(), payload);
       this.cancelCategoryEdit();
       this.refresh();
     } catch (e) {
@@ -158,8 +179,7 @@ export class MenuEditorComponent {
       allergens: [...item.allergens],
       price: item.price,
       currency: item.currency,
-      is_available: item.is_available,
-      sort_order: item.sort_order
+      is_available: item.is_available
     };
   }
 
@@ -167,6 +187,22 @@ export class MenuEditorComponent {
     this.editingItemId.set(null);
     this.editingItemImageUrl.set(null);
     this.itemForm = { ...BLANK_ITEM, category_id: this.categories()[0]?.id ?? '' };
+  }
+
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async dropItem(event: CdkDragDrop<MenuItem[]>): Promise<void> {
+    const reordered = [...this.items()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.items.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(changed.map(({ item, index }) => this.content.saveMenuItem(item.id, { sort_order: index })));
+    this.refresh();
   }
 
   async submitItem(): Promise<void> {
@@ -178,7 +214,9 @@ export class MenuEditorComponent {
     this.savingItem.set(true);
     this.itemError.set(null);
     try {
-      const saved = await this.content.saveMenuItem(this.editingItemId(), { ...this.itemForm, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.itemForm, hotel_id: this.hotelId };
+      if (!this.editingItemId()) payload['sort_order'] = this.items().length;
+      const saved = await this.content.saveMenuItem(this.editingItemId(), payload);
       this.editItem(saved); // ახალი კერძისთვისაც edit-ში ვრჩებით, რომ პირდაპირ ფოტოც აიტვირთოს
       this.refresh();
     } catch (e) {

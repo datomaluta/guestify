@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HotelRule } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -12,21 +13,21 @@ interface RuleForm {
   title_ka: string;
   title_en: string;
   title_ru: string;
-  sort_order: number;
 }
 
 const BLANK: RuleForm = {
   icon: DEFAULT_ICON,
   title_ka: '',
   title_en: '',
-  title_ru: '',
-  sort_order: 0
+  title_ru: ''
 };
 
+/** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
+ * გადალაგდება, drop()-ზე კი reindex-ული sort_order მთელი სიისთვის ერთბაშად ინახება. */
 @Component({
   selector: 'app-rules-editor',
   standalone: true,
-  imports: [FormsModule, IconComponent, IconPickerComponent],
+  imports: [FormsModule, IconComponent, IconPickerComponent, CdkDropList, CdkDrag, CdkDragHandle],
   templateUrl: './rules-editor.component.html',
   styleUrl: './rules-editor.component.scss'
 })
@@ -61,9 +62,24 @@ export class RulesEditorComponent {
       icon: this.iconFor(item.icon),
       title_ka: item.title_ka,
       title_en: item.title_en || '',
-      title_ru: item.title_ru || '',
-      sort_order: item.sort_order
+      title_ru: item.title_ru || ''
     };
+  }
+
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async drop(event: CdkDragDrop<HotelRule[]>): Promise<void> {
+    const reordered = [...this.items()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.items.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(changed.map(({ item, index }) => this.content.saveRule(item.id, { sort_order: index })));
+    this.refresh();
   }
 
   cancelEdit(): void {
@@ -75,7 +91,9 @@ export class RulesEditorComponent {
     this.saving.set(true);
     this.error.set(null);
     try {
-      await this.content.saveRule(this.editingId(), { ...this.form, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.form, hotel_id: this.hotelId };
+      if (!this.editingId()) payload['sort_order'] = this.items().length;
+      await this.content.saveRule(this.editingId(), payload);
       this.cancelEdit();
       this.refresh();
     } catch (e) {

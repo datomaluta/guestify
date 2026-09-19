@@ -1,7 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { resizeImage } from '../utils/image-resize';
-import { HotelService as HotelServiceItem, MenuCategory, MenuItem, GuidePlace, HotelRule, HotelContact, AiTopic } from '../models';
+import {
+  HotelService as HotelServiceItem,
+  MenuCategory,
+  MenuItem,
+  GuidePlace,
+  HotelRule,
+  HotelContact,
+  AiTopic,
+  AiTopicTemplate
+} from '../models';
 
 type Row = Record<string, any>;
 
@@ -177,6 +186,29 @@ export class AdminContentService {
 
   async deleteAiTopic(id: string): Promise<void> {
     const { error } = await this.supabase.client.from('ai_topics').delete().eq('id', id);
+    if (error) throw error;
+  }
+
+  // ------------------------------------------------------------ ai topic templates --
+
+  async listAiTopicTemplates(): Promise<AiTopicTemplate[]> {
+    const { data, error } = await this.supabase.client
+      .from('ai_topic_templates')
+      .select('*')
+      .order('sort_order');
+    if (error) throw error;
+    return (data ?? []) as AiTopicTemplate[];
+  }
+
+  async saveAiTopicTemplate(id: string | null, payload: Row): Promise<void> {
+    const { error } = id
+      ? await this.supabase.client.from('ai_topic_templates').update(payload).eq('id', id)
+      : await this.supabase.client.from('ai_topic_templates').insert(payload);
+    if (error) throw error;
+  }
+
+  async deleteAiTopicTemplate(id: string): Promise<void> {
+    const { error } = await this.supabase.client.from('ai_topic_templates').delete().eq('id', id);
     if (error) throw error;
   }
 

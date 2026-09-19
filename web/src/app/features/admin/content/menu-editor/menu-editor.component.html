@@ -8,16 +8,19 @@
       <p class="empty">კატეგორია ჯერ არ დამატებულა</p>
     }
 
-    @for (cat of categories(); track cat.id) {
-      <div class="row" [class.editing]="editingCategoryId() === cat.id">
-        <div class="info">
-          <p class="t">{{ cat.name_ka }}</p>
-          <p class="d">{{ (itemsByCategory().get(cat.id) ?? []).length }} კერძი</p>
+    <div cdkDropList (cdkDropListDropped)="dropCategory($event)">
+      @for (cat of categories(); track cat.id) {
+        <div class="row" [class.editing]="editingCategoryId() === cat.id" cdkDrag>
+          <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+          <div class="info">
+            <p class="t">{{ cat.name_ka }}</p>
+            <p class="d">{{ (itemsByCategory().get(cat.id) ?? []).length }} კერძი</p>
+          </div>
+          <button type="button" class="link-btn" (click)="editCategory(cat)">რედაქტირება</button>
+          <button type="button" class="link-btn danger" (click)="removeCategory(cat.id)">წაშლა</button>
         </div>
-        <button type="button" class="link-btn" (click)="editCategory(cat)">რედაქტირება</button>
-        <button type="button" class="link-btn danger" (click)="removeCategory(cat.id)">წაშლა</button>
-      </div>
-    }
+      }
+    </div>
 
     <form class="panel" (ngSubmit)="submitCategory()">
       <h2>{{ editingCategoryId() ? 'კატეგორიის რედაქტირება' : 'ახალი კატეგორია' }}</h2>
@@ -41,11 +44,6 @@
         </label>
       </div>
 
-      <label class="sort">
-        <span>რიგითობა</span>
-        <input type="number" name="cat_sort_order" [(ngModel)]="categoryForm.sort_order" />
-      </label>
-
       <div class="actions">
         <button type="submit" [disabled]="savingCategory()">
           {{ savingCategory() ? 'ინახება…' : editingCategoryId() ? 'განახლება' : 'დამატება' }}
@@ -64,21 +62,24 @@
       <p class="empty">კერძი ჯერ არ დამატებულა</p>
     }
 
-    @for (item of items(); track item.id) {
-      <div class="row" [class.editing]="editingItemId() === item.id">
-        @if (item.image_url) {
-          <img class="thumb" [src]="item.image_url" alt="" />
-        } @else {
-          <div class="thumb placeholder"></div>
-        }
-        <div class="info">
-          <p class="t">{{ item.name_ka }}</p>
-          <p class="d">{{ item.price }} {{ item.currency }} @if (!item.is_available) { · გამორთული }</p>
+    <div cdkDropList (cdkDropListDropped)="dropItem($event)">
+      @for (item of items(); track item.id) {
+        <div class="row" [class.editing]="editingItemId() === item.id" cdkDrag>
+          <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+          @if (item.image_url) {
+            <img class="thumb" [src]="item.image_url" alt="" />
+          } @else {
+            <div class="thumb placeholder"></div>
+          }
+          <div class="info">
+            <p class="t">{{ item.name_ka }}</p>
+            <p class="d">{{ item.price }} {{ item.currency }} @if (!item.is_available) { · გამორთული }</p>
+          </div>
+          <button type="button" class="link-btn" (click)="editItem(item)">რედაქტირება</button>
+          <button type="button" class="link-btn danger" (click)="removeItem(item.id)">წაშლა</button>
         </div>
-        <button type="button" class="link-btn" (click)="editItem(item)">რედაქტირება</button>
-        <button type="button" class="link-btn danger" (click)="removeItem(item.id)">წაშლა</button>
-      </div>
-    }
+      }
+    </div>
 
     <form class="panel" (ngSubmit)="submitItem()">
       <h2>{{ editingItemId() ? 'კერძის რედაქტირება' : 'ახალი კერძი' }}</h2>
@@ -162,10 +163,6 @@
         <label class="sort">
           <span>ვალუტა</span>
           <input name="item_currency" [(ngModel)]="itemForm.currency" />
-        </label>
-        <label class="sort">
-          <span>რიგითობა</span>
-          <input type="number" name="item_sort_order" [(ngModel)]="itemForm.sort_order" />
         </label>
         <label class="checkbox">
           <input type="checkbox" name="item_is_available" [(ngModel)]="itemForm.is_available" />

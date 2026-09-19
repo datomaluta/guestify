@@ -21,3 +21,25 @@ export interface AiTopic {
   sort_order: number;
   created_at: string;
 }
+
+/**
+ * გლობალური, hotel_id-ის გარეშე შაბლონი (Supabase `ai_topic_templates`, 0013) —
+ * ველები იმეორებს AiTopic-ს, superadmin მართავს (features/admin/ai-topic-templates),
+ * hotel_admin ai-topics-editor-დან "დაამატე ბიბლიოთეკიდან" ღილაკით საკუთარ AiTopic
+ * რიგად აკოპირებს და შემდეგ თავისუფლად ცვლის.
+ */
+export interface AiTopicTemplate {
+  id: string;
+  icon: string | null;
+  title_ka: string;
+  title_en: string | null;
+  title_ru: string | null;
+  keywords_ka: string[];
+  keywords_en: string[];
+  keywords_ru: string[];
+  answer_ka: string;
+  answer_en: string | null;
+  answer_ru: string | null;
+  sort_order: number;
+  created_at: string;
+}

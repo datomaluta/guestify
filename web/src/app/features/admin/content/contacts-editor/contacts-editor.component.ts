@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HotelContact } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -10,15 +11,16 @@ interface ContactForm {
   label_en: string;
   label_ru: string;
   phone: string;
-  sort_order: number;
 }
 
-const BLANK: ContactForm = { label_ka: '', label_en: '', label_ru: '', phone: '', sort_order: 0 };
+const BLANK: ContactForm = { label_ka: '', label_en: '', label_ru: '', phone: '' };
 
+/** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
+ * გადალაგდება, drop()-ზე კი reindex-ული sort_order მთელი სიისთვის ერთბაშად ინახება. */
 @Component({
   selector: 'app-contacts-editor',
   standalone: true,
-  imports: [FormsModule, IconComponent],
+  imports: [FormsModule, IconComponent, CdkDropList, CdkDrag, CdkDragHandle],
   templateUrl: './contacts-editor.component.html',
   styleUrl: './contacts-editor.component.scss'
 })
@@ -53,8 +55,7 @@ export class ContactsEditorComponent {
       label_ka: item.label_ka,
       label_en: item.label_en || '',
       label_ru: item.label_ru || '',
-      phone: item.phone,
-      sort_order: item.sort_order
+      phone: item.phone
     };
   }
 
@@ -63,11 +64,29 @@ export class ContactsEditorComponent {
     this.form = { ...BLANK };
   }
 
+  /** ჩამონათვალის ხელით გადათრევა — ინახავს ახალ sort_order-ს მხოლოდ იმ რიგებისთვის,
+   * რომელთა პოზიცია რეალურად შეიცვალა. */
+  async drop(event: CdkDragDrop<HotelContact[]>): Promise<void> {
+    const reordered = [...this.items()];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.items.set(reordered);
+
+    const changed = reordered
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => item.sort_order !== index);
+    if (changed.length === 0) return;
+
+    await Promise.all(changed.map(({ item, index }) => this.content.saveContact(item.id, { sort_order: index })));
+    this.refresh();
+  }
+
   async submit(): Promise<void> {
     this.saving.set(true);
     this.error.set(null);
     try {
-      await this.content.saveContact(this.editingId(), { ...this.form, hotel_id: this.hotelId });
+      const payload: Record<string, unknown> = { ...this.form, hotel_id: this.hotelId };
+      if (!this.editingId()) payload['sort_order'] = this.items().length;
+      await this.content.saveContact(this.editingId(), payload);
       this.cancelEdit();
       this.refresh();
     } catch (e) {
