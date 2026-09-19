@@ -43,6 +43,34 @@ button {
   color: inherit; // native <button> default (ButtonText) არ ითვალისწინებს dark mode-ს — ცალკე რომ არ დამავიწყდეს ყოველ ღილაკზე
 }
 
+// custom scrollbar — ვიწრო, დიზაინის ტოკენებზე აწყობილი (ნაცვლად OS-ის default-ისა).
+// ჰორიზონტალურ snap-სქროლებს (მაგ. home/guide) ცალკე აქვთ scrollbar-width: none,
+// ეს წესი მხოლოდ ვერტიკალურ/სხვა სქროლებზე რჩება ხილული.
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--line);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--ink-faint);
+}
+
 // Google Material Symbols — ოფიციალური boilerplate (fonts.google.com/icons), ligature-ით მუშაობს:
 // ტექსტის შემცველობა (მაგ. "wifi") თავად ფონტი გადააქცევს აიქონად.
 .material-symbols-outlined {
