@@ -16,8 +16,8 @@
   --brand-secondary: #1d3557;
 
   --font-ui:
-    'Noto Sans Georgian', 'Segoe UI', -apple-system, BlinkMacSystemFont,
-    'BPG Mrgvlovani Caps GPL&GNU', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    "Noto Sans Georgian", "Segoe UI", -apple-system, BlinkMacSystemFont,
+    "BPG Mrgvlovani Caps GPL&GNU", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 * {
@@ -35,7 +35,9 @@ body {
   color: var(--ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 button {
@@ -74,7 +76,7 @@ button {
 // Google Material Symbols — ოფიციალური boilerplate (fonts.google.com/icons), ligature-ით მუშაობს:
 // ტექსტის შემცველობა (მაგ. "wifi") თავად ფონტი გადააქცევს აიქონად.
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
+  font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -84,7 +86,7 @@ button {
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  -webkit-font-feature-settings: 'liga';
+  -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
 }
 
@@ -113,7 +115,12 @@ a {
 }
 
 .skel {
-  background: linear-gradient(90deg, var(--paper-sunk) 25%, var(--paper-raised) 50%, var(--paper-sunk) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--paper-sunk) 25%,
+    var(--paper-raised) 50%,
+    var(--paper-sunk) 75%
+  );
   background-size: 200% 100%;
   animation: guestify-shimmer 1.4s ease-in-out infinite;
   border-radius: 8px;
@@ -163,5 +170,5 @@ a {
 // flex:1 — მოკლე გვერდებმაც (მაგ. AI-ს idle ეკრანი) დარჩენილი სივრცე ავსონ ზუსტად.
 .app-shell router-outlet + * {
   flex: 1;
-  animation: guestify-page-in 0.28s ease;
+  animation: guestify-page-in 0.5s ease;
 }
