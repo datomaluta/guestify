@@ -142,12 +142,10 @@
     <div class="service-list">
       @for (i of serviceSkeletons; track i) {
         <div class="service-row">
-          <div class="service-head">
-            <div class="icn skel"></div>
-            <div class="skel-lines">
-              <div class="skel skel-line" style="width: 50%"></div>
-              <div class="skel skel-line" style="width: 80%"></div>
-            </div>
+          <div class="icn skel"></div>
+          <div class="skel-lines">
+            <div class="skel skel-line" style="width: 50%"></div>
+            <div class="skel skel-line" style="width: 80%"></div>
           </div>
         </div>
       }
@@ -159,27 +157,13 @@
     <div class="service-list">
       @for (service of services(); track service.id) {
         <div class="service-row">
-          @if ((service | localize: 'description'); as desc) {
-            <button type="button" class="service-head clickable" (click)="toggle(service.id)">
-              <div class="icn"><app-icon [name]="iconOrDefault(service.icon)" [size]="18" /></div>
-              <div class="row-text">
-                <p class="t">{{ service | localize: 'title' }}</p>
-              </div>
-              <app-icon class="chevron" [class.open]="isExpanded(service.id)" name="expand_more" [size]="20" />
-            </button>
-            <div class="stay-body-outer" [class.open]="isExpanded(service.id)">
-              <div class="stay-body-inner">
-                <p class="stay-body">{{ desc }}</p>
-              </div>
-            </div>
-          } @else {
-            <div class="service-head">
-              <div class="icn"><app-icon [name]="iconOrDefault(service.icon)" [size]="18" /></div>
-              <div class="row-text">
-                <p class="t">{{ service | localize: 'title' }}</p>
-              </div>
-            </div>
-          }
+          <div class="icn"><app-icon [name]="iconOrDefault(service.icon)" [size]="18" /></div>
+          <div class="row-text">
+            <p class="t">{{ service | localize: 'title' }}</p>
+            @if ((service | localize: 'description'); as desc) {
+              <p class="d">{{ desc }}</p>
+            }
+          </div>
         </div>
       }
     </div>
