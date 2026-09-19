@@ -6,8 +6,7 @@ import {
   MenuCategory,
   MenuItem,
   GuidePlace,
-  HotelRule,
-  HotelContact
+  HotelRule
 } from '../models';
 
 /**
@@ -114,16 +113,4 @@ export class HotelService {
     });
   }
 
-  getContacts(hotelId: string): Promise<HotelContact[]> {
-    return this.cached(`contacts:${hotelId}`, async () => {
-      const { data, error } = await this.supabase.client
-        .from('hotel_contacts')
-        .select('*')
-        .eq('hotel_id', hotelId)
-        .order('sort_order');
-
-      if (error) throw error;
-      return (data ?? []) as HotelContact[];
-    });
-  }
 }
