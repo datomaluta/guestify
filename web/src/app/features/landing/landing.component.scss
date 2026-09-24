@@ -136,24 +136,48 @@ h3 {
   }
 }
 
+// მთელ ეკრანს ავსებს (inset:0, topbar-ის ქვემოთაც კი) და არა მისი მოკლე, ჩამოსაშლელი
+// ვერსია — მობაილზე მენიუ ნავიგაციასავით მკაფიო/სრულმასშტაბიანი რომ იყოს. თავად topbar
+// (რომლის სიმაღლეც ყოველთვის ზუსტია) მაინც ზემოდან ეხურება, უფრო მაღალი z-index-ით
+// (20 > 15). padding-top კი განზრახ ჩვეულებრივი, ხისტად მითითებული რიცხვია (და არა
+// calc(var(--topbar-h))) — ეს ადგილი რამდენჯერმე იმტვრეოდა (პირველი ბმული topbar-ქვეშ
+// იმალებოდა) var(--topbar-h)-ის სხვადასხვა გარემოებაზე (custom property-ის unit-სუფიქსი,
+// ResizeObserver-ის timing) დამოკიდებულების გამო — 88px კომფორტულად სჭარბობს topbar-ის
+// რეალურ სიმაღლეს (~64-70px), ამიტომ ზუსტი გაზომვის მაგივრად უბრალოდ საკმარისი მარაგია.
 .mobile-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 15;
   display: flex;
   flex-direction: column;
-  padding: 4px 24px 12px;
+  padding: 88px 24px 32px;
   background: var(--paper);
-  border-bottom: 1px solid var(--line-soft);
-  box-shadow: var(--shadow-md);
-  animation: slide-down 0.2s ease both;
+  overflow-y: auto;
+  // მუდამ DOM-შია (აღარ @if-დება) — ღია/დახურული მდგომარეობა .open კლასით კონტროლდება.
+  // transition განზრახ მხოლოდ .open წესშია — CSS ასე მუშაობს: class-ის მოხსნისას
+  // (დახურვა) ახალი (ბაზისური, transition-ის გარეშე) მდგომარეობა მყისვე ერთდება,
+  // class-ის დამატებისას (გახსნა) კი .open-ის transition ცოცხლდება. ანუ გახსნა
+  // ანიმირებულია, დახურვა კი განზრახ მყისვეა.
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  pointer-events: none;
+
+  &.open {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
 
   a {
-    padding: 12px 0;
-    font-size: 14.5px;
-    font-weight: 600;
-    color: var(--ink-soft);
+    padding: 19px 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
     text-decoration: none;
     border-bottom: 1px solid var(--line-soft);
 
@@ -161,8 +185,8 @@ h3 {
       border-bottom: none;
     }
 
-    &:hover {
-      color: var(--ink);
+    &:active {
+      color: var(--brand-primary);
     }
   }
 

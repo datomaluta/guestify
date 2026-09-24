@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, afterNextRender, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, afterNextRender, effect, signal, viewChild } from '@angular/core';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { LangDropdownComponent } from '../../shared/lang-dropdown/lang-dropdown.component';
@@ -78,6 +78,14 @@ export class LandingComponent {
   private readonly topbarRef = viewChild<ElementRef<HTMLElement>>('topbarRef');
 
   constructor() {
+    // მობაილზე მთელ ეკრანზე გაშლილი მენიუა — ღიაობისას ფონური გვერდის სქროლი იბლოკება,
+    // რომ მენიუს მიღმა კონტენტი არ "მოძრაობდეს" გარეთ swipe-ისას. ცალკე effect (და არა
+    // toggleMobileMenu/closeMobileMenu-ში დუბლირება), რომ ყველა დამხურავმა გზამ
+    // (outside-click, Escape, ბმულზე დაჭერა) ერთნაირად იმუშაოს.
+    effect(() => {
+      document.body.style.overflow = this.mobileMenuOpen() ? 'hidden' : '';
+    });
+
     afterNextRender(() => {
       // რამდენი ტესტიმონიალი ჩანს ერთდროულად — 3 დესქტოპზე, 1 ვიწრო ეკრანზე
       const mq = window.matchMedia('(max-width: 719.98px)');

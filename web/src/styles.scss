@@ -40,6 +40,15 @@ body {
   height: 100%;
 }
 
+// ჰედერის nav-ბმულები (#how-it-works, #demo და ა.შ.) hash-ანქორებია — ეს ლამაზად
+// ასქროლებს მათკენ ნაცვლად მყისვე "ხტომისა". prefers-reduced-motion-ის პატივსაცემად
+// მხოლოდ მაშინ ირთვება, როცა მომხმარებელს ანიმაციების წინააღმდეგ პრეფერენსი არ აქვს.
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
   background: var(--paper);
