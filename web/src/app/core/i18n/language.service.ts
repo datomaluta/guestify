@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 import { AppLanguage } from '../models';
 import { TRANSLATIONS } from './translations';
 
@@ -8,6 +8,13 @@ const SUPPORTED: AppLanguage[] = ['ka', 'en', 'ru'];
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
   readonly lang = signal<AppLanguage>(this.readInitialLang());
+
+  constructor() {
+    // html[lang]-ს ვამახვილებთ, რომ styles.scss-ის :root[lang="en"] override-მა (Inter ინგლისურისთვის) იმუშაოს.
+    effect(() => {
+      document.documentElement.lang = this.lang();
+    });
+  }
 
   setLang(lang: AppLanguage): void {
     this.lang.set(lang);

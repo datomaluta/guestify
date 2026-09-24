@@ -1,8 +1,8 @@
-import { Component, ElementRef, afterNextRender, inject, signal } from '@angular/core';
-import { LanguageService } from '../../core/i18n/language.service';
+import { Component, HostListener, afterNextRender, signal } from '@angular/core';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
-import { AppLanguage } from '../../core/models';
 import { IconComponent } from '../../shared/icon/icon.component';
+import { LangDropdownComponent } from '../../shared/lang-dropdown/lang-dropdown.component';
+import { HeroSectionComponent } from './hero-section/hero-section.component';
 
 interface LandingFeature {
   icon: string;
@@ -30,21 +30,12 @@ const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Gu
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, LangDropdownComponent, HeroSectionComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
-  protected readonly language = inject(LanguageService);
-  private readonly elRef = inject(ElementRef<HTMLElement>);
-
   protected readonly demoMailto = DEMO_MAILTO;
-
-  protected readonly languages: { code: AppLanguage; label: string }[] = [
-    { code: 'ka', label: 'ქარ' },
-    { code: 'en', label: 'ENG' },
-    { code: 'ru', label: 'РУС' }
-  ];
 
   protected readonly features: LandingFeature[] = [
     { icon: 'qr_code_2', titleKey: 'landing_feat1_title', descKey: 'landing_feat1_desc' },
@@ -76,23 +67,10 @@ export class LandingComponent {
 
   protected readonly partnerPlaceholders = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
-  constructor() {
-    // scroll-reveal — მხოლოდ ბრაუზერში, ჩატვირთვის შემდეგ
-    afterNextRender(() => {
-      if (typeof IntersectionObserver === 'undefined') return;
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in');
-              io.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.15 }
-      );
-      this.elRef.nativeElement.querySelectorAll('.reveal').forEach((el: Element) => io.observe(el));
+  protected readonly mobileMenuOpen = signal(false);
 
+  constructor() {
+    afterNextRender(() => {
       // რამდენი ტესტიმონიალი ჩანს ერთდროულად — 3 დესქტოპზე, 1 ვიწრო ეკრანზე
       const mq = window.matchMedia('(max-width: 719.98px)');
       const applyPerPage = () => {
@@ -104,8 +82,24 @@ export class LandingComponent {
     });
   }
 
-  setLang(lang: AppLanguage): void {
-    this.language.setLang(lang);
+  toggleMobileMenu(event: Event): void {
+    event.stopPropagation();
+    this.mobileMenuOpen.update((v) => !v);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
+  }
+
+  /** click-outside — გარეთ დაჭერისას იხურება; toggle-ღილაკზე დაჭერა stopPropagation-ით არ აღწევს აქამდე. */
+  @HostListener('document:click')
+  closeMobileMenuOnOutsideClick(): void {
+    this.mobileMenuOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  closeMobileMenuOnEscape(): void {
+    this.mobileMenuOpen.set(false);
   }
 
   testiMaxIndex(): number {
