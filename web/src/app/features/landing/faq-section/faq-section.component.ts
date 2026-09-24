@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren, signal } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, afterNextRender, signal } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
 
@@ -28,21 +28,35 @@ export class FaqSectionComponent {
 
   protected readonly openIndex = signal(0);
 
-  /** თითო FAQ პასუხის ტექსტ-ელემენტი — რეალური სიმაღლის გასაზომად, რომ max-height ზუსტად
-   * კონტენტზე მორგებული იყოს და არა თვითნებური რიცხვი (grid-template-rows: 0fr/1fr ტრიკი
-   * აქ არ მუშაობს ზუსტად, რადგან auto-height კონტეინერში ერთადერთი flexible row კონტენტის
-   * სიმაღლეზეა დაყრდნობილი ნებისმიერი fr მნიშვნელობისთვის, გარდა ზუსტად 0fr-ისა). */
+  /**
+   * ღია პასუხის რეალური სიმაღლე (px) — max-height ზუსტად კონტენტზე რომ იყოს მორგებული
+   * (grid-template-rows: 0fr/1fr ტრიკი აქ არ მუშაობს ზუსტად, რადგან auto-height კონტეინერში
+   * ერთადერთი flexible row კონტენტის სიმაღლეზეა დაყრდნობილი ნებისმიერი fr მნიშვნელობისთვის,
+   * გარდა ზუსტად 0fr-ისა). განზრახ არის plain signal და არა template-იდან გამოძახებული
+   * DOM-წამკითხველი მეთოდი — ის NG0100-ს (ExpressionChangedAfterItHasBeenCheckedError) იწვევდა,
+   * რადგან @ViewChildren პირველივე change-detection cycle-ზე ჯერ არ იყო შევსებული და
+   * dev-mode-ის ხელახალ შემოწმებაზე მნიშვნელობა იცვლებოდა იმავე tick-ში. ამის მაგივრად
+   * სიმაღლე იზომება მხოლოდ toggle()-ში (click-ივენთი, არა template binding) და afterNextRender-ში
+   * (საწყისად ღია ელემენტისთვის) — ორივე calc-ის მიღმაა, ცალკე CD ციკლს იწყებს უსაფრთხოდ.
+   */
+  protected readonly openHeight = signal(0);
+
   @ViewChildren('answerText') private answerEls!: QueryList<ElementRef<HTMLElement>>;
 
-  toggle(i: number): void {
-    this.openIndex.update((current) => (current === i ? -1 : i));
+  constructor() {
+    afterNextRender(() => this.measureOpenHeight());
   }
 
-  maxHeight(i: number): string {
-    if (this.openIndex() !== i) {
-      return '0px';
+  toggle(i: number): void {
+    const next = this.openIndex() === i ? -1 : i;
+    this.openIndex.set(next);
+    if (next !== -1) {
+      this.measureOpenHeight();
     }
-    const el = this.answerEls?.get(i)?.nativeElement;
-    return el ? `${el.scrollHeight}px` : 'none';
+  }
+
+  private measureOpenHeight(): void {
+    const el = this.answerEls?.get(this.openIndex())?.nativeElement;
+    this.openHeight.set(el ? el.scrollHeight : 0);
   }
 }

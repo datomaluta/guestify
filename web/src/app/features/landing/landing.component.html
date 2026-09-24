@@ -1,6 +1,12 @@
-<div class="landing">
-  <div class="hero-screen">
-    <header class="topbar">
+<div class="landing" [style.--topbar-h.px]="topbarHeight()">
+  <div id="top"></div>
+
+  <!-- .hero-screen-ის ნაცვლად აქ, .landing-ის პირდაპირ შვილადაა (და არა hero-screen-ში,
+       რომელიც მხოლოდ 100dvh-ის სიმაღლისაა) — sticky-ს containing block ასე მთელ გვერდზეა
+       გადაჭიმული და არა მხოლოდ პირველ ეკრანზე, თორემ topbar სქროლვისას ქრებოდა, როგორც კი
+       hero-screen-ის ქვედა კიდეს გადავცდებოდით (იხ. landing.component.scss-ის კომენტარი). -->
+  <header class="topbar" #topbarRef>
+    <div class="wrap topbar-inner">
       <a class="brand-mark" href="#top">
         <span class="wordmark">check<span class="accent">it</span></span>
       </a>
@@ -8,6 +14,7 @@
       <nav class="nav-links">
         <a href="#how-it-works">{{ 'landing_how_title' | translate }}</a>
         <a href="#demo">{{ 'landing_nav_demo' | translate }}</a>
+        <a href="#pricing">{{ 'landing_pricing_eyebrow' | translate }}</a>
         <a href="#faq">{{ 'landing_nav_faq' | translate }}</a>
       </nav>
 
@@ -24,18 +31,19 @@
 
         <app-lang-dropdown />
       </div>
+    </div>
 
-      @if (mobileMenuOpen()) {
-        <nav class="mobile-menu">
-          <a href="#how-it-works" (click)="closeMobileMenu()">{{ 'landing_how_title' | translate }}</a>
-          <a href="#demo" (click)="closeMobileMenu()">{{ 'landing_nav_demo' | translate }}</a>
-          <a href="#faq" (click)="closeMobileMenu()">{{ 'landing_nav_faq' | translate }}</a>
-        </nav>
-      }
-    </header>
+    @if (mobileMenuOpen()) {
+      <nav class="mobile-menu">
+        <a href="#how-it-works" (click)="closeMobileMenu()">{{ 'landing_how_title' | translate }}</a>
+        <a href="#demo" (click)="closeMobileMenu()">{{ 'landing_nav_demo' | translate }}</a>
+        <a href="#pricing" (click)="closeMobileMenu()">{{ 'landing_pricing_eyebrow' | translate }}</a>
+        <a href="#faq" (click)="closeMobileMenu()">{{ 'landing_nav_faq' | translate }}</a>
+      </nav>
+    }
+  </header>
 
-    <div id="top"></div>
-
+  <div class="hero-screen">
     <app-hero-section />
   </div>
 
@@ -103,21 +111,7 @@
     </div>
   </section>
 
-  <section class="partners">
-    <div class="wrap">
-      <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
-    </div>
-    <div class="marquee">
-      <div class="marquee-track">
-        @for (p of partnerPlaceholders; track p) {
-          <span class="partner-item">[პარტნიორი სასტუმრო {{ p }}]</span>
-        }
-        @for (p of partnerPlaceholders; track p) {
-          <span class="partner-item" aria-hidden="true">[პარტნიორი სასტუმრო {{ p }}]</span>
-        }
-      </div>
-    </div>
-  </section>
+  <app-partners-section />
 
   <app-faq-section />
 
@@ -127,7 +121,7 @@
         <p class="tag">{{ 'landing_footer_tag' | translate }}</p>
         <p class="made">{{ 'landing_footer_made' | translate }} · © 2026</p>
       </div>
-      <a class="mail" href="mailto:hello@guestify.ge">hello&#64;guestify.ge</a>
+      <a class="mail" href="mailto:hello@checkit.ge">hello&#64;checkit.ge</a>
     </div>
   </footer>
 </div>

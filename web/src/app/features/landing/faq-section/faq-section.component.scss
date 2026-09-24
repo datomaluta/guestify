@@ -23,7 +23,10 @@ h2 {
 
 .faq {
   padding: 64px 0;
-  background: var(--paper);
+  // იგივე წვრილი წერტილოვანი ბადეა, რაც hero-screen-ს აქვს (landing.component.scss) —
+  // ბრენდ-ფერის ნათების blob-ის გარეშე, მხოლოდ წერტილები.
+  background:
+    var(--paper) radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
 }
 
 .faq .wrap {

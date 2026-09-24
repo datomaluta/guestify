@@ -1071,15 +1071,20 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
 
   landing_partners_eyebrow: {
-    ka: 'სად გამოვიყენოთ',
-    en: 'Built for',
-    ru: 'Подходит для',
+    ka: 'თანამშრომლობა',
+    en: 'Partnerships',
+    ru: 'Партнёрство',
+  },
+  landing_partners_heading: {
+    ka: 'ჩვენი პარტნიორები',
+    en: 'Our partners',
+    ru: 'Наши партнёры',
   },
 
   landing_footer_tag: {
-    ka: 'Guestify — ციფრული სტუმართა გზამკვლევი სასტუმროებისთვის.',
-    en: 'Guestify — a digital guest guide for hotels.',
-    ru: 'Guestify — цифровой гид для гостей отелей.',
+    ka: 'checkit — ციფრული სტუმართა გზამკვლევი სასტუმროებისთვის.',
+    en: 'checkit — a digital guest guide for hotels.',
+    ru: 'checkit — цифровой гид для гостей отелей.',
   },
   landing_footer_made: {
     ka: 'შექმნილია საქართველოში',
