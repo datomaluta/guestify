@@ -21,6 +21,15 @@
       rel="stylesheet"
     />
     <style>
+      /* სანამ loader ჩანს, გვერდს სქროლი ეკრძალება — თორემ ქვემოთ Angular-ის კონტენტის
+       რენდერის დროს scrollbar-ის გაჩენა/გაქრობა viewport-ის სიგანეს ცვლის და fixed,
+       ცენტრირებული loader-ი გვერდზე "ხტება" (განსაკუთრებით შესამჩნევია, როცა DevTools
+       ღიაა და გვერდის ეფექტური სიგანე უფრო ვიწროა). html.app-revealed დაემატება
+       loader-ის მოშორებისთანავე (იხ. app.component.ts) და სქროლი უბრუნდება რეალურ გვერდს. */
+      html:not(.app-revealed) {
+        overflow: hidden;
+      }
+
       /* პირველადი loader — Angular-ის ჩატვირთვამდეც ჩანს, JS/CSS bundle-ისა და hotel-resolver-ის დროს ცარიელი ეკრანის ნაცვლად. */
       #initial-loader {
         position: fixed;
@@ -39,62 +48,285 @@
       }
 
       /* QR-სკანერის ჩარჩო — პროდუქტი QR კოდით იხსნება, ასე რომ loader-იც ამ იდეაზეა აგებული:
-       "სკანირდება" და შედეგად ჩნდება checkit. */
+       ნამდვილი 21x21 QR მატრიცა (finder pattern-ები, timing pattern და მკვრივი მონაცემი),
+       რომელიც "იწერება", შემდეგ "სკანირდება" და შედეგად ჩნდება checkit. */
+      #initial-loader .loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+      }
+
       #initial-loader .scan-frame {
         position: relative;
-        width: 200px;
-        height: 104px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 150px;
+        height: 150px;
       }
 
-      #initial-loader .corner {
+      /* გარსი, რომლის ზომა ემთხვევა მთელი QR ნიმუშის ვიზუალურ ფართობს (126x126) — scale-in
+       ანიმაცია ამაზეა, რომ transform-origin ნიმუშის ცენტრში მოხვდეს და არა შიდა 6px
+       უჯრედის კუთხეში (რაც "ნახტომს"/წანაცვლებას იწვევდა). */
+      #initial-loader .qr-pattern {
         position: absolute;
-        width: 20px;
-        height: 20px;
+        left: 12px;
+        top: 12px;
+        width: 126px;
+        height: 126px;
         opacity: 0;
-        animation: loader-corner-in 0.35s ease-out both;
+        transform: scale(0.9);
+        animation: loader-qr-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
       }
 
-      #initial-loader .corner.tl {
-        top: 0;
+      /* ერთი 6px უჯრედი, რომლის box-shadow სიაში დაწერილია მთელი QR მატრიცის დანარჩენი
+       ყველა მუქი მოდული — ასე მთელი ნიმუში ერთ ელემენტადაა დახატული, ნამდვილი QR კოდის
+       სიმჭიდროვით. მატრიცა გენერირებულია სკრიპტით (finder pattern-ები + timing pattern +
+       სტაბილური ფსევდო-შემთხვევითი მონაცემი). */
+      #initial-loader .qr-modules {
+        position: absolute;
         left: 0;
-        border-top: 3px solid #111827;
-        border-left: 3px solid #111827;
-      }
-      #initial-loader .corner.tr {
         top: 0;
-        right: 0;
-        border-top: 3px solid #111827;
-        border-right: 3px solid #111827;
-        animation-delay: 0.05s;
-      }
-      #initial-loader .corner.bl {
-        bottom: 0;
-        left: 0;
-        border-bottom: 3px solid #111827;
-        border-left: 3px solid #111827;
-        animation-delay: 0.1s;
-      }
-      #initial-loader .corner.br {
-        bottom: 0;
-        right: 0;
-        border-bottom: 3px solid #111827;
-        border-right: 3px solid #111827;
-        animation-delay: 0.15s;
+        width: 6px;
+        height: 6px;
+        background: #111827;
+        box-shadow:
+          0px 0px 0 0 #111827,
+        6px 0px 0 0 #111827,
+        12px 0px 0 0 #111827,
+        18px 0px 0 0 #111827,
+        24px 0px 0 0 #111827,
+        30px 0px 0 0 #111827,
+        36px 0px 0 0 #111827,
+        48px 0px 0 0 #111827,
+        54px 0px 0 0 #111827,
+        72px 0px 0 0 #111827,
+        84px 0px 0 0 #111827,
+        90px 0px 0 0 #111827,
+        96px 0px 0 0 #111827,
+        102px 0px 0 0 #111827,
+        108px 0px 0 0 #111827,
+        114px 0px 0 0 #111827,
+        120px 0px 0 0 #111827,
+        0px 6px 0 0 #111827,
+        36px 6px 0 0 #111827,
+        48px 6px 0 0 #111827,
+        84px 6px 0 0 #111827,
+        120px 6px 0 0 #111827,
+        0px 12px 0 0 #111827,
+        12px 12px 0 0 #111827,
+        18px 12px 0 0 #111827,
+        24px 12px 0 0 #111827,
+        36px 12px 0 0 #111827,
+        54px 12px 0 0 #111827,
+        60px 12px 0 0 #111827,
+        66px 12px 0 0 #111827,
+        72px 12px 0 0 #111827,
+        84px 12px 0 0 #111827,
+        96px 12px 0 0 #111827,
+        102px 12px 0 0 #111827,
+        108px 12px 0 0 #111827,
+        120px 12px 0 0 #111827,
+        0px 18px 0 0 #111827,
+        12px 18px 0 0 #111827,
+        18px 18px 0 0 #111827,
+        24px 18px 0 0 #111827,
+        36px 18px 0 0 #111827,
+        72px 18px 0 0 #111827,
+        84px 18px 0 0 #111827,
+        96px 18px 0 0 #111827,
+        102px 18px 0 0 #111827,
+        108px 18px 0 0 #111827,
+        120px 18px 0 0 #111827,
+        0px 24px 0 0 #111827,
+        12px 24px 0 0 #111827,
+        18px 24px 0 0 #111827,
+        24px 24px 0 0 #111827,
+        36px 24px 0 0 #111827,
+        48px 24px 0 0 #111827,
+        54px 24px 0 0 #111827,
+        60px 24px 0 0 #111827,
+        66px 24px 0 0 #111827,
+        72px 24px 0 0 #111827,
+        84px 24px 0 0 #111827,
+        96px 24px 0 0 #111827,
+        102px 24px 0 0 #111827,
+        108px 24px 0 0 #111827,
+        120px 24px 0 0 #111827,
+        0px 30px 0 0 #111827,
+        36px 30px 0 0 #111827,
+        60px 30px 0 0 #111827,
+        66px 30px 0 0 #111827,
+        84px 30px 0 0 #111827,
+        120px 30px 0 0 #111827,
+        0px 36px 0 0 #111827,
+        6px 36px 0 0 #111827,
+        12px 36px 0 0 #111827,
+        18px 36px 0 0 #111827,
+        24px 36px 0 0 #111827,
+        30px 36px 0 0 #111827,
+        36px 36px 0 0 #111827,
+        48px 36px 0 0 #111827,
+        60px 36px 0 0 #111827,
+        72px 36px 0 0 #111827,
+        84px 36px 0 0 #111827,
+        90px 36px 0 0 #111827,
+        96px 36px 0 0 #111827,
+        102px 36px 0 0 #111827,
+        108px 36px 0 0 #111827,
+        114px 36px 0 0 #111827,
+        120px 36px 0 0 #111827,
+        48px 42px 0 0 #111827,
+        60px 42px 0 0 #111827,
+        72px 42px 0 0 #111827,
+        6px 48px 0 0 #111827,
+        12px 48px 0 0 #111827,
+        18px 48px 0 0 #111827,
+        24px 48px 0 0 #111827,
+        30px 48px 0 0 #111827,
+        36px 48px 0 0 #111827,
+        42px 48px 0 0 #111827,
+        48px 48px 0 0 #111827,
+        60px 48px 0 0 #111827,
+        72px 48px 0 0 #111827,
+        78px 48px 0 0 #111827,
+        102px 48px 0 0 #111827,
+        108px 48px 0 0 #111827,
+        114px 48px 0 0 #111827,
+        120px 48px 0 0 #111827,
+        0px 54px 0 0 #111827,
+        6px 54px 0 0 #111827,
+        12px 54px 0 0 #111827,
+        18px 54px 0 0 #111827,
+        24px 54px 0 0 #111827,
+        30px 54px 0 0 #111827,
+        72px 54px 0 0 #111827,
+        78px 54px 0 0 #111827,
+        84px 54px 0 0 #111827,
+        96px 54px 0 0 #111827,
+        102px 54px 0 0 #111827,
+        12px 60px 0 0 #111827,
+        30px 60px 0 0 #111827,
+        36px 60px 0 0 #111827,
+        42px 60px 0 0 #111827,
+        84px 60px 0 0 #111827,
+        90px 60px 0 0 #111827,
+        96px 60px 0 0 #111827,
+        114px 60px 0 0 #111827,
+        0px 66px 0 0 #111827,
+        6px 66px 0 0 #111827,
+        30px 66px 0 0 #111827,
+        42px 66px 0 0 #111827,
+        72px 66px 0 0 #111827,
+        84px 66px 0 0 #111827,
+        90px 66px 0 0 #111827,
+        102px 66px 0 0 #111827,
+        114px 66px 0 0 #111827,
+        120px 66px 0 0 #111827,
+        0px 72px 0 0 #111827,
+        24px 72px 0 0 #111827,
+        36px 72px 0 0 #111827,
+        42px 72px 0 0 #111827,
+        54px 72px 0 0 #111827,
+        60px 72px 0 0 #111827,
+        66px 72px 0 0 #111827,
+        78px 72px 0 0 #111827,
+        84px 72px 0 0 #111827,
+        90px 72px 0 0 #111827,
+        108px 72px 0 0 #111827,
+        120px 72px 0 0 #111827,
+        48px 78px 0 0 #111827,
+        66px 78px 0 0 #111827,
+        72px 78px 0 0 #111827,
+        84px 78px 0 0 #111827,
+        90px 78px 0 0 #111827,
+        114px 78px 0 0 #111827,
+        0px 84px 0 0 #111827,
+        6px 84px 0 0 #111827,
+        12px 84px 0 0 #111827,
+        18px 84px 0 0 #111827,
+        24px 84px 0 0 #111827,
+        30px 84px 0 0 #111827,
+        36px 84px 0 0 #111827,
+        48px 84px 0 0 #111827,
+        54px 84px 0 0 #111827,
+        66px 84px 0 0 #111827,
+        78px 84px 0 0 #111827,
+        90px 84px 0 0 #111827,
+        96px 84px 0 0 #111827,
+        102px 84px 0 0 #111827,
+        114px 84px 0 0 #111827,
+        0px 90px 0 0 #111827,
+        36px 90px 0 0 #111827,
+        48px 90px 0 0 #111827,
+        66px 90px 0 0 #111827,
+        72px 90px 0 0 #111827,
+        114px 90px 0 0 #111827,
+        0px 96px 0 0 #111827,
+        12px 96px 0 0 #111827,
+        18px 96px 0 0 #111827,
+        24px 96px 0 0 #111827,
+        36px 96px 0 0 #111827,
+        54px 96px 0 0 #111827,
+        60px 96px 0 0 #111827,
+        66px 96px 0 0 #111827,
+        78px 96px 0 0 #111827,
+        90px 96px 0 0 #111827,
+        102px 96px 0 0 #111827,
+        114px 96px 0 0 #111827,
+        0px 102px 0 0 #111827,
+        12px 102px 0 0 #111827,
+        18px 102px 0 0 #111827,
+        24px 102px 0 0 #111827,
+        36px 102px 0 0 #111827,
+        48px 102px 0 0 #111827,
+        54px 102px 0 0 #111827,
+        60px 102px 0 0 #111827,
+        72px 102px 0 0 #111827,
+        78px 102px 0 0 #111827,
+        84px 102px 0 0 #111827,
+        90px 102px 0 0 #111827,
+        108px 102px 0 0 #111827,
+        114px 102px 0 0 #111827,
+        120px 102px 0 0 #111827,
+        0px 108px 0 0 #111827,
+        12px 108px 0 0 #111827,
+        18px 108px 0 0 #111827,
+        24px 108px 0 0 #111827,
+        36px 108px 0 0 #111827,
+        66px 108px 0 0 #111827,
+        72px 108px 0 0 #111827,
+        84px 108px 0 0 #111827,
+        108px 108px 0 0 #111827,
+        114px 108px 0 0 #111827,
+        0px 114px 0 0 #111827,
+        36px 114px 0 0 #111827,
+        72px 114px 0 0 #111827,
+        78px 114px 0 0 #111827,
+        96px 114px 0 0 #111827,
+        120px 114px 0 0 #111827,
+        0px 120px 0 0 #111827,
+        6px 120px 0 0 #111827,
+        12px 120px 0 0 #111827,
+        18px 120px 0 0 #111827,
+        24px 120px 0 0 #111827,
+        30px 120px 0 0 #111827,
+        36px 120px 0 0 #111827,
+        66px 120px 0 0 #111827,
+        72px 120px 0 0 #111827,
+        84px 120px 0 0 #111827,
+        102px 120px 0 0 #111827,
+        120px 120px 0 0 #111827;
       }
 
       #initial-loader .scan-line {
         position: absolute;
-        left: 4px;
-        right: 4px;
-        top: 4px;
+        left: 12px;
+        right: 12px;
+        top: 12px;
         height: 2px;
         background: linear-gradient(90deg, transparent, #3b82f6, transparent);
         box-shadow: 0 0 8px 1px rgba(59, 130, 246, 0.55);
         opacity: 0;
-        animation: loader-scan-sweep 2.1s ease-in-out 0.4s infinite;
+        animation: loader-scan-sweep 2.1s ease-in-out 0.6s infinite;
       }
 
       #initial-loader .wordmark {
@@ -106,41 +338,41 @@
         color: #111827;
         opacity: 0;
         transform: scale(0.92);
-        animation: loader-wordmark-in 0.5s ease-out 0.55s both;
+        animation: loader-wordmark-in 0.5s ease-out 0.75s both;
       }
 
       #initial-loader .part-it {
         color: #3b82f6;
       }
 
-      @keyframes loader-corner-in {
+      @keyframes loader-qr-in {
         from {
           opacity: 0;
-          transform: scale(1.5);
+          transform: scale(0.9);
         }
         to {
-          opacity: 0.9;
+          opacity: 1;
           transform: scale(1);
         }
       }
 
       @keyframes loader-scan-sweep {
         0% {
-          top: 4px;
+          top: 12px;
           opacity: 0;
         }
         10% {
           opacity: 1;
         }
         50% {
-          top: calc(100% - 6px);
+          top: calc(100% - 14px);
           opacity: 1;
         }
         90% {
           opacity: 1;
         }
         100% {
-          top: 4px;
+          top: 12px;
           opacity: 0;
         }
       }
@@ -153,12 +385,9 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        #initial-loader .corner,
+        #initial-loader .qr-pattern,
         #initial-loader .wordmark {
           animation: none;
-          opacity: 0.9;
-        }
-        #initial-loader .wordmark {
           opacity: 1;
           transform: none;
         }
@@ -170,12 +399,13 @@
   </head>
   <body>
     <div id="initial-loader">
-      <div class="scan-frame">
-        <span class="corner tl"></span>
-        <span class="corner tr"></span>
-        <span class="corner bl"></span>
-        <span class="corner br"></span>
-        <span class="scan-line"></span>
+      <div class="loader-content">
+        <div class="scan-frame">
+          <span class="qr-pattern">
+            <span class="qr-modules"></span>
+          </span>
+          <span class="scan-line"></span>
+        </div>
         <span class="wordmark"
           ><span class="part-check">check</span
           ><span class="part-it">it</span></span
