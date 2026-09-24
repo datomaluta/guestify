@@ -202,9 +202,9 @@ img[appFadeIn] {
 
 // ლენდინგის hero/topbar load-in ანიმაციები (hero-section.component.scss,
 // landing.component.scss) საწყისად დაპაუზებულია და მხოლოდ მაშინ ეშვება, როცა
-// app.component.ts index.html-ის სტატიკურ #initial-loader-ს შლის — თორემ ეს ანიმაციები
-// DOM-ში ჩასმისთანავე დაიწყებოდა და loader-ის (მინიმუმ 2წ, MIN_LOADER_MS) მიღმა, უხილავად,
-// უკვე დამთავრებული აღმოჩნდებოდა. !important აუცილებელია — Angular-ის emulated
+// app.component.ts პირველი ნავიგაციის დასრულებისას html-ს .app-revealed კლასს ამატებს —
+// თორემ ეს ანიმაციები DOM-ში ჩასმისთანავე დაიწყებოდა და loader-ის (მინიმუმ 2წ,
+// MIN_LOADER_MS) მიღმა, უხილავად, უკვე დამთავრებული აღმოჩნდებოდა. !important აუცილებელია — Angular-ის emulated
 // encapsulation component-scoped სელექტორებს დამატებით [_ngcontent-*] ატრიბუტს ურთავს,
 // რაც სპეციფიურობით სჯობნის ამ გლობალურ (component-ის მიღმა დაწერილ) წესს (იხ. მსგავსი
 // მიზეზი ზემოთ, .app-shell router-outlet + *-ის კომენტარში).
