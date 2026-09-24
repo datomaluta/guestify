@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface AiLanguage {
   code: string;
@@ -11,7 +12,7 @@ interface AiLanguage {
 @Component({
   selector: 'app-ai-section',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, RevealDirective],
   templateUrl: './ai-section.component.html',
   styleUrl: './ai-section.component.scss'
 })

@@ -1,6 +1,6 @@
 <section class="features" id="features">
   <div class="wrap">
-    <div class="features-intro">
+    <div class="features-intro" appReveal>
       <p class="eyebrow">{{ 'landing_features_eyebrow' | translate }}</p>
       <h2>
         {{ 'landing_features_heading_main' | translate }}
@@ -10,8 +10,8 @@
     </div>
 
     <div class="features-grid">
-      @for (f of features; track f.titleKey) {
-        <div class="feature-card">
+      @for (f of features; track f.titleKey; let i = $index) {
+        <div class="feature-card" appReveal [style.--reveal-delay.ms]="(i % 5) * 60">
           <span class="ic"><app-icon [name]="f.icon" [size]="20" /></span>
           <h3>{{ f.titleKey | translate }}</h3>
           <p>{{ f.descKey | translate }}</p>

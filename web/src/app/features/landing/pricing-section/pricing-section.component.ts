@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface PricingPlan {
   nameKey: string;
@@ -16,7 +17,7 @@ const PRICING_TEL = 'tel:+995577776841';
 @Component({
   selector: 'app-pricing-section',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, RevealDirective],
   templateUrl: './pricing-section.component.html',
   styleUrl: './pricing-section.component.scss'
 })

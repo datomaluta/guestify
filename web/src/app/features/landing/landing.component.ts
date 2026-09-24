@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener, afterNextRender, effect, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, afterNextRender, effect, inject, signal, viewChild } from '@angular/core';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { LangDropdownComponent } from '../../shared/lang-dropdown/lang-dropdown.component';
+import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { ProblemSectionComponent } from './problem-section/problem-section.component';
 import { HowSectionComponent } from './how-section/how-section.component';
@@ -31,6 +32,7 @@ interface Testimonial {
     TranslatePipe,
     IconComponent,
     LangDropdownComponent,
+    RevealDirective,
     HeroSectionComponent,
     ProblemSectionComponent,
     HowSectionComponent,
@@ -77,6 +79,12 @@ export class LandingComponent {
   protected readonly topbarHeight = signal(64);
   private readonly topbarRef = viewChild<ElementRef<HTMLElement>>('topbarRef');
 
+  /** სქროლის მდგომარეობა — topbar-ის კომპაქტური სტილისთვის და ზედა scroll-progress ზოლისთვის. */
+  protected readonly scrolled = signal(false);
+  protected readonly scrollProgress = signal(0);
+
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor() {
     // მობაილზე მთელ ეკრანზე გაშლილი მენიუა — ღიაობისას ფონური გვერდის სქროლი იბლოკება,
     // რომ მენიუს მიღმა კონტენტი არ "მოძრაობდეს" გარეთ swipe-ისას. ცალკე effect (და არა
@@ -103,6 +111,26 @@ export class LandingComponent {
         });
         ro.observe(topbarEl);
       }
+
+      // topbar-ის კომპაქტური სტილი + ზედა scroll-progress ზოლი — rAF-ით გატროტლილი, რომ
+      // scroll-ივენთმა (რომელიც ბრაუზერს ხშირად ეშვება) ზედმეტი layout/style ხელახლა არ გამოთვალოს.
+      let ticking = false;
+      const updateScroll = () => {
+        const doc = document.documentElement;
+        this.scrolled.set(doc.scrollTop > 8);
+        const max = doc.scrollHeight - doc.clientHeight;
+        this.scrollProgress.set(max > 0 ? Math.min(100, (doc.scrollTop / max) * 100) : 0);
+        ticking = false;
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateScroll);
+        }
+      };
+      updateScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
     });
   }
 

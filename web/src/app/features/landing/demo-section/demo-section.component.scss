@@ -159,10 +159,26 @@ h2 {
   }
 }
 
+@keyframes float-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .demo-phone {
   width: 100%;
   max-width: 340px;
   margin: 0 auto;
+
+  // idle float მხოლოდ scroll-reveal-ის დასრულების მერე ერთვება (animation-delay), რომ
+  // reveal-ის translate-სა და float-ის transform-ს შორის საწყისი "აჯანყება" არ გამოჩნდეს.
+  &.is-visible {
+    animation: float-idle 5s ease-in-out 0.7s infinite;
+  }
 
   img {
     display: block;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface ProblemQuestion {
   icon: string;
@@ -16,7 +17,7 @@ interface ProblemQuestion {
 @Component({
   selector: 'app-problem-section',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, RevealDirective],
   templateUrl: './problem-section.component.html',
   styleUrl: './problem-section.component.scss',
 })

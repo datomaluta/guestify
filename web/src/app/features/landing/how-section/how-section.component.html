@@ -1,6 +1,6 @@
 <section class="how" id="how-it-works">
   <div class="wrap">
-    <div class="how-intro">
+    <div class="how-intro" appReveal>
       <p class="eyebrow">{{ 'landing_how_title' | translate }}</p>
       <h2>{{ 'landing_how_heading' | translate }}</h2>
       <p class="subtitle">{{ 'landing_how_subtitle' | translate }}</p>
@@ -8,7 +8,7 @@
 
     <div class="how-grid">
       @for (s of steps; track s.titleKey; let i = $index) {
-        <div class="how-step">
+        <div class="how-step reveal-scale" appReveal [style.--reveal-delay.ms]="i * 120">
           <div class="how-connector">
             <span class="how-num">{{ i + 1 }}</span>
           </div>

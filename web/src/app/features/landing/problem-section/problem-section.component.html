@@ -1,13 +1,13 @@
 <section class="problem">
   <div class="wrap">
-    <div class="problem-intro">
+    <div class="problem-intro" appReveal>
       <p class="eyebrow">{{ 'landing_problem_eyebrow' | translate }}</p>
       <h2>{{ 'landing_problem_title' | translate }}</h2>
     </div>
 
     <div class="problem-grid">
-      @for (q of questions; track q.key) {
-        <div class="problem-card">
+      @for (q of questions; track q.key; let i = $index) {
+        <div class="problem-card" appReveal [style.--reveal-delay.ms]="i * 70">
           <span class="ic"><app-icon [name]="q.icon" [size]="22" /></span>
           <p class="q">{{ q.key | translate }}</p>
         </div>

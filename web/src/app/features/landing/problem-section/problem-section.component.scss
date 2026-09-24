@@ -55,6 +55,19 @@ h2 {
   }
 }
 
+@keyframes icon-wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
 .problem-grid {
   display: grid;
   gap: 16px;
@@ -97,6 +110,12 @@ h2 {
     display: grid;
     place-items: center;
     margin-bottom: 16px;
+  }
+
+  @media (hover: hover) {
+    &:hover .ic {
+      animation: icon-wobble 0.5s ease;
+    }
   }
 
   .q {

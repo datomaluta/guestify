@@ -1,6 +1,6 @@
 <section class="ba">
   <div class="wrap">
-    <div class="ba-intro">
+    <div class="ba-intro" appReveal>
       <p class="eyebrow">{{ 'landing_ba_eyebrow' | translate }}</p>
       <h2>
         {{ 'landing_ba_heading_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_heading_post' | translate }}
@@ -8,20 +8,20 @@
     </div>
 
     <div class="ba-grid">
-      <div class="ba-card before">
+      <div class="ba-card before reveal-left" appReveal>
         <span class="badge">{{ 'landing_ba_before_badge_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_before_badge_post' | translate }}</span>
         <ul>
-          @for (key of beforeItems; track key) {
-            <li><app-icon name="close" [size]="15" />{{ key | translate }}</li>
+          @for (key of beforeItems; track key; let i = $index) {
+            <li [style.--reveal-delay.ms]="i * 70"><app-icon name="close" [size]="15" />{{ key | translate }}</li>
           }
         </ul>
       </div>
 
-      <div class="ba-card after">
+      <div class="ba-card after reveal-right" appReveal [style.--reveal-delay.ms]="150">
         <span class="badge">{{ 'landing_ba_after_badge_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_after_badge_post' | translate }}</span>
         <ul>
-          @for (key of afterItems; track key) {
-            <li><app-icon name="check" [size]="15" />{{ key | translate }}</li>
+          @for (key of afterItems; track key; let i = $index) {
+            <li [style.--reveal-delay.ms]="i * 70"><app-icon name="check" [size]="15" />{{ key | translate }}</li>
           }
         </ul>
       </div>

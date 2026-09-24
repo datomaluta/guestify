@@ -1,6 +1,6 @@
 <section class="ai">
   <div class="wrap">
-    <div class="ai-copy">
+    <div class="ai-copy reveal-left" appReveal>
       <p class="eyebrow">{{ 'landing_ai_eyebrow' | translate }}</p>
       <h2>{{ 'landing_ai_heading' | translate }}</h2>
       <p class="body">{{ 'landing_ai_body' | translate }}</p>
@@ -21,7 +21,7 @@
       </p>
     </div>
 
-    <div class="ai-chat">
+    <div class="ai-chat reveal-right" appReveal [style.--reveal-delay.ms]="120">
       <div class="chat-card">
         <div class="chat-header">
           <span class="bot-avatar"><app-icon name="smart_toy" [size]="18" /></span>

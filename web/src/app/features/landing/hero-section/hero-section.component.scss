@@ -48,34 +48,129 @@ h3 {
   }
 }
 
+// ტელეფონის მოკიდების შემდეგ (pop-in) რბილი, უსასრულო "სუნთქვის" მოძრაობა — ცოცხალი,
+// მაგრამ არადამაბნეველი. pop-in-ის ცალკე animation-ია (comma-separated), delay-ით ეშვება
+// pop-in-ის დასრულების მერე.
+@keyframes float-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+// ფონური "blob"-ები — hero-screen-ის არსებული წერტილოვანი ბადის/ნათების თემაზეა აწყობილი
+// (landing.component.scss-ის .hero-screen background), მხოლოდ დამატებით ნელა მოცურავს.
+// pointer-events: none და z-index: -1, რომ კონტენტს/კლიკებს არაფერში ხელი არ შეუშალოს.
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -24px);
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-26px, 20px);
+  }
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.blob-a {
+  top: -10%;
+  right: -6%;
+  width: 320px;
+  height: 320px;
+  background: color-mix(in srgb, var(--brand-primary) 22%, transparent);
+  animation: drift-a 14s ease-in-out infinite;
+}
+
+.blob-b {
+  bottom: -14%;
+  left: -8%;
+  width: 260px;
+  height: 260px;
+  background: color-mix(in srgb, var(--brand-secondary) 16%, transparent);
+  animation: drift-b 17s ease-in-out infinite;
+}
+
+// ყველა load-in ანიმაცია საწყისად დაპაუზებულია — index.html-ის სტატიკური #initial-loader-ი
+// მინიმუმ 2წ ჩანს (app.component.ts, MIN_LOADER_MS), მაგრამ hero DOM-ში ბევრად ადრე ჩნდება
+// (router-ის NavigationEnd-ისთანავე), ასე რომ დაუპაუზებლად ეს ანიმაციები loader-ის მიღმა,
+// უხილავად, უკვე დამთავრებული აღმოჩნდებოდა. animation-fill-mode: both საშუალებას იძლევა
+// პაუზის დროსაც (delay-ფაზაშივე) "from" კადრის მდგომარეობა (opacity:0) ჩანდეს. გაშვება
+// html.app-revealed-ის დამატებისას ხდება (styles.scss-ის გლობალური !important წესი,
+// app.component.ts loader-ს რომ შლის, იმავე მომენტში ამატებს ამ კლასს document.documentElement-ზე).
 .hero h1 {
   animation: rise-in 0.6s ease both;
   animation-delay: 0.1s;
+  animation-play-state: paused;
 }
 
 .hero p.sub {
   animation: rise-in 0.6s ease both;
   animation-delay: 0.2s;
+  animation-play-state: paused;
 }
 
+// rise-in-ის (0.3s + 0.6s = 0.9s) დასრულების ჩვენებისთანავე ცოცხლდება — ორივე ერთსა და
+// იმავე animation-play-state-ს იზიარებს (single-value shorthand ორივეს ეხება), ასე რომ
+// html.app-revealed-მდე pulse-იც პაუზირებულია და ერთდროულად ეშვება rise-in-თან.
 .hero .cta-btn {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.3s;
+  animation:
+    rise-in 0.6s ease 0.3s both,
+    cta-pulse 2.6s ease-in-out 0.9s infinite;
+  animation-play-state: paused;
+}
+
+@keyframes cta-pulse {
+  0%,
+  100% {
+    box-shadow: var(--shadow-md), 0 0 0 0 color-mix(in srgb, var(--brand-primary) 45%, transparent);
+  }
+  50% {
+    box-shadow: var(--shadow-md), 0 0 0 8px transparent;
+  }
 }
 
 .hero .hero-trust {
   animation: rise-in 0.6s ease both;
   animation-delay: 0.38s;
+  animation-play-state: paused;
 }
 
 .hero .hero-checks {
   animation: rise-in 0.6s ease both;
   animation-delay: 0.44s;
+  animation-play-state: paused;
 }
 
 .phone {
-  animation: pop-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  animation-delay: 0.3s;
+  animation:
+    pop-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both,
+    float-idle 5.5s ease-in-out 1s infinite;
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

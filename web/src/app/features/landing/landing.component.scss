@@ -43,8 +43,11 @@ h3 {
   }
 }
 
+// (იხ. hero-section.component.scss-ის იგივე კომენტარი) — საწყისად დაპაუზებულია, ვიდრე
+// app.component.ts loader-ს არ მოხსნის და html.app-revealed-ს არ დაამატებს.
 .topbar {
   animation: slide-down 0.5s ease both;
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -63,6 +66,33 @@ h3 {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line-soft);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
+  // ცოტა უფრო "მკვრივი" ხდება სქროლვისას — padding-ს .topbar-inner-ზე ვამცირებთ (და არა
+  // აქ, რომ თავად .topbar-ის sticky ყუთის ჩარჩო არ შეიცვალოს).
+  &.scrolled {
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    box-shadow: var(--shadow-sm);
+
+    .topbar-inner {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+// წვრილი პროგრეს-ზოლი topbar-ის ქვედა კიდეზე — scaleX-ით იზრდება scrollProgress()-ის
+// შესაბამისად (landing.component.ts). transform-origin: left, რომ მარცხნიდან იზრდებოდეს.
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--brand-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+  pointer-events: none;
 }
 
 // .wrap (ზემოთ, "shared layout"-ში) საიტის დანარჩენი კონტენტის იგივე სიგანეზე (1120px)
@@ -74,6 +104,7 @@ h3 {
   gap: 12px;
   padding-top: 14px;
   padding-bottom: 14px;
+  transition: padding 0.25s ease;
 }
 
 .brand-mark {

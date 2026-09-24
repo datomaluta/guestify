@@ -157,6 +157,38 @@ img[appFadeIn] {
   }
 }
 
+// scroll-reveal utility (RevealDirective იმართავს .is-visible-ს) — ლენდინგის სექციებზეა
+// გამოყენებული. `translate`/`scale` განზრახ (და არა `transform`), რომ hover-ის ან სხვა
+// ეფექტების transform-ს (lift, active-scale და ა.შ.) არ დაუპირისპირდეს — ორივე ერთდროულად,
+// დამოუკიდებლად მოქმედებს იმავე ელემენტზე.
+[appReveal] {
+  opacity: 0;
+  translate: 0 22px;
+  transition:
+    opacity 0.6s ease,
+    translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+
+  &.reveal-left {
+    translate: -22px 0;
+  }
+
+  &.reveal-right {
+    translate: 22px 0;
+  }
+
+  &.reveal-scale {
+    translate: 0 14px;
+    scale: 0.95;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -166,6 +198,24 @@ img[appFadeIn] {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+// ლენდინგის hero/topbar load-in ანიმაციები (hero-section.component.scss,
+// landing.component.scss) საწყისად დაპაუზებულია და მხოლოდ მაშინ ეშვება, როცა
+// app.component.ts index.html-ის სტატიკურ #initial-loader-ს შლის — თორემ ეს ანიმაციები
+// DOM-ში ჩასმისთანავე დაიწყებოდა და loader-ის (მინიმუმ 2წ, MIN_LOADER_MS) მიღმა, უხილავად,
+// უკვე დამთავრებული აღმოჩნდებოდა. !important აუცილებელია — Angular-ის emulated
+// encapsulation component-scoped სელექტორებს დამატებით [_ngcontent-*] ატრიბუტს ურთავს,
+// რაც სპეციფიურობით სჯობნის ამ გლობალურ (component-ის მიღმა დაწერილ) წესს (იხ. მსგავსი
+// მიზეზი ზემოთ, .app-shell router-outlet + *-ის კომენტარში).
+html.app-revealed .topbar,
+html.app-revealed .hero h1,
+html.app-revealed .hero p.sub,
+html.app-revealed .hero .cta-btn,
+html.app-revealed .hero .hero-trust,
+html.app-revealed .hero .hero-checks,
+html.app-revealed .hero .phone {
+  animation-play-state: running !important;
 }
 
 // guest ტაბებს შორის ნავიგაციის ანიმაცია — **არა** browser-ის View Transitions API
