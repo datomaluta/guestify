@@ -1,0 +1,22 @@
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="features-intro">
+      <p class="eyebrow">{{ 'landing_features_eyebrow' | translate }}</p>
+      <h2>
+        {{ 'landing_features_heading_main' | translate }}
+        <span class="accent">{{ 'landing_features_heading_accent' | translate }}</span>
+      </h2>
+      <p class="subtitle">{{ 'landing_features_subtitle' | translate }}</p>
+    </div>
+
+    <div class="features-grid">
+      @for (f of features; track f.titleKey) {
+        <div class="feature-card">
+          <span class="ic"><app-icon [name]="f.icon" [size]="20" /></span>
+          <h3>{{ f.titleKey | translate }}</h3>
+          <p>{{ f.descKey | translate }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
