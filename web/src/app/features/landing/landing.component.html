@@ -1,4 +1,4 @@
-<div class="landing" [style.--topbar-h.px]="topbarHeight()">
+<div class="landing" [style.--topbar-h]="topbarHeight() + 'px'">
   <div id="top"></div>
 
   <!-- .hero-screen-ის ნაცვლად აქ, .landing-ის პირდაპირ შვილადაა (და არა hero-screen-ში,
@@ -32,16 +32,22 @@
         <app-lang-dropdown />
       </div>
     </div>
-
-    @if (mobileMenuOpen()) {
-      <nav class="mobile-menu">
-        <a href="#how-it-works" (click)="closeMobileMenu()">{{ 'landing_how_title' | translate }}</a>
-        <a href="#demo" (click)="closeMobileMenu()">{{ 'landing_nav_demo' | translate }}</a>
-        <a href="#pricing" (click)="closeMobileMenu()">{{ 'landing_pricing_eyebrow' | translate }}</a>
-        <a href="#faq" (click)="closeMobileMenu()">{{ 'landing_nav_faq' | translate }}</a>
-      </nav>
-    }
   </header>
+
+  <!-- .topbar-ის მიღმაა (და არა მასში ჩადგმული) — .topbar-ს backdrop-filter აქვს, რომელიც
+       fixed-პოზიციონირებული შვილებისთვის ახალ containing block-ს ქმნის (viewport-ის მაგივრად
+       topbar-ის საკუთარ პატარა ყუთს), ასე რომ position:fixed აქ topbar-ის შიგნით რომ ყოფილიყო,
+       მთელ ეკრანს ვერ დაფარავდა (და გვერდის კონტენტი ჩანდა topbar-ქვემოთ).
+
+       @if-ით აღარ იხსნება/იხურება (რაც DOM-იდან მყისვე შლიდა და გაქრობის ანიმაციას
+       შეუძლებელს ხდიდა) — მუდმივად DOM-შია, ხოლო ღია/დახურული მდგომარეობა .open კლასით
+       კონტროლდება, opacity/transform transition-ით ორივე მიმართულებით. -->
+  <nav class="mobile-menu" [class.open]="mobileMenuOpen()">
+    <a href="#how-it-works" (click)="closeMobileMenu()">{{ 'landing_how_title' | translate }}</a>
+    <a href="#demo" (click)="closeMobileMenu()">{{ 'landing_nav_demo' | translate }}</a>
+    <a href="#pricing" (click)="closeMobileMenu()">{{ 'landing_pricing_eyebrow' | translate }}</a>
+    <a href="#faq" (click)="closeMobileMenu()">{{ 'landing_nav_faq' | translate }}</a>
+  </nav>
 
   <div class="hero-screen">
     <app-hero-section />
