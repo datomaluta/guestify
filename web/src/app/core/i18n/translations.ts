@@ -365,10 +365,45 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Fewer repetitive messages',
     ru: 'Меньше повторяющихся сообщений',
   },
+  landing_problem_eyebrow: {
+    ka: 'პრობლემა',
+    en: 'The problem',
+    ru: 'Проблема',
+  },
+  landing_problem_title: {
+    ka: 'სტუმრები ერთსა და იმავე კითხვებს ისევ და ისევ სვამენ',
+    en: 'Guests ask the same questions again and again',
+    ru: 'Гости снова и снова задают одни и те же вопросы',
+  },
+  landing_problem_q1: {
+    ka: '„რა არის Wi-Fi პაროლი?“',
+    en: '"What\'s the Wi-Fi password?"',
+    ru: '«Какой пароль Wi-Fi?»',
+  },
+  landing_problem_q2: {
+    ka: '„რომელ საათზეა check-out?“',
+    en: '"What time is check-out?"',
+    ru: '«Во сколько выезд?»',
+  },
+  landing_problem_q3: {
+    ka: '„სად დავტოვოთ მანქანა?“',
+    en: '"Where should we park?"',
+    ru: '«Где нам припарковаться?»',
+  },
+  landing_problem_q4: {
+    ka: '„როგორ დავუკავშირდეთ მასპინძელს?“',
+    en: '"How do we contact the host?"',
+    ru: '«Как связаться с хозяином?»',
+  },
+  landing_problem_body: {
+    ka: 'სტუმრისთვის ეს დამაბნეველია. მასპინძლისთვის კი — ზედმეტი მიმოწერა. checkit ამცირებს ამ ხახუნს.',
+    en: 'For guests, this can feel confusing. For hosts, it creates unnecessary back-and-forth. checkit helps reduce that friction.',
+    ru: 'Для гостя это может сбивать с толку. Для хозяина — лишняя переписка. checkit снижает это трение.',
+  },
   landing_why_title: {
-    ka: 'რატომ Guestify',
-    en: 'Why Guestify',
-    ru: 'Почему Guestify',
+    ka: 'რატომ checkit',
+    en: 'Why checkit',
+    ru: 'Почему checkit',
   },
   landing_why_body: {
     ka: 'ბეჭდური ბუკლეტი მალე მოძველდება, იკარგება ოთახიდან და ერთ ენაზეა დაბეჭდილი. Guestify-ით სტუმარი ყველაფერს ოთახიდანვე კითხულობს — თქვენ კი კონტენტს ცვლით წამებში, ხელახლა დაბეჭდვის გარეშე.',
@@ -422,35 +457,96 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'How it works',
     ru: 'Как это работает',
   },
+  landing_how_heading: {
+    ka: 'შექმენით სტუმრის გზამკვლევი წუთებში',
+    en: 'Create your guest guide in minutes',
+    ru: 'Создайте гид для гостей за минуты',
+  },
+  landing_how_subtitle: {
+    ka: 'დაამატეთ ინფორმაცია ერთხელ — სტუმარი QR-ს სკანერავს და მყისვე პოულობს ყველაფერს, რაც სჭირდება.',
+    en: 'Add your info once. Guests scan the QR and find everything they need instantly.',
+    ru: 'Добавьте информацию один раз. Гости сканируют QR и мгновенно находят всё, что нужно.',
+  },
   landing_how1_title: {
-    ka: 'ბეჭდავთ QR-ს',
-    en: 'Print the QR',
-    ru: 'Печатаете QR',
+    ka: 'ვამატებთ თქვენს შესახებ ინფორმაციას',
+    en: 'We add your information',
+    ru: 'Добавляем информацию о вас',
   },
   landing_how1_desc: {
-    ka: 'განათავსეთ თქვენი უნიკალური კოდი ოთახში, რეცეფციაზე ან სასადილოში.',
-    en: 'Place your unique code in rooms, at reception, in the restaurant.',
-    ru: 'Размещаете уникальный код в номерах, на ресепшене, в ресторане.',
+    ka: 'სახლის წესები, რეკომენდაციები, კონტაქტები და ინსტრუქციები — ერთხელ, ადმინ პანელიდან.',
+    en: 'House rules, recommendations, contacts and instructions — once, from the admin panel.',
+    ru: 'Правила дома, рекомендации, контакты и инструкции — один раз, из админ-панели.',
   },
   landing_how2_title: {
-    ka: 'სტუმარი სკანერავს',
-    en: 'Guest scans it',
-    ru: 'Гость сканирует',
+    ka: 'გააზიარეთ ერთი QR-ით',
+    en: 'Share it with one QR code',
+    ru: 'Делитесь одним QR-кодом',
   },
   landing_how2_desc: {
-    ka: 'გვერდი ეგრევე იხსნება — ინსტალაციის გარეშე.',
-    en: 'The page opens instantly — nothing to install.',
-    ru: 'Страница открывается мгновенно — ничего устанавливать не нужно.',
+    ka: 'დადეთ ოთახში, მისასალმებელ ბარათზე ან შეტყობინებაში.',
+    en: 'Place it in the room, on a welcome card or in a message.',
+    ru: 'Разместите в номере, на приветственной карточке или в сообщении.',
   },
   landing_how3_title: {
-    ka: 'თქვენ განაახლებთ',
-    en: 'You keep it current',
-    ru: 'Вы обновляете',
+    ka: 'სტუმარი ხედავს მყისვე',
+    en: 'Guests see it instantly',
+    ru: 'Гости видят мгновенно',
   },
   landing_how3_desc: {
-    ka: 'ფასი შეიცვალა? სერვისი დაემატა? წამებში, ადმინ პანელიდან.',
-    en: 'Price changed? New service? Seconds, from the admin panel.',
-    ru: 'Изменилась цена? Появилась услуга? Секунды — из админ-панели.',
+    ka: 'ხსნის ტელეფონიდან, აპლიკაციის ინსტალაციის გარეშე.',
+    en: 'Opens on their phone — no app to install.',
+    ru: 'Открывается на телефоне — без установки приложения.',
+  },
+  landing_how_highlight: {
+    ka: 'აპლიკაციის ინსტალაცია არ სჭირდება. რთული სეთაფი არ არის. PDF-ები და ნაბეჭდი ბუკლეტები — აღარ.',
+    en: 'No app to download. No complicated setup. No PDFs or printed binders.',
+    ru: 'Не нужно скачивать приложение. Никакой сложной настройки. Никаких PDF и папок.',
+  },
+
+  landing_demo_heading: {
+    ka: 'ნახეთ, რას იხილავენ თქვენი სტუმრები',
+    en: 'See what your guests will experience',
+    ru: 'Посмотрите, что увидят ваши гости',
+  },
+  landing_demo_body: {
+    ka: 'checkit თქვენი სასტუმროს ინფორმაციას გარდაქმნის მარტივ, მობილურზე მორგებულ გზამკვლევად, რომელსაც სტუმარი QR კოდით მყისვე ხსნის.',
+    en: 'checkit turns your property information into a simple, mobile-friendly guide your guests open instantly from a QR code.',
+    ru: 'checkit превращает информацию о вашем объекте в простой, удобный для мобильных устройств гид, который гости мгновенно открывают по QR-коду.',
+  },
+  landing_demo_pill_wifi: {
+    ka: 'Wi-Fi',
+    en: 'Wi-Fi',
+    ru: 'Wi-Fi',
+  },
+  landing_demo_pill_checkin: {
+    ka: 'ჩექინი',
+    en: 'Check-in',
+    ru: 'Заезд',
+  },
+  landing_demo_pill_rules: {
+    ka: 'წესები',
+    en: 'Rules',
+    ru: 'Правила',
+  },
+  landing_demo_pill_tips: {
+    ka: 'რჩევები',
+    en: 'Tips',
+    ru: 'Советы',
+  },
+  landing_demo_pill_emergency: {
+    ka: 'გადაუდებელი დახმარება',
+    en: 'Emergency',
+    ru: 'Экстренная помощь',
+  },
+  landing_demo_pill_ai: {
+    ka: 'AI დახმარება',
+    en: 'AI assistant',
+    ru: 'AI-помощник',
+  },
+  landing_demo_features_cta: {
+    ka: 'იხილეთ ფუნქციები',
+    en: 'See the features',
+    ru: 'Смотреть функции',
   },
 
   landing_testi_title: {

@@ -3,14 +3,12 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { LangDropdownComponent } from '../../shared/lang-dropdown/lang-dropdown.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
+import { ProblemSectionComponent } from './problem-section/problem-section.component';
+import { HowSectionComponent } from './how-section/how-section.component';
+import { DemoSectionComponent } from './demo-section/demo-section.component';
 
 interface LandingFeature {
   icon: string;
-  titleKey: string;
-  descKey: string;
-}
-
-interface LandingStep {
   titleKey: string;
   descKey: string;
 }
@@ -30,7 +28,15 @@ const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Gu
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [TranslatePipe, IconComponent, LangDropdownComponent, HeroSectionComponent],
+  imports: [
+    TranslatePipe,
+    IconComponent,
+    LangDropdownComponent,
+    HeroSectionComponent,
+    ProblemSectionComponent,
+    HowSectionComponent,
+    DemoSectionComponent
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
@@ -42,12 +48,6 @@ export class LandingComponent {
     { icon: 'edit_note', titleKey: 'landing_feat2_title', descKey: 'landing_feat2_desc' },
     { icon: 'language', titleKey: 'landing_feat3_title', descKey: 'landing_feat3_desc' },
     { icon: 'location_on', titleKey: 'landing_feat4_title', descKey: 'landing_feat4_desc' }
-  ];
-
-  protected readonly steps: LandingStep[] = [
-    { titleKey: 'landing_how1_title', descKey: 'landing_how1_desc' },
-    { titleKey: 'landing_how2_title', descKey: 'landing_how2_desc' },
-    { titleKey: 'landing_how3_title', descKey: 'landing_how3_desc' }
   ];
 
   protected readonly testimonials: Testimonial[] = [

@@ -39,6 +39,12 @@
     <app-hero-section />
   </div>
 
+  <app-problem-section />
+
+  <app-how-section />
+
+  <app-demo-section />
+
   <section class="why">
     <div class="wrap">
       <h2>{{ 'landing_why_title' | translate }}</h2>
@@ -46,7 +52,7 @@
     </div>
   </section>
 
-  <section class="features">
+  <section class="features" id="features">
     <div class="wrap">
       <div class="features-grid">
         @for (f of features; track f.titleKey; let i = $index) {
@@ -54,22 +60,6 @@
             <span class="ic"><app-icon [name]="f.icon" [size]="20" /></span>
             <h3>{{ f.titleKey | translate }}</h3>
             <p>{{ f.descKey | translate }}</p>
-          </div>
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="how why" id="how-it-works">
-    <div class="wrap">
-      <h2>{{ 'landing_how_title' | translate }}</h2>
-
-      <div class="how-grid">
-        @for (s of steps; track s.titleKey; let i = $index) {
-          <div class="how-step">
-            <div class="how-num">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</div>
-            <h3>{{ s.titleKey | translate }}</h3>
-            <p>{{ s.descKey | translate }}</p>
           </div>
         }
       </div>

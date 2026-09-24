@@ -1,0 +1,33 @@
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="demo-copy">
+      <p class="eyebrow">{{ 'landing_nav_demo' | translate }}</p>
+      <h2>{{ 'landing_demo_heading' | translate }}</h2>
+      <p class="body">{{ 'landing_demo_body' | translate }}</p>
+
+      <div class="demo-pills">
+        @for (p of pills; track p.key) {
+          <span class="pill" [class.active]="p.active">
+            <app-icon [name]="p.icon" [size]="15" />
+            {{ p.key | translate }}
+          </span>
+        }
+      </div>
+
+      <div class="demo-actions">
+        <a class="cta-btn" routerLink="/hotel/aurahotel">
+          {{ 'landing_view_demo' | translate }}
+          <app-icon name="arrow_forward" [size]="15" />
+        </a>
+        <a class="cta-btn-outline" href="#features">
+          {{ 'landing_demo_features_cta' | translate }}
+          <app-icon name="arrow_downward" [size]="15" />
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-phone">
+      <img src="images/hero-phone.webp" alt="checkit — სტუმრის გვერდის მაგალითი ტელეფონზე" />
+    </div>
+  </div>
+</section>
