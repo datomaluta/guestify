@@ -1,4 +1,10 @@
-import { Directive, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 
 /**
  * ელემენტს viewport-ში პირველად შესვლისას ამატებს .is-visible კლასს (IntersectionObserver-ით,
@@ -27,9 +33,16 @@ export class RevealDirective implements OnInit, OnDestroy {
           this.observer?.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
     );
-    this.observer.observe(this.el);
+
+    // ელემენტები, რომლებიც გვერდის ჩატვირთვისთანავე უკვე viewport-შია (მაგ. hero-ს
+    // მომდევნო სექციები) — observe()-ის სინქრონულმა გამოძახებამ StackBlitz/Chrome-ში
+    // callback-ი შეიძლება იმავე კადრში დააბრუნოს, სანამ ბრაუზერს opacity:0 საწყისი
+    // მდგომარეობა საერთოდ დახატული ჰქონდეს — ასეთ შემთხვევაში transition არაფერს
+    // გადადის და ელემენტი უბრალოდ მყისვე "ხტება" გამოჩენილ მდგომარეობაში. ერთი
+    // rAF-ით გადავადება ერთ დახატულ კადრს (hidden state) გარანტირებთ observe()-მდე.
+    requestAnimationFrame(() => this.observer?.observe(this.el));
   }
 
   ngOnDestroy(): void {

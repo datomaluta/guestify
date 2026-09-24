@@ -90,9 +90,16 @@ h2 {
   border-radius: 16px;
   padding: 26px 22px;
   box-shadow: var(--shadow-sm);
+  // hover-ის box-shadow/transform ერთსა და იმავე transition შორთჰენდშია გლობალურ
+  // [appReveal]-ის (styles.scss) opacity/translate-თან ერთად ჩამოთვლილი — თუ აქ ცალკე,
+  // component-scoped rule-ით გადავეწერდით, უფრო მაღალი სპეციფიურობის გამო *მთლიანად*
+  // ჩაანაცვლებდა გლობალურ transition-ს (და არა დაემატებოდა მას), ანუ scroll-reveal-ს
+  // საერთოდ აღარ ექნებოდა transition — ბარათი უბრალოდ მყისვე გამოჩნდებოდა.
   transition:
     box-shadow 0.18s ease,
-    transform 0.18s ease;
+    transform 0.18s ease,
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
 
   @media (hover: hover) {
     &:hover {
