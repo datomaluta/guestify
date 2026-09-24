@@ -1,0 +1,28 @@
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1>{{ 'landing_h1' | translate }}</h1>
+      <p class="sub">{{ 'landing_sub' | translate }}</p>
+
+      <a class="cta-btn" routerLink="/hotel/aurahotel">
+        {{ 'landing_view_demo' | translate }}
+        <app-icon name="arrow_forward" [size]="15" />
+      </a>
+
+      <p class="hero-trust">{{ 'landing_trust' | translate }}</p>
+
+      <div class="hero-checks">
+        <span><app-icon name="check_circle" [size]="14" />{{ 'landing_check1' | translate }}</span>
+        <span><app-icon name="check_circle" [size]="14" />{{ 'landing_check2' | translate }}</span>
+        <span><app-icon name="check_circle" [size]="14" />{{ 'landing_check3' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="phone">
+      <picture>
+        <source media="(max-width: 899px)" srcset="images/hero-hotel-mobile.webp" />
+        <img src="images/hero-hotel.webp" alt="Checkit — QR კოდი სასტუმროს მისაღებში" />
+      </picture>
+    </div>
+  </div>
+</section>

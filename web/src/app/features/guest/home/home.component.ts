@@ -33,12 +33,11 @@ const HOME_FAVORITES_LIMIT = 5;
   imports: [
     RouterLink,
     IconComponent,
-    PlaceCardComponent,
     AmenityCardComponent,
     AmenityDetailSheetComponent,
     TranslatePipe,
     LocalizePipe,
-    ImgFadeInDirective
+    ImgFadeInDirective,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -93,6 +92,6 @@ export class HomeComponent {
   protected readonly quickAccessItems: QuickAccessItem[] = [
     { route: 'essentials', icon: 'wifi', labelKey: 'home_qa_wifi' },
     { route: 'essentials', icon: 'logout', labelKey: 'home_qa_checkout' },
-    { route: 'essentials', icon: 'local_parking', labelKey: 'home_qa_parking' }
+    { route: 'essentials', icon: 'local_parking', labelKey: 'home_qa_parking' },
   ];
 }

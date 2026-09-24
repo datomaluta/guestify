@@ -29,17 +29,9 @@ h3 {
 }
 
 /* ---------- load-in ---------- */
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
+// rise-in/pop-in (hero-ს ანიმაციები) hero-section.component.scss-შია გადატანილი hero-ს
+// component-ად გამოყოფასთან ერთად — slide-down კი აქ რჩება, topbar/mobile-menu კვლავ ამ
+// component-შია.
 @keyframes slide-down {
   from {
     opacity: 0;
@@ -51,74 +43,14 @@ h3 {
   }
 }
 
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.94) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 .topbar {
   animation: slide-down 0.5s ease both;
-}
-
-.hero .eyebrow {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.08s;
-}
-
-.hero h1 {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.16s;
-}
-
-.hero p.sub {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.26s;
-}
-
-.hero .cta-btn {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.36s;
-}
-
-.hero .hero-proof {
-  animation: rise-in 0.6s ease both;
-  animation-delay: 0.44s;
-}
-
-.phone {
-  animation: pop-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  animation-delay: 0.3s;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-  transition-delay: var(--rd, 0s);
-
-  &.in {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
-  }
-
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -142,47 +74,109 @@ h3 {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  margin-right: auto;
+}
+
+// აბსოლუტურად ცენტრირებულია .topbar-ის მიმართ (და არა flex-ის ბუნებრივი განაწილებით) —
+// ასე ცენტრში რჩება ლოგოსა და მარჯვენა action-ების სიგანისგან დამოუკიდებლად.
+.nav-links {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  gap: 26px;
+
+  a {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+
+  @media (min-width: 720px) {
+    display: flex;
+  }
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  cursor: pointer;
+
+  @media (min-width: 720px) {
+    display: none;
+  }
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 24px 12px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-md);
+  animation: slide-down 0.2s ease both;
+
+  a {
+    padding: 12px 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-soft);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+
+  @media (min-width: 720px) {
+    display: none;
+  }
 }
 
 .wordmark {
   font-family: "Inter", var(--font-ui);
   font-weight: 800;
-  font-size: 34px;
+  font-size: 22px;
   letter-spacing: -0.02em;
   color: var(--ink);
 
   .accent {
     color: var(--brand-primary);
   }
-}
 
-.lang-switch {
-  display: flex;
-  gap: 3px;
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  padding: 3px;
-  border-radius: 999px;
-}
-
-.lang-pill {
-  font-size: 11px;
-  font-weight: 700;
-  border: none;
-  background: transparent;
-  color: var(--ink-soft);
-  padding: 6px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: inherit;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-
-  &.active {
-    background: var(--brand-primary);
-    color: #fff;
+  @media (min-width: 640px) {
+    font-size: 34px;
   }
 }
 
@@ -199,42 +193,28 @@ section {
 }
 
 /* ---------- hero ---------- */
-.hero {
-  padding-top: 56px;
+// header + hero ერთად ერთ ეკრანს ავსებენ ჩატვირთვაზე — შემდეგი სექცია (.why)
+// scroll-მდე არ უნდა ჩანდეს. header-ს ბუნებრივი სიმაღლე უჭირავს, hero კი (flex: 1)
+// ავსებს დარჩენილ სივრცეს — ასე headroom-ის hardcode-ვა (calc(100dvh - Npx)) აღარაა საჭირო.
+.hero-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  // წვრილი წერტილოვანი ბადე + ბრენდ-ფერის რბილი ნათება ტელეფონის უკან — მთლიანად
+  // თეთრი/ცარიელი პირველი ეკრანის მაგივრად ოდნავ დატვირთული ფონი, ისევ დიზაინის
+  // არსებულ ტოკენებზეა აწყობილი (--line, --brand-primary), ახალი ფერი არ შემოგვაქვს.
+  background:
+    radial-gradient(
+      560px circle at 88% 18%,
+      color-mix(in srgb, var(--brand-primary) 14%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
 }
 
-.hero .wrap {
-  display: grid;
-  gap: 40px;
-  align-items: center;
-}
-
-@media (min-width: 900px) {
-  .hero .wrap {
-    grid-template-columns: 1fr 380px;
-    gap: 56px;
-  }
-}
-
-.hero h1 {
-  font-size: 34px;
-  line-height: 1.16;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-
-  @media (min-width: 640px) {
-    font-size: 44px;
-  }
-}
-
-.hero p.sub {
-  font-size: 16px;
-  color: var(--ink-soft);
-  max-width: 46ch;
-  margin-bottom: 26px;
-}
-
+// გაზიარებული .cta-btn სტილია hero-section.component.scss-შიც (hero-ს "View demo"
+// ღილაკისთვის) — Angular-ის emulated view encapsulation component-ებს შორის style-ებს არ
+// უზიარებს, ამიტომ იძულებით დუბლირებულია, სანამ cta-band-იც არ გამოეყოფა component-ად.
 .cta-btn {
   display: inline-flex;
   align-items: center;
@@ -257,137 +237,6 @@ section {
     &:hover {
       transform: translateY(-1px);
     }
-  }
-}
-
-.hero-proof {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-  font-size: 12.5px;
-  color: var(--ink-faint);
-
-  app-icon {
-    color: var(--brand-primary);
-    flex-shrink: 0;
-  }
-}
-
-/* ---------- phone mock ---------- */
-.phone {
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.phone-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.phone-badge {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: linear-gradient(
-    155deg,
-    var(--brand-primary),
-    color-mix(in srgb, var(--brand-primary) 60%, black)
-  );
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-  font-weight: 800;
-  flex-shrink: 0;
-}
-
-.phone-hotel {
-  font-size: 12.5px;
-  font-weight: 700;
-  flex: 1;
-}
-
-.phone-langs {
-  display: flex;
-  gap: 2px;
-
-  span {
-    font-size: 8.5px;
-    font-weight: 700;
-    padding: 3px 5px;
-    border-radius: 999px;
-    color: var(--ink-faint);
-
-    &.on {
-      background: var(--brand-primary);
-      color: #fff;
-    }
-  }
-}
-
-.phone-body {
-  padding: 16px;
-
-  .hi {
-    font-size: 15px;
-    font-weight: 800;
-    margin: 0 0 2px;
-  }
-
-  .sub {
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin: 0 0 16px;
-  }
-}
-
-.phone-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.phone-card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-  opacity: 0;
-  animation: pop-in 0.5s ease both;
-  animation-delay: calc(0.75s + var(--i, 0) * 0.1s);
-
-  .ic {
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    background: color-mix(
-      in srgb,
-      var(--brand-primary) 14%,
-      var(--paper-raised)
-    );
-    color: var(--brand-primary);
-    display: grid;
-    place-items: center;
-  }
-
-  .lbl {
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.25;
   }
 }
 
@@ -438,9 +287,7 @@ section {
   box-shadow: var(--shadow-sm);
   transition:
     border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    opacity 0.6s ease,
-    transform 0.6s ease;
+    box-shadow 0.18s ease;
 
   @media (hover: hover) {
     &:hover {

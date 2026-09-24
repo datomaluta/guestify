@@ -315,37 +315,56 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
   },
 
   // --- საჯარო ლენდინგ გვერდი (root `/`) ---
-  landing_eyebrow: {
-    ka: 'სასტუმროებისა და სასტუმროს ტიპის საცხოვრებლებისთვის',
-    en: 'For hotels & short-stay properties',
-    ru: 'Для отелей и гостевых домов',
+  landing_nav_demo: {
+    ka: 'დემო',
+    en: 'Demo',
+    ru: 'Демо',
+  },
+  landing_nav_faq: {
+    ka: 'ხშირი კითხვები',
+    en: 'FAQ',
+    ru: 'Частые вопросы',
   },
   landing_h1: {
-    ka: 'სტუმრის გზამკვლევი — ერთ QR კოდში',
-    en: 'The guest guide, in one QR code',
-    ru: 'Гид для гостя в одном QR-коде',
+    ka: 'ყველაფერი, რაც სტუმარს სჭირდება — ერთ მარტივ QR კოდში',
+    en: 'Everything your guests need, in one simple QR',
+    ru: 'Всё, что нужно вашим гостям — в одном простом QR-коде',
   },
   landing_sub: {
-    ka: 'შეცვალეთ ქაღალდის საინფორმაციო ბუკლეტი ცოცხალი ციფრული გვერდით — სერვისები, მენიუ, ადგილობრივი გიდი და წესები, ყოველთვის განახლებული, ნებისმიერ ენაზე.',
-    en: 'Replace the paper welcome folder with a living digital page — services, menu, local guide and house rules, always current, in any language.',
-    ru: 'Замените бумажную папку цифровой страницей — услуги, меню, гид по округе и правила проживания, всегда актуальные, на любом языке.',
+    ka: 'შექმენით ლამაზი ციფრული სტუმრის გზამკვლევი — Wi-Fi, ჩექინის დეტალები, სახლის წესები, ადგილობრივი რეკომენდაციები, დახმარების მოთხოვნები და AI დახმარება — ყველაფერი მყისიერად ხელმისაწვდომია სტუმრის ტელეფონიდან.',
+    en: "Create a beautiful digital guest guide with Wi-Fi, check-in details, house rules, local recommendations, support requests, and AI help — all instantly available from your guest's phone.",
+    ru: 'Создайте красивый цифровой гид для гостя — Wi-Fi, детали заезда, правила проживания, местные рекомендации, запросы на помощь и AI-помощник — всё мгновенно доступно с телефона гостя.',
+  },
+  landing_view_demo: {
+    ka: 'დემოს ნახვა',
+    en: 'View demo',
+    ru: 'Посмотреть демо',
   },
   landing_cta: {
     ka: 'მოითხოვეთ დემო',
     en: 'Request a demo',
     ru: 'Запросить демо',
   },
-  landing_proof: {
-    ka: 'აპლიკაციის ჩამოტვირთვის გარეშე — პირდაპირ ბრაუზერში იხსნება',
-    en: 'No app to install — opens straight in the browser',
-    ru: 'Без установки приложений — открывается прямо в браузере',
+  landing_trust: {
+    ka: 'შექმნილია Airbnb-ჰოსტებისთვის, B&B-ებისთვის, საკურორტო ბინებისთვის, სასტუმროებისთვის და საკუთრების მმართველებისთვის.',
+    en: 'Built for Airbnb hosts, B&Bs, vacation rentals, boutique stays, and property managers.',
+    ru: 'Создано для хостов Airbnb, гостевых домов, апартаментов, бутик-отелей и управляющих недвижимостью.',
   },
-  landing_phone_sub: {
-    ka: 'დღეს რითი დაგეხმაროთ?',
-    en: 'How can we help today?',
-    ru: 'Чем помочь сегодня?',
+  landing_check1: {
+    ka: 'აპლიკაციის ჩამოტვირთვის გარეშე',
+    en: 'No app download',
+    ru: 'Без установки приложения',
   },
-
+  landing_check2: {
+    ka: 'არეული PDF-ების გარეშე',
+    en: 'No messy PDFs',
+    ru: 'Без запутанных PDF',
+  },
+  landing_check3: {
+    ka: 'ნაკლები განმეორებადი შეტყობინება',
+    en: 'Fewer repetitive messages',
+    ru: 'Меньше повторяющихся сообщений',
+  },
   landing_why_title: {
     ka: 'რატომ Guestify',
     en: 'Why Guestify',

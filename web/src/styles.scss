@@ -20,6 +20,17 @@
     "BPG Mrgvlovani Caps GPL&GNU", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+// ინგლისურ ენაზე (html[lang="en"], იხ. LanguageService) ტექსტი Inter-ით რენდერდება —
+// ქართული/რუსული კი კვლავ Noto Sans Georgian-ზე რჩება ამ property-ს არ ეხება.
+// "Noto Sans Georgian" ბოლოში მაინც გვინდა — Inter-ს ქართული გლიფები საერთოდ არ აქვს,
+// ასე რომ ჰარდქოდილი ქართული ტექსტი (მაგ. lang-dropdown-ის "ქარ" ლეიბლი) ინგლისურ UI-ზეც
+// ამ font-ს უნდა დაუბრუნდეს და არა OS-ის შემთხვევით fallback-ს.
+:root[lang="en"] {
+  --font-ui:
+    "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+    "Helvetica Neue", Arial, "Noto Sans Georgian", sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
