@@ -1,0 +1,38 @@
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="pricing-intro">
+      <p class="eyebrow">{{ 'landing_pricing_eyebrow' | translate }}</p>
+      <h2>{{ 'landing_pricing_heading' | translate }}</h2>
+      <p class="subtitle">{{ 'landing_pricing_subtitle' | translate }}</p>
+    </div>
+
+    <div class="pricing-grid">
+      @for (plan of plans; track plan.nameKey) {
+        <div class="plan-card" [class.highlighted]="plan.highlighted">
+          @if (plan.highlighted) {
+            <span class="plan-pill">{{ 'landing_pricing_premium_badge' | translate }}</span>
+          }
+
+          <p class="plan-label">{{ plan.nameKey | translate }}</p>
+          <p class="plan-price">
+            <span class="amount">{{ plan.price }}</span>
+            <span class="period">{{ 'landing_pricing_period' | translate }}</span>
+          </p>
+
+          <ul>
+            @for (key of plan.featureKeys; track key) {
+              <li><app-icon name="check" [size]="15" />{{ key | translate }}</li>
+            }
+          </ul>
+
+          <a class="plan-cta" [href]="tel">
+            @if (plan.ctaIcon) {
+              <app-icon [name]="plan.ctaIcon" [size]="15" />
+            }
+            {{ plan.ctaKey | translate }}
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</section>

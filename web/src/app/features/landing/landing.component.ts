@@ -8,13 +8,15 @@ import { HowSectionComponent } from './how-section/how-section.component';
 import { DemoSectionComponent } from './demo-section/demo-section.component';
 import { FeaturesSectionComponent } from './features-section/features-section.component';
 import { AiSectionComponent } from './ai-section/ai-section.component';
+import { WhoSectionComponent } from './who-section/who-section.component';
+import { BeforeAfterSectionComponent } from './before-after-section/before-after-section.component';
+import { PricingSectionComponent } from './pricing-section/pricing-section.component';
+import { FaqSectionComponent } from './faq-section/faq-section.component';
 
 interface Testimonial {
   quoteKey: string;
   whoKey: string;
 }
-
-const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Guestify — დემოს მოთხოვნა');
 
 /**
  * საჯარო ლენდინგ გვერდი (root `/`) — Guestify-ის, როგორც პროდუქტის, პრეზენტაცია
@@ -33,13 +35,16 @@ const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Gu
     HowSectionComponent,
     DemoSectionComponent,
     FeaturesSectionComponent,
-    AiSectionComponent
+    AiSectionComponent,
+    WhoSectionComponent,
+    BeforeAfterSectionComponent,
+    PricingSectionComponent,
+    FaqSectionComponent
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
-  protected readonly demoMailto = DEMO_MAILTO;
 
   protected readonly testimonials: Testimonial[] = [
     { quoteKey: 'landing_testi1_quote', whoKey: 'landing_testi1_who' },

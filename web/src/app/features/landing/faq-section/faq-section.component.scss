@@ -1,0 +1,126 @@
+// landing.component.scss-ის ბაზისური reset/layout წესების დუბლიკატია (*, h2, .wrap) —
+// Angular-ის emulated view encapsulation component-ებს შორის style-ებს არ უზიარებს, ამიტომ
+// faq-section-ს, რომელიც საკუთარ template-შია, თავადვე სჭირდება ეს ბაზისური წესები.
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+:host {
+  display: contents;
+}
+
+.faq {
+  padding: 64px 0;
+  background: var(--paper);
+}
+
+.faq .wrap {
+  text-align: center;
+}
+
+.faq-intro {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.faq .eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-primary);
+  margin: 0 0 12px;
+}
+
+.faq h2 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.28;
+
+  @media (min-width: 640px) {
+    font-size: 32px;
+  }
+}
+
+.faq-list {
+  max-width: 720px;
+  margin: 40px auto 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease;
+
+  &.open {
+    border-color: var(--brand-primary);
+  }
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 17px 20px;
+
+  app-icon {
+    flex-shrink: 0;
+    color: var(--ink-faint);
+    transition: transform 0.2s ease;
+  }
+
+  .open & app-icon {
+    transform: rotate(180deg);
+    color: var(--brand-primary);
+  }
+}
+
+.faq-a-wrap {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.28s ease,
+    opacity 0.2s ease;
+
+  .open & {
+    opacity: 1;
+  }
+}
+
+.faq-a {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 20px 18px;
+}

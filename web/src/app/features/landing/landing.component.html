@@ -49,16 +49,18 @@
 
   <app-ai-section />
 
-  <section class="why">
-    <div class="wrap">
-      <h2>{{ 'landing_why_title' | translate }}</h2>
-      <p>{{ 'landing_why_body' | translate }}</p>
-    </div>
-  </section>
+  <app-who-section />
+
+  <app-before-after-section />
+
+  <app-pricing-section />
 
   <section class="testimonials">
     <div class="wrap">
-      <h2>{{ 'landing_testi_title' | translate }}</h2>
+      <div class="testi-intro">
+        <p class="eyebrow">{{ 'landing_testi_eyebrow' | translate }}</p>
+        <h2>{{ 'landing_testi_title' | translate }}</h2>
+      </div>
 
       <div class="testi-slider">
         @if (testimonials.length > testiPerPage()) {
@@ -72,8 +74,12 @@
             @for (t of testimonials; track t.quoteKey) {
               <div class="testi-item">
                 <div class="testi-card">
+                  <span class="quote-mark"><app-icon name="format_quote" [size]="20" /></span>
                   <p class="testi-quote">{{ t.quoteKey | translate }}</p>
-                  <p class="testi-who">{{ t.whoKey | translate }}</p>
+                  <div class="testi-who">
+                    <span class="avatar"><app-icon name="person" [size]="15" /></span>
+                    <p>{{ t.whoKey | translate }}</p>
+                  </div>
                 </div>
               </div>
             }
@@ -94,8 +100,6 @@
           }
         </div>
       }
-
-      <p class="placeholder-note">{{ 'landing_testi_note' | translate }}</p>
     </div>
   </section>
 
@@ -115,12 +119,7 @@
     </div>
   </section>
 
-  <section class="cta-band">
-    <div class="wrap">
-      <h2>{{ 'landing_cta2_title' | translate }}</h2>
-      <a class="cta-btn" [href]="demoMailto">{{ 'landing_cta' | translate }}</a>
-    </div>
-  </section>
+  <app-faq-section />
 
   <footer>
     <div class="wrap">

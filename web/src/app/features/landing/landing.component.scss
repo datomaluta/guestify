@@ -212,63 +212,41 @@ section {
     radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
 }
 
-// გაზიარებული .cta-btn სტილია hero-section.component.scss-შიც (hero-ს "View demo"
-// ღილაკისთვის) — Angular-ის emulated view encapsulation component-ებს შორის style-ებს არ
-// უზიარებს, ამიტომ იძულებით დუბლირებულია, სანამ cta-band-იც არ გამოეყოფა component-ად.
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--brand-primary);
-  color: #fff;
-  font-weight: 700;
-  font-size: 14.5px;
-  text-decoration: none;
-  padding: 13px 22px;
-  border-radius: 999px;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.12s ease;
-
-  &:active {
-    transform: scale(0.97);
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      transform: translateY(-1px);
-    }
-  }
-}
-
-/* ---------- why band ---------- */
-.why {
-  background: var(--paper-sunk);
-
-  .wrap {
-    max-width: 720px;
-    text-align: left;
-  }
-
-  h2 {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin-bottom: 14px;
-  }
-
-  p {
-    font-size: 15.5px;
-    color: var(--ink-soft);
-    max-width: 62ch;
-  }
-}
-
 /* ---------- testimonials ---------- */
+.testimonials {
+  text-align: center;
+}
+
+.testi-intro {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.testimonials .eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-primary);
+  margin: 0 0 12px;
+}
+
+.testimonials h2 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.28;
+
+  @media (min-width: 640px) {
+    font-size: 32px;
+  }
+}
+
 .testi-slider {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .testi-arrow {
@@ -330,6 +308,27 @@ section {
   flex-direction: column;
   gap: 12px;
   box-sizing: border-box;
+  transition:
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.quote-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--brand-primary) 14%, var(--paper-raised));
+  color: var(--brand-primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
 
 .testi-quote {
@@ -337,21 +336,33 @@ section {
   line-height: 1.6;
   color: var(--ink);
   margin: 0;
-
-  &::before {
-    content: "\201C";
-  }
-
-  &::after {
-    content: "\201D";
-  }
 }
 
 .testi-who {
-  font-size: 12px;
-  font-style: italic;
-  color: var(--ink-faint);
-  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+
+  p {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--paper-sunk);
+    color: var(--ink-faint);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
 }
 
 .testi-dots {
@@ -377,13 +388,6 @@ section {
     background: var(--brand-primary);
     transform: scale(1.3);
   }
-}
-
-.placeholder-note {
-  margin: 18px 0 0;
-  font-size: 11.5px;
-  color: var(--ink-faint);
-  text-align: center;
 }
 
 /* ---------- partners marquee ---------- */
@@ -437,29 +441,6 @@ section {
   letter-spacing: 0.01em;
   color: var(--ink-faint);
   white-space: nowrap;
-}
-
-/* ---------- cta band ---------- */
-.cta-band {
-  background: var(--paper-sunk);
-  color: var(--ink);
-
-  .wrap {
-    text-align: center;
-    max-width: 620px;
-  }
-
-  h2 {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin-bottom: 22px;
-  }
-
-  .cta-btn {
-    background: var(--brand-primary);
-    color: #fff;
-  }
 }
 
 /* ---------- footer ---------- */
