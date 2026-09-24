@@ -13,7 +13,7 @@
             <app-icon name="expand_more" [size]="18" />
           </button>
 
-          <div class="faq-a-wrap" [style.max-height]="maxHeight(i)">
+          <div class="faq-a-wrap" [style.max-height.px]="openIndex() === i ? openHeight() : 0">
             <p class="faq-a" #answerText>{{ item.aKey | translate }}</p>
           </div>
         </div>

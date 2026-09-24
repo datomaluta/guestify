@@ -1,0 +1,101 @@
+// landing.component.scss-ის ბაზისური reset/layout წესების დუბლიკატია (*, h2, .wrap) —
+// Angular-ის emulated view encapsulation component-ებს შორის style-ებს არ უზიარებს, ამიტომ
+// partners-section-ს, რომელიც საკუთარ template-შია, თავადვე სჭირდება ეს ბაზისური წესები.
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+:host {
+  display: contents;
+}
+
+.partners {
+  padding: 64px 0;
+  background: var(--paper);
+}
+
+.partners .wrap {
+  text-align: center;
+}
+
+.partners-intro {
+  max-width: 560px;
+  margin: 0 auto 40px;
+}
+
+.partners .eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-primary);
+  margin: 0 0 12px;
+}
+
+.partners h2 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.28;
+
+  @media (min-width: 640px) {
+    font-size: 32px;
+  }
+}
+
+.marquee {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+// REPEAT_COUNT (component.ts) = 4 ასლი — ტრეკი ამიტომ 4 ტოლ ნაწილად იყოფა და ერთი ნაწილის
+// სიგანეზე (25%) გადაინაცვლებს ციკლურად, ისე რომ loop-ის ბოლოში ხარვეზი არ ჩანდეს.
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.partner-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  img {
+    display: block;
+    height: 76px;
+    width: auto;
+    max-width: 260px;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+}

@@ -1,0 +1,20 @@
+<section class="partners">
+  <div class="wrap">
+    <div class="partners-intro">
+      <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
+      <h2>{{ 'landing_partners_heading' | translate }}</h2>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      @for (group of repeatGroups; track group) {
+        @for (logo of partnerLogos; track logo.src) {
+          <span class="partner-item" [attr.aria-hidden]="group > 0 ? true : null">
+            <img [src]="logo.src" [alt]="logo.alt" loading="lazy" />
+          </span>
+        }
+      }
+    </div>
+  </div>
+</section>

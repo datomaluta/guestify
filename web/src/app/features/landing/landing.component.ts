@@ -1,4 +1,4 @@
-import { Component, HostListener, afterNextRender, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, afterNextRender, signal, viewChild } from '@angular/core';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { LangDropdownComponent } from '../../shared/lang-dropdown/lang-dropdown.component';
@@ -12,6 +12,7 @@ import { WhoSectionComponent } from './who-section/who-section.component';
 import { BeforeAfterSectionComponent } from './before-after-section/before-after-section.component';
 import { PricingSectionComponent } from './pricing-section/pricing-section.component';
 import { FaqSectionComponent } from './faq-section/faq-section.component';
+import { PartnersSectionComponent } from './partners-section/partners-section.component';
 
 interface Testimonial {
   quoteKey: string;
@@ -39,7 +40,8 @@ interface Testimonial {
     WhoSectionComponent,
     BeforeAfterSectionComponent,
     PricingSectionComponent,
-    FaqSectionComponent
+    FaqSectionComponent,
+    PartnersSectionComponent
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
@@ -61,9 +63,19 @@ export class LandingComponent {
   protected readonly testiPerPage = signal(3);
   protected readonly testiIndex = signal(0);
 
-  protected readonly partnerPlaceholders = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-
   protected readonly mobileMenuOpen = signal(false);
+
+  /**
+   * topbar აღარაა .hero-screen-ის flex-column-ში (გატანილია sticky-ბაგის გამო — იხ.
+   * template-ის კომენტარი), ამიტომ .hero-screen-ის 100dvh + topbar-ის საკუთარი სიმაღლე
+   * ერთ ეკრანს სცდება და hero-ს ვერტიკალურად ცენტრირებული კონტენტი "მოწყვეტილად" გამოიყურება
+   * (ჩანს, რომ scroll-ის შემდეგაც კვლავ იმავე სექციაშია). ResizeObserver რეალურად ზომავს
+   * topbar-ის რენდერილ სიმაღლეს და .hero-screen საიდანაც სწორედ ამდენს აკლებს 100dvh-ს —
+   * hardcode-ილი Npx-ის მაგივრად, რომელიც font-loading/ლოკალიზაციაზე დამოკიდებულებით
+   * არასწორი გამოვიდოდა.
+   */
+  protected readonly topbarHeight = signal(64);
+  private readonly topbarRef = viewChild<ElementRef<HTMLElement>>('topbarRef');
 
   constructor() {
     afterNextRender(() => {
@@ -75,6 +87,14 @@ export class LandingComponent {
       };
       applyPerPage();
       mq.addEventListener('change', applyPerPage);
+
+      const topbarEl = this.topbarRef()?.nativeElement;
+      if (topbarEl) {
+        const ro = new ResizeObserver(([entry]) => {
+          if (entry) this.topbarHeight.set(Math.round(entry.contentRect.height));
+        });
+        ro.observe(topbarEl);
+      }
     });
   }
 

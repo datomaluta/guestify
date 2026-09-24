@@ -23,6 +23,9 @@ h2 {
 
 .demo {
   padding: 64px 0;
+  // იგივე წვრილი წერტილოვანი ბადეა, რაც hero-screen-ს აქვს (landing.component.scss) —
+  // ბრენდ-ფერის ნათების blob-ის გარეშე, მხოლოდ წერტილები.
+  background: radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
 }
 
 .demo .wrap {

@@ -59,14 +59,21 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 24px;
   background: color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line-soft);
+}
+
+// .wrap (ზემოთ, "shared layout"-ში) საიტის დანარჩენი კონტენტის იგივე სიგანეზე (1120px)
+// აჭერს topbar-ის შიგთავსსაც — თავად .topbar კი სრულ სიგანეზე რჩება (sticky ზოლის
+// ფონი/blur კიდემდე რომ სწვდებოდეს), ცენტრში მხოლოდ .topbar-inner იზღუდება.
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 .brand-mark {
@@ -193,11 +200,14 @@ section {
 }
 
 /* ---------- hero ---------- */
-// header + hero ერთად ერთ ეკრანს ავსებენ ჩატვირთვაზე — შემდეგი სექცია (.why)
-// scroll-მდე არ უნდა ჩანდეს. header-ს ბუნებრივი სიმაღლე უჭირავს, hero კი (flex: 1)
-// ავსებს დარჩენილ სივრცეს — ასე headroom-ის hardcode-ვა (calc(100dvh - Npx)) აღარაა საჭირო.
+// topbar აქ აღარაა (გატანილია .landing-ის პირდაპირ შვილად, topbar-ის sticky-ს გამო —
+// იხ. landing.component.html-ის კომენტარი), მაგრამ ის მაინც ნორმალურ flow-შია (sticky და
+// არა fixed) და საკუთარ სიმაღლეს იკავებს topbar-ის ზემოთ — ამიტომ hero-screen-ს 100dvh-დან
+// ზუსტად topbar-ის (ResizeObserver-ით გაზომილი, landing.component.ts-ის topbarHeight)
+// სიმაღლე აკლდება, რომ ჯამში topbar+hero ერთ ეკრანს ავსებდეს და hero-ს ვერტიკალური
+// ცენტრირება ხილულ viewport-შივე ჩანდეს (და არა ეკრანს გადაცდენილ ყუთში).
 .hero-screen {
-  min-height: 100dvh;
+  min-height: calc(100dvh - var(--topbar-h, 64px));
   display: flex;
   flex-direction: column;
   // წვრილი წერტილოვანი ბადე + ბრენდ-ფერის რბილი ნათება ტელეფონის უკან — მთლიანად
@@ -214,6 +224,7 @@ section {
 
 /* ---------- testimonials ---------- */
 .testimonials {
+  background: var(--paper-sunk);
   text-align: center;
 }
 
@@ -388,59 +399,6 @@ section {
     background: var(--brand-primary);
     transform: scale(1.3);
   }
-}
-
-/* ---------- partners marquee ---------- */
-.partners .wrap {
-  margin-bottom: 22px;
-}
-
-.marquee {
-  overflow: hidden;
-  width: 100%;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-}
-
-.marquee-track {
-  display: flex;
-  align-items: center;
-  gap: 52px;
-  width: max-content;
-  animation: marquee 26s linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.partner-item {
-  font-size: 14.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink-faint);
-  white-space: nowrap;
 }
 
 /* ---------- footer ---------- */
