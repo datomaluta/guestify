@@ -263,10 +263,6 @@ section {
   }
 }
 
-.how.why .wrap {
-  max-width: 1120px;
-}
-
 /* ---------- features ---------- */
 .features-grid {
   display: grid;
@@ -324,46 +320,6 @@ section {
     margin: 0;
     line-height: 1.55;
   }
-}
-
-/* ---------- how it works ---------- */
-.how-grid {
-  display: grid;
-  gap: 24px;
-  margin-top: 8px;
-
-  @media (min-width: 720px) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-}
-
-.how-step {
-  position: relative;
-  padding-top: 6px;
-
-  h3 {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-
-  p {
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin: 0;
-    line-height: 1.55;
-    max-width: 34ch;
-  }
-}
-
-.how-num {
-  font-size: 34px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: color-mix(in srgb, var(--brand-primary) 45%, var(--ink-faint));
-  margin-bottom: 10px;
-  line-height: 1;
 }
 
 /* ---------- testimonials ---------- */

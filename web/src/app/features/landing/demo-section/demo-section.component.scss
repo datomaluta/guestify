@@ -1,0 +1,169 @@
+// landing.component.scss-ის ბაზისური reset/layout წესების დუბლიკატია (*, h2, .wrap) —
+// Angular-ის emulated view encapsulation component-ებს შორის style-ებს არ უზიარებს, ამიტომ
+// demo-section-ს, რომელიც საკუთარ template-შია, თავადვე სჭირდება ეს ბაზისური წესები.
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+:host {
+  display: contents;
+}
+
+.demo {
+  padding: 64px 0;
+}
+
+.demo .wrap {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1fr 0.8fr;
+    gap: 56px;
+  }
+}
+
+.demo .eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-primary);
+  margin: 0 0 12px;
+}
+
+.demo h2 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.24;
+
+  @media (min-width: 640px) {
+    font-size: 32px;
+  }
+}
+
+.demo .body {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  max-width: 48ch;
+  line-height: 1.6;
+  margin: 16px 0 0;
+}
+
+.demo-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+
+  app-icon {
+    color: var(--ink-soft);
+  }
+
+  &.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #fff;
+
+    app-icon {
+      color: #fff;
+    }
+  }
+}
+
+.demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+// გაზიარებული .cta-btn სტილია hero-section.component.scss-შიც — Angular-ის emulated view
+// encapsulation component-ებს შორის style-ებს არ უზიარებს, ამიტომ იძულებით დუბლირებულია.
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.12s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.cta-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.demo-phone {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}

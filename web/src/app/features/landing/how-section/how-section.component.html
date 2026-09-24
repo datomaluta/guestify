@@ -1,0 +1,24 @@
+<section class="how" id="how-it-works">
+  <div class="wrap">
+    <div class="how-intro">
+      <p class="eyebrow">{{ 'landing_how_title' | translate }}</p>
+      <h2>{{ 'landing_how_heading' | translate }}</h2>
+      <p class="subtitle">{{ 'landing_how_subtitle' | translate }}</p>
+    </div>
+
+    <div class="how-grid">
+      @for (s of steps; track s.titleKey; let i = $index) {
+        <div class="how-step">
+          <div class="how-connector">
+            <span class="how-num">{{ i + 1 }}</span>
+          </div>
+          <span class="ic"><app-icon [name]="s.icon" [size]="20" /></span>
+          <h3>{{ s.titleKey | translate }}</h3>
+          <p>{{ s.descKey | translate }}</p>
+        </div>
+      }
+    </div>
+
+    <p class="how-highlight">{{ 'landing_how_highlight' | translate }}</p>
+  </div>
+</section>

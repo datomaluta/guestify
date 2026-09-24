@@ -1,0 +1,19 @@
+<section class="problem">
+  <div class="wrap">
+    <div class="problem-intro">
+      <p class="eyebrow">{{ 'landing_problem_eyebrow' | translate }}</p>
+      <h2>{{ 'landing_problem_title' | translate }}</h2>
+    </div>
+
+    <div class="problem-grid">
+      @for (q of questions; track q.key) {
+        <div class="problem-card">
+          <span class="ic"><app-icon [name]="q.icon" [size]="22" /></span>
+          <p class="q">{{ q.key | translate }}</p>
+        </div>
+      }
+    </div>
+
+    <p class="problem-body">{{ 'landing_problem_body' | translate }}</p>
+  </div>
+</section>
