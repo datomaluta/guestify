@@ -89,7 +89,17 @@ h2 {
 
   &.highlighted {
     border-color: var(--brand-primary);
+    animation: plan-glow 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes plan-glow {
+  0%,
+  100% {
     box-shadow: var(--shadow-lg);
+  }
+  50% {
+    box-shadow: var(--shadow-lg), 0 0 0 6px color-mix(in srgb, var(--brand-primary) 16%, transparent);
   }
 }
 

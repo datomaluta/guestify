@@ -179,6 +179,24 @@ h2 {
   padding: 12px 14px;
   border-radius: 14px;
   max-width: 88%;
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity 0.4s ease,
+    translate 0.4s ease;
+
+  .ai-chat.is-visible & {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .ai-chat.is-visible &.question {
+    transition-delay: 0.35s;
+  }
+
+  .ai-chat.is-visible &.answer {
+    transition-delay: 0.65s;
+  }
 
   &.question {
     background: var(--paper-sunk);
@@ -222,5 +240,16 @@ h2 {
     display: grid;
     place-items: center;
     flex-shrink: 0;
+    animation: send-pulse 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes send-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-primary) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 7px transparent;
   }
 }

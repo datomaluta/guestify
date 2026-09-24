@@ -25,6 +25,11 @@ export class AppComponent {
 
       setTimeout(() => {
         loader.classList.add('done');
+        // hero/topbar-ის load-in ანიმაციები (animation-play-state: paused საწყისად, იხ.
+        // hero-section.component.scss/landing.component.scss) ამ კლასის დამატებამდე
+        // დაპაუზებულია — თორემ DOM-ში ჩასმისთანავე დაიწყებოდნენ და loader-ის მიღმა,
+        // უხილავად, უკვე დამთავრებული აღმოჩნდებოდნენ ამ setTimeout-მდე.
+        document.documentElement.classList.add('app-revealed');
         setTimeout(() => loader.remove(), 300);
       }, remaining);
     });

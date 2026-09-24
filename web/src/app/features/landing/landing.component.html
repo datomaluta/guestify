@@ -5,7 +5,9 @@
        რომელიც მხოლოდ 100dvh-ის სიმაღლისაა) — sticky-ს containing block ასე მთელ გვერდზეა
        გადაჭიმული და არა მხოლოდ პირველ ეკრანზე, თორემ topbar სქროლვისას ქრებოდა, როგორც კი
        hero-screen-ის ქვედა კიდეს გადავცდებოდით (იხ. landing.component.scss-ის კომენტარი). -->
-  <header class="topbar" #topbarRef>
+  <header class="topbar" #topbarRef [class.scrolled]="scrolled()">
+    <div class="scroll-progress" [style.transform]="'scaleX(' + (scrollProgress() / 100) + ')'"></div>
+
     <div class="wrap topbar-inner">
       <a class="brand-mark" href="#top">
         <span class="wordmark">check<span class="accent">it</span></span>
@@ -71,12 +73,12 @@
 
   <section class="testimonials">
     <div class="wrap">
-      <div class="testi-intro">
+      <div class="testi-intro" appReveal>
         <p class="eyebrow">{{ 'landing_testi_eyebrow' | translate }}</p>
         <h2>{{ 'landing_testi_title' | translate }}</h2>
       </div>
 
-      <div class="testi-slider">
+      <div class="testi-slider" appReveal [style.--reveal-delay.ms]="120">
         @if (testimonials.length > testiPerPage()) {
           <button type="button" class="testi-arrow" [disabled]="testiIndex() === 0" (click)="prevTesti()" aria-label="წინა">
             <app-icon name="chevron_left" [size]="18" />

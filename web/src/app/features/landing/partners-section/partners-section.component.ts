@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface PartnerLogo {
   src: string;
@@ -26,7 +27,7 @@ const REPEAT_COUNT = 4;
 @Component({
   selector: 'app-partners-section',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, RevealDirective],
   templateUrl: './partners-section.component.html',
   styleUrl: './partners-section.component.scss'
 })

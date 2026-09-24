@@ -1,12 +1,12 @@
 <section class="partners">
   <div class="wrap">
-    <div class="partners-intro">
+    <div class="partners-intro" appReveal>
       <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
       <h2>{{ 'landing_partners_heading' | translate }}</h2>
     </div>
   </div>
 
-  <div class="marquee">
+  <div class="marquee" appReveal [style.--reveal-delay.ms]="120">
     <div class="marquee-track">
       @for (group of repeatGroups; track group) {
         @for (logo of partnerLogos; track logo.src) {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface WhoCard {
   icon: string;
@@ -11,7 +12,7 @@ interface WhoCard {
 @Component({
   selector: 'app-who-section',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, RevealDirective],
   templateUrl: './who-section.component.html',
   styleUrl: './who-section.component.scss'
 })

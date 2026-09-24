@@ -1,6 +1,6 @@
 <section class="demo" id="demo">
   <div class="wrap">
-    <div class="demo-copy">
+    <div class="demo-copy reveal-left" appReveal>
       <p class="eyebrow">{{ 'landing_nav_demo' | translate }}</p>
       <h2>{{ 'landing_demo_heading' | translate }}</h2>
       <p class="body">{{ 'landing_demo_body' | translate }}</p>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="demo-phone">
+    <div class="demo-phone reveal-right" appReveal [style.--reveal-delay.ms]="120">
       <img src="images/hero-phone.webp" alt="checkit — სტუმრის გვერდის მაგალითი ტელეფონზე" />
     </div>
   </div>

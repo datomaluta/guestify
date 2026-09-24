@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { IconComponent } from '../../../shared/icon/icon.component';
+import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 interface HowStep {
   icon: string;
@@ -11,7 +12,7 @@ interface HowStep {
 @Component({
   selector: 'app-how-section',
   standalone: true,
-  imports: [TranslatePipe, IconComponent],
+  imports: [TranslatePipe, IconComponent, RevealDirective],
   templateUrl: './how-section.component.html',
   styleUrl: './how-section.component.scss'
 })
