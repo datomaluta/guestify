@@ -1,0 +1,30 @@
+<section class="ba">
+  <div class="wrap">
+    <div class="ba-intro">
+      <p class="eyebrow">{{ 'landing_ba_eyebrow' | translate }}</p>
+      <h2>
+        {{ 'landing_ba_heading_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_heading_post' | translate }}
+      </h2>
+    </div>
+
+    <div class="ba-grid">
+      <div class="ba-card before">
+        <span class="badge">{{ 'landing_ba_before_badge_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_before_badge_post' | translate }}</span>
+        <ul>
+          @for (key of beforeItems; track key) {
+            <li><app-icon name="close" [size]="15" />{{ key | translate }}</li>
+          }
+        </ul>
+      </div>
+
+      <div class="ba-card after">
+        <span class="badge">{{ 'landing_ba_after_badge_pre' | translate }}check<span class="accent">it</span>{{ 'landing_ba_after_badge_post' | translate }}</span>
+        <ul>
+          @for (key of afterItems; track key) {
+            <li><app-icon name="check" [size]="15" />{{ key | translate }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

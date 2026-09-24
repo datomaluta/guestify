@@ -1,0 +1,23 @@
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-intro">
+      <p class="eyebrow">{{ 'landing_nav_faq' | translate }}</p>
+      <h2>{{ 'landing_faq_heading' | translate }}</h2>
+    </div>
+
+    <div class="faq-list">
+      @for (item of items; track item.qKey; let i = $index) {
+        <div class="faq-item" [class.open]="openIndex() === i">
+          <button type="button" class="faq-q" (click)="toggle(i)" [attr.aria-expanded]="openIndex() === i">
+            {{ item.qKey | translate }}
+            <app-icon name="expand_more" [size]="18" />
+          </button>
+
+          <div class="faq-a-wrap" [style.max-height]="maxHeight(i)">
+            <p class="faq-a" #answerText>{{ item.aKey | translate }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

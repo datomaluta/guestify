@@ -1,0 +1,18 @@
+<section class="who">
+  <div class="wrap">
+    <div class="who-intro">
+      <p class="eyebrow">{{ 'landing_who_eyebrow' | translate }}</p>
+      <h2>{{ 'landing_who_heading' | translate }}</h2>
+    </div>
+
+    <div class="who-grid">
+      @for (c of cards; track c.titleKey) {
+        <div class="who-card">
+          <span class="ic"><app-icon [name]="c.icon" [size]="20" /></span>
+          <h3>{{ c.titleKey | translate }}</h3>
+          <p>{{ c.descKey | translate }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

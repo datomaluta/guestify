@@ -153,6 +153,10 @@ h2 {
     font-weight: 700;
     color: var(--ink);
     margin: 0;
+
+    .accent {
+      color: var(--brand-primary);
+    }
   }
 
   .status {

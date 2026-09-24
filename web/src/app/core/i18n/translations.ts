@@ -340,11 +340,6 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'View demo',
     ru: 'Посмотреть демо',
   },
-  landing_cta: {
-    ka: 'მოითხოვეთ დემო',
-    en: 'Request a demo',
-    ru: 'Запросить демо',
-  },
   landing_trust: {
     ka: 'შექმნილია Airbnb-ჰოსტებისთვის, B&B-ებისთვის, საკურორტო ბინებისთვის, სასტუმროებისთვის და საკუთრების მმართველებისთვის.',
     en: 'Built for Airbnb hosts, B&Bs, vacation rentals, boutique stays, and property managers.',
@@ -399,16 +394,6 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ka: 'სტუმრისთვის ეს დამაბნეველია. მასპინძლისთვის კი — ზედმეტი მიმოწერა. checkit ამცირებს ამ ხახუნს.',
     en: 'For guests, this can feel confusing. For hosts, it creates unnecessary back-and-forth. checkit helps reduce that friction.',
     ru: 'Для гостя это может сбивать с толку. Для хозяина — лишняя переписка. checkit снижает это трение.',
-  },
-  landing_why_title: {
-    ka: 'რატომ checkit',
-    en: 'Why checkit',
-    ru: 'Почему checkit',
-  },
-  landing_why_body: {
-    ka: 'ბეჭდური ბუკლეტი მალე მოძველდება, იკარგება ოთახიდან და ერთ ენაზეა დაბეჭდილი. Guestify-ით სტუმარი ყველაფერს ოთახიდანვე კითხულობს — თქვენ კი კონტენტს ცვლით წამებში, ხელახლა დაბეჭდვის გარეშე.',
-    en: "A printed booklet goes stale, disappears from the room, and speaks one language. With Guestify your guest reads everything from where they're sitting — and you update the content in seconds, with nothing to reprint.",
-    ru: 'Бумажный буклет быстро устаревает, теряется из номера и существует только на одном языке. С Guestify гость читает всё, не вставая с места, а вы меняете контент за секунды — без допечатки.',
   },
 
   landing_features_eyebrow: {
@@ -674,10 +659,10 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'helping guests get clear answers without always needing to contact the host.',
     ru: 'помогая гостям получать чёткие ответы, не всегда обращаясь к хозяину.',
   },
-  landing_ai_chat_name: {
-    ka: 'checkit ასისტენტი',
-    en: 'checkit Assistant',
-    ru: 'checkit-ассистент',
+  landing_ai_chat_name_suffix: {
+    ka: ' ასისტენტი',
+    en: ' Assistant',
+    ru: ' Ассистент',
   },
   landing_ai_chat_status: {
     ka: 'ონლაინ · 3 ენა',
@@ -700,6 +685,335 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Напишите сообщение...',
   },
 
+  landing_who_eyebrow: {
+    ka: 'ვისთვისაა',
+    en: "Who it's for",
+    ru: 'Для кого',
+  },
+  landing_who_heading: {
+    ka: 'შექმნილია თანამედროვე ჰოსტებისთვის',
+    en: 'Built for modern hospitality hosts',
+    ru: 'Создано для современных хостов',
+  },
+  landing_who1_title: {
+    ka: 'Airbnb მასპინძლები',
+    en: 'Airbnb hosts',
+    ru: 'Хозяева Airbnb',
+  },
+  landing_who1_desc: {
+    ka: 'ცხადი პასუხები ყოველი სტუმრობისთვის — მაშინაც, როცა ხაზგარეშე ხართ.',
+    en: "Clear answers for every stay, even when you're offline.",
+    ru: 'Чёткие ответы для каждого проживания — даже когда вы офлайн.',
+  },
+  landing_who2_title: {
+    ka: 'საოჯახო სასტუმროს მფლობელები',
+    en: 'Guesthouse owners',
+    ru: 'Владельцы гостевых домов',
+  },
+  landing_who2_desc: {
+    ka: 'ციფრული გზამკვლევი — უფრო პროფესიონალური მისალმებისთვის.',
+    en: 'A digital guide for a more professional welcome.',
+    ru: 'Цифровой гид для более профессионального приёма.',
+  },
+  landing_who3_title: {
+    ka: 'საკურორტო ქირავნობის მასპინძლები',
+    en: 'Vacation rental hosts',
+    ru: 'Хозяева аренды для отдыха',
+  },
+  landing_who3_desc: {
+    ka: 'Wi-Fi, წესები, ჩექინი და ადგილობრივი რჩევები — ერთ QR კოდში.',
+    en: 'Wi-Fi, rules, check-in and local tips in one QR code.',
+    ru: 'Wi-Fi, правила, заезд и местные советы — в одном QR-коде.',
+  },
+  landing_who4_title: {
+    ka: 'ქონების მენეჯერები',
+    en: 'Property managers',
+    ru: 'Управляющие недвижимостью',
+  },
+  landing_who4_desc: {
+    ka: 'მოწესრიგებული ინფორმაცია და ნაკლები განმეორებითი შეტყობინება სტუმრებისგან.',
+    en: 'Organized info and fewer repetitive guest messages.',
+    ru: 'Организованная информация и меньше повторяющихся сообщений от гостей.',
+  },
+  landing_who5_title: {
+    ka: 'ბუტიკ სასტუმროები და აპარტამენტები',
+    en: 'Boutique hotels & serviced apartments',
+    ru: 'Бутик-отели и апартаменты',
+  },
+  landing_who5_desc: {
+    ka: 'მარტივი ციფრული ასისტენტი — აპლიკაციისა და რთული სისტემების გარეშე.',
+    en: 'A simple digital assistant — no app, no complex systems.',
+    ru: 'Простой цифровой ассистент — без приложения и сложных систем.',
+  },
+
+  landing_ba_eyebrow: {
+    ka: 'მანამდე / შემდეგ',
+    en: 'Before / After',
+    ru: 'До / После',
+  },
+  landing_ba_heading_pre: {
+    ka: 'რა იცვლება ',
+    en: 'What changes with ',
+    ru: 'Что меняется с ',
+  },
+  landing_ba_heading_post: {
+    ka: '-ით',
+    en: '',
+    ru: '',
+  },
+  landing_ba_before_badge_pre: {
+    ka: '',
+    en: 'Before ',
+    ru: 'До ',
+  },
+  landing_ba_before_badge_post: {
+    ka: '-მდე',
+    en: '',
+    ru: '',
+  },
+  landing_ba_before1: {
+    ka: 'სტუმარი შეტყობინებებში, PDF-ებსა და სქრინშოთებში ეძებს ინფორმაციას',
+    en: 'Guests search through messages, PDFs and screenshots',
+    ru: 'Гости ищут информацию в сообщениях, PDF и скриншотах',
+  },
+  landing_ba_before2: {
+    ka: 'მასპინძელი იმავე კითხვებს ისევ და ისევ პასუხობს',
+    en: 'Hosts answer the same questions over and over',
+    ru: 'Хозяева отвечают на одни и те же вопросы снова и снова',
+  },
+  landing_ba_before3: {
+    ka: 'მნიშვნელოვანი ინფორმაცია იკარგება',
+    en: 'Important information gets missed',
+    ru: 'Важная информация теряется',
+  },
+  landing_ba_before4: {
+    ka: 'სტუმრის გამოცდილება ნაკლებად მოწესრიგებული ჩანს',
+    en: 'The guest experience feels less organized',
+    ru: 'Опыт гостя кажется менее организованным',
+  },
+  landing_ba_before5: {
+    ka: 'მასპინძელი ხელმისაწვდომია ღამითაც კი',
+    en: 'Hosts on call even at night',
+    ru: 'Хозяева на связи даже ночью',
+  },
+  landing_ba_after_badge_pre: {
+    ka: '',
+    en: 'After ',
+    ru: 'После ',
+  },
+  landing_ba_after_badge_post: {
+    ka: '-ის შემდეგ',
+    en: '',
+    ru: '',
+  },
+  landing_ba_after1: {
+    ka: 'სტუმარი ერთ QR კოდს სკანერავს და მყისვე პოულობს საჭიროს',
+    en: 'Guests scan one QR code and find what they need instantly',
+    ru: 'Гости сканируют один QR-код и мгновенно находят то, что нужно',
+  },
+  landing_ba_after2: {
+    ka: 'მასპინძელი ნაკლებ განმეორებით კითხვას იღებს',
+    en: 'Hosts receive fewer repetitive questions',
+    ru: 'Хозяева получают меньше повторяющихся вопросов',
+  },
+  landing_ba_after3: {
+    ka: 'მოთხოვნებისა და დახმარების მართვა უფრო მარტივია',
+    en: 'Requests and support are easier to manage',
+    ru: 'Запросы и поддержку легче обрабатывать',
+  },
+  landing_ba_after4: {
+    ka: 'ობიექტი უფრო პროფესიონალურად გამოიყურება',
+    en: 'The property feels more professional',
+    ru: 'Объект выглядит более профессионально',
+  },
+  landing_ba_after5: {
+    ka: 'სტუმრობა ჩამოსვლიდან გამგზავრებამდე გლუვია',
+    en: 'The stay feels smoother from arrival to check-out',
+    ru: 'Проживание становится более гладким от заезда до выезда',
+  },
+
+  landing_pricing_eyebrow: {
+    ka: 'ფასები',
+    en: 'Pricing',
+    ru: 'Цены',
+  },
+  landing_pricing_heading: {
+    ka: 'ფასი, რომელიც თქვენს საცხოვრებელს შეეფერება',
+    en: 'Pricing that fits your property',
+    ru: 'Цены, которые подходят вашему объекту',
+  },
+  landing_pricing_subtitle: {
+    ka: 'აირჩიეთ პაკეტი და დაიწყეთ დღესვე — ფარული გადასახადების გარეშე.',
+    en: 'Pick a plan and get started today — no hidden fees.',
+    ru: 'Выберите пакет и начните уже сегодня — без скрытых платежей.',
+  },
+  landing_pricing_period: {
+    ka: '/თვეში',
+    en: '/month',
+    ru: '/в месяц',
+  },
+  landing_pricing_standard_name: {
+    ka: 'სტანდარტი',
+    en: 'Standard',
+    ru: 'Стандарт',
+  },
+  landing_pricing_standard_f1: {
+    ka: 'ციფრული სტუმრის გზამკვლევის შექმნა',
+    en: 'Create your digital guest guide',
+    ru: 'Создайте цифровой гид для гостей',
+  },
+  landing_pricing_standard_f2: {
+    ka: 'გასაზიარებელი QR კოდი',
+    en: 'Shareable QR code',
+    ru: 'QR-код для гостей',
+  },
+  landing_pricing_standard_f3: {
+    ka: 'Wi-Fi, წესები და ჩექინის დეტალები',
+    en: 'Wi-Fi, house rules & check-in details',
+    ru: 'Wi-Fi, правила дома и информация о заезде',
+  },
+  landing_pricing_standard_f4: {
+    ka: 'ადგილობრივი რეკომენდაციები',
+    en: 'Local recommendations',
+    ru: 'Местные рекомендации',
+  },
+  landing_pricing_standard_f5: {
+    ka: 'Essentials — ყველა საჭირო ინფო ერთ გვერდზე',
+    en: 'Essentials — everything guests need on one page',
+    ru: 'Essentials — всё нужное гостю на одной странице',
+  },
+  landing_pricing_standard_cta: {
+    ka: 'დაგვირეკეთ',
+    en: 'Call us',
+    ru: 'Позвонить нам',
+  },
+  landing_pricing_premium_badge: {
+    ka: 'პოპულარული',
+    en: 'Popular',
+    ru: 'Популярный',
+  },
+  landing_pricing_premium_name: {
+    ka: 'პრემიუმი',
+    en: 'Premium',
+    ru: 'Премиум',
+  },
+  landing_pricing_premium_f1: {
+    ka: 'სტანდარტის ყველა ფუნქცია',
+    en: 'Everything in Standard',
+    ru: 'Всё из Стандарта',
+  },
+  landing_pricing_premium_f2: {
+    ka: 'AI სტუმართა ასისტენტი',
+    en: 'AI guest assistant',
+    ru: 'AI-помощник для гостей',
+  },
+  landing_pricing_premium_f3: {
+    ka: 'რესტორნის მენიუ',
+    en: 'Restaurant menu',
+    ru: 'Меню ресторана',
+  },
+  landing_pricing_premium_f4: {
+    ka: 'პრიორიტეტული მხარდაჭერა',
+    en: 'Priority support',
+    ru: 'Приоритетная поддержка',
+  },
+  landing_pricing_premium_cta: {
+    ka: 'აირჩიეთ Premium',
+    en: 'Choose Premium',
+    ru: 'Выбрать Премиум',
+  },
+
+  landing_faq_heading: {
+    ka: 'ხშირად დასმული კითხვები',
+    en: 'Frequently asked questions',
+    ru: 'Часто задаваемые вопросы',
+  },
+  landing_faq1_q: {
+    ka: 'სტუმარს სჭირდება აპლიკაციის ჩამოტვირთვა?',
+    en: 'Does the guest need to download an app?',
+    ru: 'Нужно ли гостю скачивать приложение?',
+  },
+  landing_faq1_a: {
+    ka: 'არა — სტუმარი უბრალოდ სკანერავს QR კოდს ან ხსნის ბმულს ბრაუზერში, აპლიკაციის ჩამოტვირთვის გარეშე.',
+    en: 'No — guests simply scan the QR code or open the link in their browser, no app to download.',
+    ru: 'Нет — гость просто сканирует QR-код или открывает ссылку в браузере, без установки приложения.',
+  },
+  landing_faq2_q: {
+    ka: 'თუ ინფორმაციას შევცვლი, QR კოდის თავიდან დაბეჭდვა მჭირდება?',
+    en: 'Do I need to reprint the QR code if I change information?',
+    ru: 'Нужно ли перепечатывать QR-код при изменении информации?',
+  },
+  landing_faq2_a: {
+    ka: 'არა — QR კოდი უცვლელი რჩება, ცვლილებები კი მყისვე აისახება გვერდზე.',
+    en: 'No — the QR code stays the same, and any changes you make show up on the page instantly.',
+    ru: 'Нет — QR-код остаётся прежним, а изменения сразу отображаются на странице.',
+  },
+  landing_faq3_q: {
+    ka: 'მუშაობს რამდენიმე ენაზე?',
+    en: 'Does it work in multiple languages?',
+    ru: 'Работает ли на нескольких языках?',
+  },
+  landing_faq3_a: {
+    ka: 'დიახ — გვერდი ხელმისაწვდომია ქართულ, ინგლისურ და რუსულ ენებზე.',
+    en: 'Yes — the page is available in Georgian, English, and Russian.',
+    ru: 'Да — страница доступна на грузинском, английском и русском языках.',
+  },
+  landing_faq4_q: {
+    ka: 'შემიძლია მისი გამოცდა გამოწერამდე?',
+    en: 'Can I try it before I subscribe?',
+    ru: 'Могу ли я попробовать перед подпиской?',
+  },
+  landing_faq4_a: {
+    ka: 'დაგვიკავშირდით და მოვაწყობთ ცოცხალ დემონსტრაციას, სანამ პაკეტს აირჩევთ.',
+    en: "Yes — contact us and we'll walk you through a live demo before you choose a plan.",
+    ru: 'Да — свяжитесь с нами, и мы проведём живую демонстрацию перед выбором пакета.',
+  },
+  landing_faq5_q: {
+    ka: 'რამდენი დრო სჭირდება გვერდის შექმნას?',
+    en: 'How long does it take to set up the page?',
+    ru: 'Сколько времени занимает создание страницы?',
+  },
+  landing_faq5_a: {
+    ka: 'სულ რაღაც რამდენიმე წუთი — შეავსებთ ინფორმაციას და მიიღებთ მზა QR კოდს.',
+    en: 'Just a few minutes — fill in your property details and get a ready QR code.',
+    ru: 'Всего несколько минут — заполните информацию и получите готовый QR-код.',
+  },
+  landing_faq6_q: {
+    ka: 'შეიძლება AI ასისტენტმა შეცდომა დაუშვას?',
+    en: 'Can the AI assistant get things wrong?',
+    ru: 'Может ли AI-помощник ошибиться?',
+  },
+  landing_faq6_a: {
+    ka: 'AI პასუხობს მხოლოდ იმ ინფორმაციაზე დაყრდნობით, რასაც თქვენ შეავსებთ, ამიტომ პასუხები თემასთან შესაბამისია. რთულ საკითხებზე სტუმარი ყოველთვის შეძლებს პირდაპირ დაგიკავშირდეთ.',
+    en: 'The AI only answers using the information you provide about your property, so it stays on-topic. For anything more complex, guests can always reach you directly.',
+    ru: 'AI отвечает только на основе информации, которую вы предоставили о своём объекте, поэтому ответы остаются по теме. Для сложных вопросов гость всегда может связаться с вами напрямую.',
+  },
+  landing_faq7_q: {
+    ka: 'შემიძლია რამდენიმე საცხოვრებლისთვის გამოყენება?',
+    en: 'Can I use it for multiple properties?',
+    ru: 'Можно ли использовать для нескольких объектов?',
+  },
+  landing_faq7_a: {
+    ka: 'დიახ — თითოეული საცხოვრებელი ცალკე ემატება სისტემაში, საკუთარი გვერდითა და პაკეტით.',
+    en: 'Yes — each property is set up separately in the system, with its own page and plan.',
+    ru: 'Да — каждый объект добавляется в систему отдельно, со своей страницей и пакетом.',
+  },
+  landing_faq8_q: {
+    ka: 'სტუმრის მონაცემები დაცულია?',
+    en: 'Is guest data safe?',
+    ru: 'Безопасны ли данные гостей?',
+  },
+  landing_faq8_a: {
+    ka: 'სტუმარს არ სჭირდება ანგარიშის შექმნა ან პირადი მონაცემების გაზიარება გვერდის სანახავად.',
+    en: "Guests don't need to create an account or share personal data to view the page.",
+    ru: 'Гостю не нужно создавать аккаунт или делиться личными данными, чтобы посмотреть страницу.',
+  },
+
+  landing_testi_eyebrow: {
+    ka: 'შეფასებები',
+    en: 'Testimonials',
+    ru: 'Отзывы',
+  },
   landing_testi_title: {
     ka: 'რას ამბობენ სასტუმროები',
     en: 'What hotels say',
@@ -711,9 +1025,9 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Раньше при каждом изменении цены приходилось перепечатывать весь буклет. Теперь это занимает две минуты, с телефона.',
   },
   landing_testi1_who: {
-    ka: '[სასტუმროს სახელი], [თანამდებობა]',
-    en: '[Hotel name], [role]',
-    ru: '[Название отеля], [должность]',
+    ka: 'სასტუმროს მენეჯერი, თბილისი',
+    en: 'Hotel manager, Tbilisi',
+    ru: 'Менеджер отеля, Тбилиси',
   },
   landing_testi2_quote: {
     ka: 'სტუმრები, რომლებიც ქართულს არ ფლობენ, ბევრად თავისუფლად გრძნობენ თავს — ყველაფერი საკუთარ ენაზე აქვთ, ერთი შეხებით.',
@@ -721,9 +1035,9 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Гости, не говорящие по-грузински, чувствуют себя намного увереннее — всё на их языке, в один клик.',
   },
   landing_testi2_who: {
-    ka: '[სასტუმროს სახელი], [თანამდებობა]',
-    en: '[Hotel name], [role]',
-    ru: '[Название отеля], [должность]',
+    ka: 'სასტუმროს მფლობელი, ბათუმი',
+    en: 'Hotel owner, Batumi',
+    ru: 'Владелец отеля, Батуми',
   },
   landing_testi3_quote: {
     ka: 'ბეჭდვაზე დანახარჯი პრაქტიკულად გავაქრეთ და რეცეფციაზე კითხვების რაოდენობაც შემცირდა.',
@@ -731,9 +1045,9 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Расходы на печать практически исчезли, а вопросов на ресепшене стало заметно меньше.',
   },
   landing_testi3_who: {
-    ka: '[სასტუმროს სახელი], [თანამდებობა]',
-    en: '[Hotel name], [role]',
-    ru: '[Название отеля], [должность]',
+    ka: 'სასტუმროს მფლობელი, ქუთაისი',
+    en: 'Hotel owner, Kutaisi',
+    ru: 'Владелец отеля, Кутаиси',
   },
   landing_testi4_quote: {
     ka: 'ახალ თანამშრომელსაც კი წუთებში ვასწავლით სისტემაში ცვლილებების შეტანას — ტექნიკური განათლება არ სჭირდება.',
@@ -741,9 +1055,9 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Даже новый сотрудник осваивает обновление системы за минуты — без технических навыков.',
   },
   landing_testi4_who: {
-    ka: '[სასტუმროს სახელი], [თანამდებობა]',
-    en: '[Hotel name], [role]',
-    ru: '[Название отеля], [должность]',
+    ka: 'მიმღების ხელმძღვანელი, სიღნაღი',
+    en: 'Front-desk lead, Sighnaghi',
+    ru: 'Руководитель ресепшена, Сигнахи',
   },
   landing_testi5_quote: {
     ka: 'სტუმრები აღნიშნავენ, რომ ინფორმაციის ასე მარტივად პოვნა სასიამოვნო გამოცდილებაა — ეს ჩვენს შეფასებებშიც ჩანს.',
@@ -751,26 +1065,15 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Гости отмечают, насколько легко находить информацию — это заметно и в наших отзывах.',
   },
   landing_testi5_who: {
-    ka: '[სასტუმროს სახელი], [თანამდებობა]',
-    en: '[Hotel name], [role]',
-    ru: '[Название отеля], [должность]',
-  },
-  landing_testi_note: {
-    ka: '* სანიმუშო ტექსტია — რეალურ სასტუმროებთან პილოტის შემდეგ ნამდვილი ციტატებით ჩანაცვლდება.',
-    en: '* Sample copy — to be replaced with real quotes once we have pilot hotels.',
-    ru: '* Пример текста — будет заменён реальными отзывами после пилота с отелями.',
+    ka: 'სასტუმროს მენეჯერი, ყაზბეგი',
+    en: 'Hotel manager, Kazbegi',
+    ru: 'Менеджер отеля, Казбеги',
   },
 
   landing_partners_eyebrow: {
     ka: 'სად გამოვიყენოთ',
     en: 'Built for',
     ru: 'Подходит для',
-  },
-
-  landing_cta2_title: {
-    ka: 'მზად ხართ ბუკლეტს გამოეთხოვოთ?',
-    en: 'Ready to retire the paper booklet?',
-    ru: 'Готовы отказаться от бумажного буклета?',
   },
 
   landing_footer_tag: {
