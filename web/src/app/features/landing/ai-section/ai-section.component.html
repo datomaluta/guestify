@@ -1,0 +1,46 @@
+<section class="ai">
+  <div class="wrap">
+    <div class="ai-copy">
+      <p class="eyebrow">{{ 'landing_ai_eyebrow' | translate }}</p>
+      <h2>{{ 'landing_ai_heading' | translate }}</h2>
+      <p class="body">{{ 'landing_ai_body' | translate }}</p>
+
+      <div class="ai-langs">
+        @for (l of languages; track l.key) {
+          <span class="pill" [class.active]="l.active">
+            <span class="code">{{ l.code }}</span>
+            {{ l.key | translate }}
+          </span>
+        }
+      </div>
+
+      <p class="footnote">
+        {{ 'landing_ai_footnote_pre' | translate }}
+        <strong>{{ 'landing_ai_footnote_bold' | translate }}</strong>
+        — {{ 'landing_ai_footnote_post' | translate }}
+      </p>
+    </div>
+
+    <div class="ai-chat">
+      <div class="chat-card">
+        <div class="chat-header">
+          <span class="bot-avatar"><app-icon name="smart_toy" [size]="18" /></span>
+          <div>
+            <p class="name">{{ 'landing_ai_chat_name' | translate }}</p>
+            <p class="status">{{ 'landing_ai_chat_status' | translate }}</p>
+          </div>
+        </div>
+
+        <div class="chat-body">
+          <p class="bubble question">{{ 'landing_ai_chat_question' | translate }}</p>
+          <p class="bubble answer">{{ 'landing_ai_chat_answer' | translate }}</p>
+        </div>
+
+        <div class="chat-input">
+          <span class="fake-input">{{ 'landing_ai_chat_placeholder' | translate }}</span>
+          <span class="send-btn"><app-icon name="send" [size]="16" /></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -6,12 +6,8 @@ import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { ProblemSectionComponent } from './problem-section/problem-section.component';
 import { HowSectionComponent } from './how-section/how-section.component';
 import { DemoSectionComponent } from './demo-section/demo-section.component';
-
-interface LandingFeature {
-  icon: string;
-  titleKey: string;
-  descKey: string;
-}
+import { FeaturesSectionComponent } from './features-section/features-section.component';
+import { AiSectionComponent } from './ai-section/ai-section.component';
 
 interface Testimonial {
   quoteKey: string;
@@ -35,20 +31,15 @@ const DEMO_MAILTO = 'mailto:hello@guestify.ge?subject=' + encodeURIComponent('Gu
     HeroSectionComponent,
     ProblemSectionComponent,
     HowSectionComponent,
-    DemoSectionComponent
+    DemoSectionComponent,
+    FeaturesSectionComponent,
+    AiSectionComponent
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
   protected readonly demoMailto = DEMO_MAILTO;
-
-  protected readonly features: LandingFeature[] = [
-    { icon: 'qr_code_2', titleKey: 'landing_feat1_title', descKey: 'landing_feat1_desc' },
-    { icon: 'edit_note', titleKey: 'landing_feat2_title', descKey: 'landing_feat2_desc' },
-    { icon: 'language', titleKey: 'landing_feat3_title', descKey: 'landing_feat3_desc' },
-    { icon: 'location_on', titleKey: 'landing_feat4_title', descKey: 'landing_feat4_desc' }
-  ];
 
   protected readonly testimonials: Testimonial[] = [
     { quoteKey: 'landing_testi1_quote', whoKey: 'landing_testi1_who' },

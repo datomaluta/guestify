@@ -411,45 +411,125 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Бумажный буклет быстро устаревает, теряется из номера и существует только на одном языке. С Guestify гость читает всё, не вставая с места, а вы меняете контент за секунды — без допечатки.',
   },
 
-  landing_feat1_title: {
-    ka: 'QR ყოველ ოთახში',
-    en: 'A QR in every room',
-    ru: 'QR в каждом номере',
+  landing_features_eyebrow: {
+    ka: 'ფუნქციები',
+    en: 'Features',
+    ru: 'Функции',
   },
-  landing_feat1_desc: {
-    ka: 'სტუმარი კამერით ასკანერებს კოდს და პირდაპირ თქვენს გვერდზეა — ინსტალაციის გარეშე.',
-    en: 'Guests scan with their camera and land straight on your page — nothing to install.',
-    ru: 'Гость сканирует камерой и сразу попадает на вашу страницу — без установки.',
+  landing_features_heading_main: {
+    ka: 'ყველაფერი, რაც სტუმარს სჭირდება',
+    en: 'Everything your guests need',
+    ru: 'Всё, что нужно вашим гостям',
   },
-  landing_feat2_title: {
-    ka: 'კონტენტი რეალურ დროში',
-    en: 'Content in real time',
-    ru: 'Контент в реальном времени',
+  landing_features_heading_accent: {
+    ka: 'ერთ QR კოდში',
+    en: 'in one QR code',
+    ru: 'в одном QR-коде',
   },
-  landing_feat2_desc: {
-    ka: 'სერვისები, მენიუ, წესები და კონტაქტები — თქვენივე ადმინ პანელიდან იცვლება.',
-    en: 'Services, menu, house rules and contacts — edited from your own admin panel.',
-    ru: 'Услуги, меню, правила и контакты — редактируются в вашей админ-панели.',
+  landing_features_subtitle: {
+    ka: 'სუფთა, თანამედროვე გამოცდილება სტუმრისთვის — და მოწესრიგებული სისტემა თქვენთვის.',
+    en: 'A clean, modern experience for guests — and a tidier system for you.',
+    ru: 'Чистый, современный опыт для гостей — и более упорядоченная система для вас.',
   },
-  landing_feat3_title: {
+  landing_features1_title: {
+    ka: 'Wi-Fi დეტალები',
+    en: 'Wi-Fi details',
+    ru: 'Данные Wi-Fi',
+  },
+  landing_features1_desc: {
+    ka: 'სტუმარი მყისვე ხედავს Wi-Fi-ის მონაცემებს — მასპინძლისთვის მიწერის გარეშე.',
+    en: 'Guests see the Wi-Fi details instantly — no need to message the host.',
+    ru: 'Гости мгновенно видят данные Wi-Fi — без сообщений хозяину.',
+  },
+  landing_features2_title: {
+    ka: 'ჩექინი და ჩექაუთი',
+    en: 'Check-in & check-out',
+    ru: 'Заезд и выезд',
+  },
+  landing_features2_desc: {
+    ka: 'ჩამოსვლის ინსტრუქციები, დროები და ყველა მნიშვნელოვანი დეტალი — ნათლად.',
+    en: 'Arrival instructions, times and every important detail — laid out clearly.',
+    ru: 'Инструкции по заезду, время и все важные детали — понятно и чётко.',
+  },
+  landing_features3_title: {
+    ka: 'სახლის წესები',
+    en: 'House rules',
+    ru: 'Правила дома',
+  },
+  landing_features3_desc: {
+    ka: 'წესები ადვილად საპოვნელია, გასაგები და ხელმისაწვდომია რამდენიმე ენაზე.',
+    en: 'Rules are easy to find, easy to understand and available in multiple languages.',
+    ru: 'Правила легко найти, легко понять — доступны на нескольких языках.',
+  },
+  landing_features4_title: {
+    ka: 'ადგილობრივი რეკომენდაციები',
+    en: 'Local recommendations',
+    ru: 'Местные рекомендации',
+  },
+  landing_features4_desc: {
+    ka: 'საუკეთესო რესტორნები, კაფეები და ღირსშესანიშნაობები — სასტუმროს ირგვლივ.',
+    en: 'The best restaurants, cafés and sights — right around the property.',
+    ru: 'Лучшие рестораны, кафе и достопримечательности — рядом с отелем.',
+  },
+  landing_features5_title: {
+    ka: 'კონტაქტი მასპინძელთან',
+    en: 'Host contact',
+    ru: 'Связь с хозяином',
+  },
+  landing_features5_desc: {
+    ka: 'სტუმარს შეუძლია მარტივად დარეკოს ან მისწეროს, როცა დახმარება სჭირდება.',
+    en: 'Guests can call or message the host easily whenever they need help.',
+    ru: 'Гости могут легко позвонить или написать хозяину, когда нужна помощь.',
+  },
+  landing_features6_title: {
+    ka: 'გადაუდებელი დახმარება',
+    en: 'Emergency & essentials',
+    ru: 'Экстренная помощь',
+  },
+  landing_features6_desc: {
+    ka: 'სასწრაფო ნომრები, უახლოესი აფთიაქი და ბანკომატი — ერთ ადგილას.',
+    en: 'Emergency numbers, the nearest pharmacy and ATM — all in one place.',
+    ru: 'Экстренные номера, ближайшая аптека и банкомат — в одном месте.',
+  },
+  landing_features7_title: {
+    ka: 'AI დამხმარე',
+    en: 'AI guest assistant',
+    ru: 'AI-помощник',
+  },
+  landing_features7_desc: {
+    ka: 'სტუმარი ნებისმიერ კითხვას სვამს AI-ს — Wi-Fi-დან ტრანსპორტამდე.',
+    en: 'Guests can ask the AI anything — from Wi-Fi to local transport.',
+    ru: 'Гости могут спросить AI о чём угодно — от Wi-Fi до транспорта.',
+  },
+  landing_features8_title: {
     ka: 'მრავალენოვანი ნაგულისხმევად',
     en: 'Multilingual by default',
     ru: 'Многоязычность по умолчанию',
   },
-  landing_feat3_desc: {
+  landing_features8_desc: {
     ka: 'სტუმარი თავად ირჩევს ენას, რომელზეც კითხულობს.',
     en: 'Guests choose the language they read in.',
     ru: 'Гость сам выбирает язык.',
   },
-  landing_feat4_title: {
-    ka: 'ადგილობრივი გზამკვლევი',
-    en: 'Local guide',
-    ru: 'Гид по окрестностям',
+  landing_features9_title: {
+    ka: 'განახლება რეალურ დროში',
+    en: 'Real-time updates',
+    ru: 'Обновления в реальном времени',
   },
-  landing_feat4_desc: {
-    ka: 'საუკეთესო რესტორნები და ღირსშესანიშნაობები სასტუმროს ირგვლივ — Google Maps ბმულით, ერთ შეხებაზე.',
-    en: 'The best restaurants and sights around your property — with a one-tap Google Maps link.',
-    ru: 'Лучшие рестораны и достопримечательности рядом с отелем — со ссылкой на Google Maps в один клик.',
+  landing_features9_desc: {
+    ka: 'შეცვალეთ ინფორმაცია ადმინ პანელიდან — სტუმრებს ეგრევე ემატებათ.',
+    en: 'Update anything from the admin panel — guests see it instantly.',
+    ru: 'Изменяйте информацию в админ-панели — гости видят это мгновенно.',
+  },
+  landing_features10_title: {
+    ka: 'აპლიკაციის გარეშე',
+    en: 'No app to download',
+    ru: 'Без приложения',
+  },
+  landing_features10_desc: {
+    ka: 'სტუმარი QR-ს სკანერავს და ბრაუზერში ხსნის — ანგარიშის ან ჩამოტვირთვის გარეშე.',
+    en: 'Guests scan the QR and open it in their browser — no account, no download.',
+    ru: 'Гости сканируют QR и открывают в браузере — без аккаунта и загрузок.',
   },
 
   landing_how_title: {
@@ -547,6 +627,77 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ka: 'იხილეთ ფუნქციები',
     en: 'See the features',
     ru: 'Смотреть функции',
+  },
+
+  landing_ai_eyebrow: {
+    ka: 'AI დამხმარე',
+    en: 'AI guest assistant',
+    ru: 'AI-помощник',
+  },
+  landing_ai_heading: {
+    ka: 'AI, რომელიც განმეორებით კითხვებს თქვენ მაგივრად პასუხობს',
+    en: 'AI that answers the repetitive questions for you',
+    ru: 'AI, который отвечает на повторяющиеся вопросы за вас',
+  },
+  landing_ai_body: {
+    ka: 'სტუმარს შეუძლია ჰკითხოს Wi-Fi-ის, ჩექაუთის, პარკინგის, ტრანსპორტის, ადგილობრივი რეკომენდაციების, წესების და სხვა შესახებ. ასისტენტი თქვენი გზამკვლევის მონაცემებზე დაყრდნობით პასუხობს ცხადად.',
+    en: 'Guests can ask about Wi-Fi, check-out, parking, transport, local recommendations, house rules and more. The assistant uses your property guide to give clear answers.',
+    ru: 'Гости могут спросить про Wi-Fi, выезд, парковку, транспорт, местные рекомендации, правила и многое другое. Ассистент отвечает на основе данных вашего гида.',
+  },
+  landing_ai_lang_ka: {
+    ka: 'ქართული',
+    en: 'Georgian',
+    ru: 'Грузинский',
+  },
+  landing_ai_lang_en: {
+    ka: 'ინგლისური',
+    en: 'English',
+    ru: 'Английский',
+  },
+  landing_ai_lang_ru: {
+    ka: 'რუსული',
+    en: 'Russian',
+    ru: 'Русский',
+  },
+  landing_ai_footnote_pre: {
+    ka: 'ასისტენტი იყენებს',
+    en: 'The assistant uses',
+    ru: 'Ассистент использует',
+  },
+  landing_ai_footnote_bold: {
+    ka: 'მხოლოდ თქვენი ობიექტის ინფორმაციას',
+    en: "only your property's information",
+    ru: 'только информацию о вашем объекте',
+  },
+  landing_ai_footnote_post: {
+    ka: 'სტუმრებს ცხადი პასუხები აქვთ, მასპინძელთან დაკავშირების გარეშეც.',
+    en: 'helping guests get clear answers without always needing to contact the host.',
+    ru: 'помогая гостям получать чёткие ответы, не всегда обращаясь к хозяину.',
+  },
+  landing_ai_chat_name: {
+    ka: 'checkit ასისტენტი',
+    en: 'checkit Assistant',
+    ru: 'checkit-ассистент',
+  },
+  landing_ai_chat_status: {
+    ka: 'ონლაინ · 3 ენა',
+    en: 'Online · 3 languages',
+    ru: 'Онлайн · 3 языка',
+  },
+  landing_ai_chat_question: {
+    ka: 'სად შემიძლია პარკინგის გაკეთება?',
+    en: 'Where can I park near the property?',
+    ru: 'Где я могу припарковаться рядом с домом?',
+  },
+  landing_ai_chat_answer: {
+    ka: 'პარკინგი შეგიძლიათ შენობის უკან, ან გამოიყენოთ ფასიანი ავტოსადგომი მოპირდაპირე მხარეს.',
+    en: 'You can park behind the building, or use the paid lot just across the street.',
+    ru: 'Вы можете припарковаться за зданием или воспользоваться платной парковкой напротив.',
+  },
+  landing_ai_chat_placeholder: {
+    ka: 'დაწერეთ შეტყობინება...',
+    en: 'Write a message...',
+    ru: 'Напишите сообщение...',
   },
 
   landing_testi_title: {

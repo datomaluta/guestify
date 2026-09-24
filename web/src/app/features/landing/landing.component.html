@@ -45,24 +45,14 @@
 
   <app-demo-section />
 
+  <app-features-section />
+
+  <app-ai-section />
+
   <section class="why">
     <div class="wrap">
       <h2>{{ 'landing_why_title' | translate }}</h2>
       <p>{{ 'landing_why_body' | translate }}</p>
-    </div>
-  </section>
-
-  <section class="features" id="features">
-    <div class="wrap">
-      <div class="features-grid">
-        @for (f of features; track f.titleKey; let i = $index) {
-          <div class="feature-card">
-            <span class="ic"><app-icon [name]="f.icon" [size]="20" /></span>
-            <h3>{{ f.titleKey | translate }}</h3>
-            <p>{{ f.descKey | translate }}</p>
-          </div>
-        }
-      </div>
     </div>
   </section>
 
