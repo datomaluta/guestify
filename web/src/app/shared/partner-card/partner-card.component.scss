@@ -14,15 +14,9 @@
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
   box-sizing: border-box;
-  // ეს component-scoped transition მთლიანად ჩაანაცვლებდა (და არა დაემატებოდა) გლობალურ
-  // [appReveal]-ის (styles.scss) opacity/translate transition-ს მაღალი სპეციფიურობის
-  // გამო — ამიტომ ისინიც აქვეა ჩამოთვლილი, თორემ scroll-reveal ტრანზიციის გარეშე,
-  // მყისვე/უხეშად გამოჩნდებოდა (იხ. features-section.component.scss-ის იგივე კომენტარი).
   transition:
     box-shadow 0.18s ease,
-    transform 0.18s ease,
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
-    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+    transform 0.18s ease;
 
   @media (hover: hover) {
     &:hover {
