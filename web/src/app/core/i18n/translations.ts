@@ -1080,6 +1080,27 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Our partners',
     ru: 'Наши партнёры',
   },
+  landing_partners_cta: {
+    ka: 'ყველას ნახვა',
+    en: 'View all partners',
+    ru: 'Смотреть всех партнёров',
+  },
+
+  partners_page_back: {
+    ka: 'მთავარზე დაბრუნება',
+    en: 'Back to home',
+    ru: 'На главную',
+  },
+  partners_page_heading: {
+    ka: 'ყველა პარტნიორი სასტუმრო',
+    en: 'All partner hotels',
+    ru: 'Все отели-партнёры',
+  },
+  partners_page_subtitle: {
+    ka: 'სასტუმროები, რომლებიც checkit-ს იყენებენ სტუმრების მომსახურების გასაუმჯობესებლად',
+    en: 'Hotels that use checkit to elevate their guest experience',
+    ru: 'Отели, которые используют checkit для улучшения обслуживания гостей',
+  },
 
   landing_footer_tag: {
     ka: 'checkit — ციფრული სტუმართა გზამკვლევი სასტუმროებისთვის.',

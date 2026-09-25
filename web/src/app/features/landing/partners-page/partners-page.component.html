@@ -1,0 +1,42 @@
+<div class="partners-page">
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand-mark" routerLink="/">
+        <span class="wordmark">check<span class="accent">it</span></span>
+      </a>
+
+      <div class="topbar-actions">
+        <a class="back-link" routerLink="/" [attr.aria-label]="'partners_page_back' | translate">
+          <app-icon name="arrow_back" [size]="16" />
+          <span class="back-link-label">{{ 'partners_page_back' | translate }}</span>
+        </a>
+
+        <app-lang-dropdown />
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-intro" appReveal>
+      <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
+      <h1>{{ 'partners_page_heading' | translate }}</h1>
+      <p class="sub">{{ 'partners_page_subtitle' | translate }}</p>
+    </div>
+
+    <div class="partners-grid">
+      @for (partner of partners; track partner.slug; let i = $index) {
+        <app-partner-card [partner]="partner" [revealDelayMs]="(i % 3) * 90" />
+      }
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        <p class="tag">{{ 'landing_footer_tag' | translate }}</p>
+        <p class="made">{{ 'landing_footer_made' | translate }} · © 2026</p>
+      </div>
+      <a class="mail" href="mailto:hello@checkit.ge">hello&#64;checkit.ge</a>
+    </div>
+  </footer>
+</div>

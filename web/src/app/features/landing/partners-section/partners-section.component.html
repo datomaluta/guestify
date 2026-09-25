@@ -4,17 +4,16 @@
       <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
       <h2>{{ 'landing_partners_heading' | translate }}</h2>
     </div>
-  </div>
 
-  <div class="marquee" appReveal [style.--reveal-delay.ms]="120">
-    <div class="marquee-track">
-      @for (group of repeatGroups; track group) {
-        @for (logo of partnerLogos; track logo.src) {
-          <span class="partner-item" [attr.aria-hidden]="group > 0 ? true : null">
-            <img [src]="logo.src" [alt]="logo.alt" loading="lazy" />
-          </span>
-        }
+    <div class="partners-grid">
+      @for (partner of featuredPartners; track partner.slug; let i = $index) {
+        <app-partner-card [partner]="partner" [revealDelayMs]="i * 90" />
       }
     </div>
+
+    <a class="cta-btn-outline" routerLink="/partners" appReveal [style.--reveal-delay.ms]="200">
+      {{ 'landing_partners_cta' | translate }}
+      <app-icon name="arrow_forward" [size]="15" />
+    </a>
   </div>
 </section>
