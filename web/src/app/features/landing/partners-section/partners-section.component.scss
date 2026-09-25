@@ -55,47 +55,41 @@ h2 {
   }
 }
 
-.marquee {
-  overflow: hidden;
-  width: 100%;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 920px;
+  margin: 0 auto 32px;
 }
 
-.marquee-track {
-  display: flex;
+// გაზიარებული .cta-btn-outline სტილია demo-section.component.scss-შიც — Angular-ის
+// emulated view encapsulation component-ებს შორის style-ებს არ უზიარებს, ამიტომ
+// დუბლირებულია.
+.cta-btn-outline {
+  display: inline-flex;
   align-items: center;
-  gap: 56px;
-  width: max-content;
-  animation: marquee 34s linear infinite;
-}
+  gap: 8px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-// REPEAT_COUNT (component.ts) = 4 ასლი — ტრეკი ამიტომ 4 ტოლ ნაწილად იყოფა და ერთი ნაწილის
-// სიგანეზე (25%) გადაინაცვლებს ციკლურად, ისე რომ loop-ის ბოლოში ხარვეზი არ ჩანდეს.
-@keyframes marquee {
-  from {
-    transform: translateX(0);
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+    }
   }
-  to {
-    transform: translateX(-25%);
-  }
-}
 
-.partner-item {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-
-  img {
-    display: block;
-    height: 76px;
-    width: auto;
-    max-width: 260px;
-    object-fit: contain;
-    border-radius: 10px;
+  &:active {
+    transform: scale(0.97);
   }
 }

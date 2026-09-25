@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/landing/landing.component').then((m) => m.LandingComponent)
   },
   {
+    path: 'partners',
+    loadComponent: () =>
+      import('./features/landing/partners-page/partners-page.component').then((m) => m.PartnersPageComponent)
+  },
+  {
     path: 'hotel/:slug',
     loadComponent: () =>
       import('./features/guest/guest-shell/guest-shell.component').then((m) => m.GuestShellComponent),

@@ -1,37 +1,18 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { IconComponent } from '../../../shared/icon/icon.component';
 import { RevealDirective } from '../../../shared/directives/reveal.directive';
-
-interface PartnerLogo {
-  src: string;
-  alt: string;
-}
-
-const PARTNER_LOGOS: PartnerLogo[] = [
-  { src: 'images/partners/castello-mare.webp', alt: 'Castello Mare' },
-  { src: 'images/partners/dreamland-oasis.webp', alt: 'Dreamland Oasis' },
-  { src: 'images/partners/georgiagold.webp', alt: 'Georgia Gold' },
-  { src: 'images/partners/kasslogo.webp', alt: 'KASS' },
-  { src: 'images/partners/orbi-hotels.webp', alt: 'Orbi Hotels' },
-  { src: 'images/partners/sevsamora.webp', alt: 'Sevsamora' }
-];
-
-/**
- * marquee-ს "უსასრულო" scroll-ეფექტი translateX(0 -> -1/REPEAT_COUNT * 100%) ტრიკზეა აგებული —
- * ამისთვის ლოგოების ერთი კომპლექტის საერთო სიგანე ყოველთვის უნდა აღემატებოდეს ეკრანის სიგანეს,
- * თორემ loop-ის ბოლოში ცარიელი ადგილი გამოჩნდება (6 ლოგო ამის საკმარისად ვერ ივსებდა ფართო
- * ეკრანებზე). 4 ასლი კომპლექტს გარანტირებულად აჭარბებს ნებისმიერ რეალურ ეკრანის სიგანეს.
- */
-const REPEAT_COUNT = 4;
+import { PartnerCardComponent } from '../../../shared/partner-card/partner-card.component';
+import { PARTNER_HOTELS } from './partners.data';
 
 @Component({
   selector: 'app-partners-section',
   standalone: true,
-  imports: [TranslatePipe, RevealDirective],
+  imports: [TranslatePipe, IconComponent, RevealDirective, RouterLink, PartnerCardComponent],
   templateUrl: './partners-section.component.html',
   styleUrl: './partners-section.component.scss'
 })
 export class PartnersSectionComponent {
-  protected readonly repeatGroups = Array.from({ length: REPEAT_COUNT }, (_, i) => i);
-  protected readonly partnerLogos = PARTNER_LOGOS;
+  protected readonly featuredPartners = PARTNER_HOTELS.filter((p) => p.featured);
 }
