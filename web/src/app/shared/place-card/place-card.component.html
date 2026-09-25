@@ -45,7 +45,7 @@
           {{ "home_fav_open_maps" | translate }}
         </a>
         <span class="fav-walk" [class.is-empty]="!place()!.walk_minutes">
-          <app-icon name="footprint" [size]="13" />
+          <app-icon [name]="place()!.travel_mode === 'car' ? 'directions_car' : 'footprint'" [size]="13" />
           {{ place()!.walk_minutes }} {{ "home_min_walk_suffix" | translate }}
         </span>
       </div>

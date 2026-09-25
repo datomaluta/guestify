@@ -11,6 +11,7 @@ export interface GuidePlace {
   image_url: string | null;
   google_maps_url: string | null;
   walk_minutes: number | null;
+  travel_mode: 'walk' | 'car';
   sort_order: number;
   created_at: string;
 }

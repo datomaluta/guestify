@@ -16,6 +16,7 @@ interface PlaceForm {
   description_ru: string;
   google_maps_url: string;
   walk_minutes: number | null;
+  travel_mode: 'walk' | 'car';
 }
 
 const BLANK: PlaceForm = {
@@ -27,7 +28,8 @@ const BLANK: PlaceForm = {
   description_en: '',
   description_ru: '',
   google_maps_url: '',
-  walk_minutes: null
+  walk_minutes: null,
+  travel_mode: 'walk'
 };
 
 /** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
@@ -79,7 +81,8 @@ export class GuideEditorComponent {
       description_en: item.description_en || '',
       description_ru: item.description_ru || '',
       google_maps_url: item.google_maps_url || '',
-      walk_minutes: item.walk_minutes
+      walk_minutes: item.walk_minutes,
+      travel_mode: item.travel_mode || 'walk'
     };
   }
 
