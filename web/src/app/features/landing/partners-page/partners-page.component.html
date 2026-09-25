@@ -17,15 +17,15 @@
   </header>
 
   <main class="wrap">
-    <div class="page-intro" appReveal>
+    <div class="page-intro">
       <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
       <h1>{{ 'partners_page_heading' | translate }}</h1>
       <p class="sub">{{ 'partners_page_subtitle' | translate }}</p>
     </div>
 
     <div class="partners-grid">
-      @for (partner of partners; track partner.slug; let i = $index) {
-        <app-partner-card [partner]="partner" [revealDelayMs]="(i % 3) * 90" />
+      @for (partner of partners; track partner.slug) {
+        <app-partner-card [partner]="partner" />
       }
     </div>
   </main>
