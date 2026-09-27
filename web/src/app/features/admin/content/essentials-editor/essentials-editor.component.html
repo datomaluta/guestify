@@ -6,7 +6,8 @@
   }
 
   <p class="hint">
-    ეს ველები სტუმრის Essentials გვერდზე ჩანს — Wi-Fi, Check-in/Check-out, აფთიაქი და ბანკომატი.
+    ეს ველები სტუმრის Essentials გვერდზე ჩანს — Wi-Fi, Check-in/Check-out, აფთიაქი და ბანკომატი
+    (Google რევიუს ბმული კი Home გვერდის ბანერზე).
     ცარიელი ველის შესაბამისი ბლოკი სტუმარს საერთოდ არ უჩნდება.
   </p>
 
@@ -92,6 +93,31 @@
         <input name="atm_maps_url" [(ngModel)]="form.atm_maps_url" placeholder="https://maps.google.com/..." />
       </label>
     </div>
+
+    <h2>Google რევიუ</h2>
+    <p class="hint">
+      Google Business Profile → „Ask for reviews“ ბმული, ან
+      https://search.google.com/local/writereview?placeid=... — სტუმრის Home გვერდზე
+      „შეგვაფასე Google-ზე“ ბანერი ამ ბმულზე გადაიყვანს. ცარიელის შემთხვევაში ბანერი არ ჩანს.
+    </p>
+    <div class="grid">
+      <label class="span-2">
+        <span>რევიუს დასაწერი ბმული</span>
+        <input name="google_review_url" type="url" [(ngModel)]="form.google_review_url" placeholder="https://g.page/r/.../review" />
+      </label>
+      <label>
+        <span>შეფასება (1.0–5.0)</span>
+        <input name="google_rating" type="number" min="1" max="5" step="0.1" [(ngModel)]="form.google_rating" placeholder="4.6" />
+      </label>
+      <label>
+        <span>რევიუების რაოდენობა</span>
+        <input name="google_review_count" type="number" min="0" step="1" [(ngModel)]="form.google_review_count" placeholder="1243" />
+      </label>
+    </div>
+    <p class="hint">
+      შეფასება და რაოდენობა Google Maps-ზე სასტუმროს გვერდიდან გადმოიწერეთ და პერიოდულად განაახლეთ.
+      თუ შეფასება ცარიელია, ბანერზე უბრალოდ 5 დეკორატიული ვარსკვლავი ჩანს.
+    </p>
 
     <div class="actions">
       <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : 'შენახვა' }}</button>
