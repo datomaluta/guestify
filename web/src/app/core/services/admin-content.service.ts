@@ -216,11 +216,11 @@ export class AdminContentService {
 
   // ----------------------------------------------------------------- images --
 
-  /** ატვირთვამდე resize/compress (ნაგულისხმევად ~480px WebP), `{hotel_id}/{relativePath}` კონვენციით.
-   * maxDimension გადაწერადია იმ შემთხვევებისთვის, სადაც ბარათი უფრო დიდ ფოტოს აჩვენებს
-   * (მაგ. გამორჩეული სერვისების 170px-იანი ბარათი 480px-ზე შესამჩნევად რბილი გამოვიდოდა). */
-  async uploadEntityImage(hotelId: string, relativePath: string, file: File, maxDimension = 480): Promise<string> {
-    const blob = await resizeImage(file, maxDimension, 0.82);
+  /** ატვირთვამდე resize/compress (ნაგულისხმევად ~1200px WebP), `{hotel_id}/{relativePath}` კონვენციით.
+   * 1200px იმიტომ, რომ menu/guide-ის დეტალების ხედი ფოტოს ეკრანის სრულ სიგანეზე აჩვენებს
+   * და 2x–3x ეკრანებზე 480px შესამჩნევად რბილი გამოდიოდა. maxDimension გადაწერადია. */
+  async uploadEntityImage(hotelId: string, relativePath: string, file: File, maxDimension = 1200): Promise<string> {
+    const blob = await resizeImage(file, maxDimension, 0.85);
     const path = `${hotelId}/${relativePath}`;
 
     const { error } = await this.supabase.client.storage
