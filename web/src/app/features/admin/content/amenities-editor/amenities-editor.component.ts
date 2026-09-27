@@ -32,10 +32,6 @@ const BLANK: AmenityForm = {
   is_active: true
 };
 
-// ატვირთვისთვის ბარათს ბოლო კადრს ვანიჭებთ 720px-ს (vs ჩვეულებრივი 480px) —
-// ეს ბარათი guide/menu-ს მინიატურებზე გაცილებით დიდ ფოტოს (170px სიმაღლის) აჩვენებს.
-const AMENITY_IMAGE_MAX_DIMENSION = 720;
-
 /** რიგითობა აღარ ჩაიწერება ხელით — სია drag-and-drop-ით (@angular/cdk/drag-drop)
  * გადალაგდება, drop()-ზე კი reindex-ული sort_order მთელი სიისთვის ერთბაშად ინახება.
  *
@@ -139,12 +135,7 @@ export class AmenitiesEditorComponent {
 
     this.uploadingImage.set(true);
     try {
-      const url = await this.content.uploadEntityImage(
-        this.hotelId,
-        `amenities/${id}.webp`,
-        file,
-        AMENITY_IMAGE_MAX_DIMENSION
-      );
+      const url = await this.content.uploadEntityImage(this.hotelId, `amenities/${id}.webp`, file);
       await this.content.saveFeaturedAmenity(id, { image_url: url });
       this.editingImageUrl.set(url);
       this.refresh();

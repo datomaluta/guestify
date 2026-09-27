@@ -17,7 +17,7 @@ values (
   'hotel-assets',
   'hotel-assets',
   true,
-  5242880, -- 5 MB ზედა ზღვარი; menu ფოტოები app-ში resize/compress ხდება ატვირთვამდე (~480px)
+  5242880, -- 5 MB ზედა ზღვარი; menu ფოტოები app-ში resize/compress ხდება ატვირთვამდე (~1200px)
   array['image/png', 'image/jpeg', 'image/webp']
 );
 
