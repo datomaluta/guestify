@@ -37,7 +37,10 @@ const BLANK_FORM: HotelFormModel = {
   checkout_note_en: '',
   checkout_note_ru: '',
   pharmacy_maps_url: '',
-  atm_maps_url: ''
+  atm_maps_url: '',
+  google_review_url: '',
+  google_rating: null,
+  google_review_count: null
 };
 
 @Component({
@@ -142,7 +145,10 @@ export class HotelFormComponent {
         checkout_note_en: hotel.checkout_note_en || '',
         checkout_note_ru: hotel.checkout_note_ru || '',
         pharmacy_maps_url: hotel.pharmacy_maps_url || '',
-        atm_maps_url: hotel.atm_maps_url || ''
+        atm_maps_url: hotel.atm_maps_url || '',
+        google_review_url: hotel.google_review_url || '',
+        google_rating: hotel.google_rating,
+        google_review_count: hotel.google_review_count
       };
       this.admins.set(await this.adminHotel.listHotelAdmins(id));
     } catch (e) {

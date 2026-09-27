@@ -21,6 +21,9 @@ type EssentialsForm = Pick<
   | 'checkout_note_ru'
   | 'pharmacy_maps_url'
   | 'atm_maps_url'
+  | 'google_review_url'
+  | 'google_rating'
+  | 'google_review_count'
 >;
 
 const BLANK: EssentialsForm = {
@@ -39,7 +42,10 @@ const BLANK: EssentialsForm = {
   checkout_note_en: '',
   checkout_note_ru: '',
   pharmacy_maps_url: '',
-  atm_maps_url: ''
+  atm_maps_url: '',
+  google_review_url: '',
+  google_rating: null,
+  google_review_count: null
 };
 
 /**
@@ -95,7 +101,10 @@ export class EssentialsEditorComponent {
           checkout_note_en: hotel.checkout_note_en || '',
           checkout_note_ru: hotel.checkout_note_ru || '',
           pharmacy_maps_url: hotel.pharmacy_maps_url || '',
-          atm_maps_url: hotel.atm_maps_url || ''
+          atm_maps_url: hotel.atm_maps_url || '',
+          google_review_url: hotel.google_review_url || '',
+          google_rating: hotel.google_rating,
+          google_review_count: hotel.google_review_count
         };
       }
     } catch (e) {

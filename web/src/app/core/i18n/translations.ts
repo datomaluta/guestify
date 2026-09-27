@@ -60,6 +60,22 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ru: 'Хозяин',
   },
 
+  home_review_title: {
+    ka: 'მოგწონთ ჩვენთან ყოფნა?',
+    en: 'Enjoying your stay?',
+    ru: 'Вам у нас нравится?',
+  },
+  home_review_subtitle: {
+    ka: 'შეგვაფასეთ Google-ზე — ეს ერთ წუთს წაიღებს',
+    en: 'Rate us on Google — it only takes a minute',
+    ru: 'Оцените нас в Google — это займёт минуту',
+  },
+  home_review_cta: {
+    ka: 'შეფასება',
+    en: 'Review',
+    ru: 'Оценить',
+  },
+
   home_favorites_title: {
     ka: 'ადგილობრივი რჩევები',
     en: 'Local Favorites',

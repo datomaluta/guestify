@@ -35,6 +35,9 @@ export interface Hotel {
   checkout_note_ru: string | null;
   pharmacy_maps_url: string | null;
   atm_maps_url: string | null;
+  google_review_url: string | null;
+  google_rating: number | null;
+  google_review_count: number | null;
   created_at: string;
   updated_at: string;
 }

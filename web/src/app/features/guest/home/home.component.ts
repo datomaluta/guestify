@@ -89,6 +89,23 @@ export class HomeComponent {
     { route: 'guide', icon: 'explore', labelKey: 'home_intent_explore' },
   ]);
 
+  // Google რევიუს ბანერის შეფასება — ადმინში ხელით შეყვანილი. null, თუ შეფასება არ აქვს.
+  protected readonly googleRating = computed(() => {
+    const hotel = this.hotelContext.hotel();
+    if (hotel?.google_rating == null) return null;
+    return {
+      score: Number(hotel.google_rating).toFixed(1),
+      count: hotel.google_review_count ? hotel.google_review_count.toLocaleString('en-US') : null,
+    };
+  });
+
+  // შეფასება ნახევარ ვარსკვლავამდე მრგვალდება (4.6 → ★★★★½); შეფასების გარეშე 5 სავსე დეკორატიული ვარსკვლავია.
+  protected readonly reviewStars = computed<Array<'full' | 'half' | 'empty'>>(() => {
+    const rating = this.hotelContext.hotel()?.google_rating;
+    const rounded = rating == null ? 5 : Math.round(Number(rating) * 2) / 2;
+    return [1, 2, 3, 4, 5].map((i) => (rounded >= i ? 'full' : rounded >= i - 0.5 ? 'half' : 'empty'));
+  });
+
   protected readonly quickAccessItems: QuickAccessItem[] = [
     { route: 'essentials', icon: 'wifi', labelKey: 'home_qa_wifi' },
     { route: 'essentials', icon: 'logout', labelKey: 'home_qa_checkout' },
