@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ALLERGENS, MenuCategory, MenuItem } from '../../../../core/models';
+import { MenuCategory, MenuItem } from '../../../../core/models';
 import { AdminContentService } from '../../../../core/services/admin-content.service';
 import { AdminHotelContextService } from '../../../../core/services/admin-hotel-context.service';
 import { IconComponent } from '../../../../shared/icon/icon.component';
@@ -23,7 +23,6 @@ interface ItemForm {
   ingredients_ka: string;
   ingredients_en: string;
   ingredients_ru: string;
-  allergens: string[];
   price: number;
   currency: string;
   is_available: boolean;
@@ -42,7 +41,6 @@ const BLANK_ITEM: ItemForm = {
   ingredients_ka: '',
   ingredients_en: '',
   ingredients_ru: '',
-  allergens: [],
   price: 0,
   currency: 'GEL',
   is_available: true
@@ -76,8 +74,6 @@ export class MenuEditorComponent {
   protected readonly savingItem = signal(false);
   protected readonly uploadingImage = signal(false);
   protected readonly itemError = signal<string | null>(null);
-
-  protected readonly allergens = ALLERGENS;
 
   protected readonly itemsByCategory = computed(() => {
     const map = new Map<string, MenuItem[]>();
@@ -175,7 +171,6 @@ export class MenuEditorComponent {
       ingredients_ka: item.ingredients_ka || '',
       ingredients_en: item.ingredients_en || '',
       ingredients_ru: item.ingredients_ru || '',
-      allergens: [...item.allergens],
       price: item.price,
       currency: item.currency,
       is_available: item.is_available
@@ -223,12 +218,6 @@ export class MenuEditorComponent {
     } finally {
       this.savingItem.set(false);
     }
-  }
-
-  toggleAllergen(key: string): void {
-    const set = new Set(this.itemForm.allergens);
-    set.has(key) ? set.delete(key) : set.add(key);
-    this.itemForm.allergens = [...set];
   }
 
   async onImageSelected(event: Event): Promise<void> {

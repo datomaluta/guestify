@@ -138,23 +138,6 @@
         </label>
       </div>
 
-      <label class="allergens">
-        <span>ალერგენები</span>
-        <div class="allergen-picker">
-          @for (a of allergens; track a.key) {
-            <button
-              type="button"
-              class="allergen-chip"
-              [class.active]="itemForm.allergens.includes(a.key)"
-              (click)="toggleAllergen(a.key)"
-            >
-              <span class="icon">{{ a.icon }}</span>
-              {{ a.label }}
-            </button>
-          }
-        </div>
-      </label>
-
       <div class="row-fields">
         <label class="sort">
           <span>ფასი *</span>

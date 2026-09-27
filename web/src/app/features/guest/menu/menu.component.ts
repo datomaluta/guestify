@@ -1,5 +1,5 @@
 import { Component, ElementRef, computed, inject, signal } from '@angular/core';
-import { MenuCategory, MenuItem } from '../../../core/models';
+import { MenuCategory, MenuItem, currencySymbol } from '../../../core/models';
 import { HotelService } from '../../../core/services/hotel.service';
 import { HotelContextService } from '../../../core/services/hotel-context.service';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
@@ -82,9 +82,7 @@ export class MenuComponent {
     this.elementRef.nativeElement.scrollIntoView({ behavior: 'auto', block: 'start' });
   }
 
-  currencySymbol(code: string): string {
-    return { GEL: '₾', USD: '$', EUR: '€' }[code] ?? code;
-  }
+  protected readonly currencySymbol = currencySymbol;
 
   openItem(item: MenuItem): void {
     this.selectedItem.set(item);

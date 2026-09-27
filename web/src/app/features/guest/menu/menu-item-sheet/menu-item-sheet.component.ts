@@ -1,12 +1,12 @@
 import { Component, DestroyRef, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
-import { ALLERGENS, MenuItem } from '../../../../core/models';
+import { MenuItem, currencySymbol } from '../../../../core/models';
 import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 import { LocalizePipe } from '../../../../core/i18n/localize.pipe';
 import { ImgFadeInDirective } from '../../../../shared/directives/img-fade-in.directive';
 
 /**
- * მენიუს კერძის დეტალების bottom sheet — ფოტო, სრული აღწერა, შემადგენლობა
- * და ალერგენები. აპში პირველი overlay-ია, ამიტომ hand-rolled-ია (CDK/Material
+ * მენიუს კერძის დეტალების bottom sheet — ფოტო, სრული აღწერა და შემადგენლობა.
+ * აპში პირველი overlay-ია, ამიტომ hand-rolled-ია (CDK/Material
  * არ არსებობს პროექტში ერთი გამოყენებისთვის) — position: fixed, ცენტრირებული
  * .app-shell-ის იმავე 430px ჩარჩოში (იხ. menu-item-sheet.component.scss).
  *
@@ -26,8 +26,8 @@ export class MenuItemSheetComponent {
   readonly item = input.required<MenuItem>();
   readonly close = output<void>();
 
-  protected readonly allergenIcons = new Map(ALLERGENS.map((a) => [a.key, a.icon]));
   protected readonly closing = signal(false);
+  protected readonly currencySymbol = currencySymbol;
 
   /** sheet-ის ღიაობისას .app-body-ს (ნამდვილი scroll-container, იხ. scss-ის კომენტარი) ვბლოკავთ, რომ ფონზე არ ისქროლოს. */
   constructor() {
