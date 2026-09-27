@@ -1,19 +1,21 @@
-<section class="partners">
-  <div class="wrap">
-    <div class="partners-intro" appReveal>
-      <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
-      <h2>{{ 'landing_partners_heading' | translate }}</h2>
-    </div>
+@if (featuredPartners().length > 0) {
+  <section class="partners">
+    <div class="wrap">
+      <div class="partners-intro" appReveal>
+        <p class="eyebrow">{{ 'landing_partners_eyebrow' | translate }}</p>
+        <h2>{{ 'landing_partners_heading' | translate }}</h2>
+      </div>
 
-    <div class="partners-grid">
-      @for (partner of featuredPartners; track partner.slug) {
-        <app-partner-card [partner]="partner" />
-      }
-    </div>
+      <div class="partners-grid">
+        @for (partner of featuredPartners(); track partner.id) {
+          <app-partner-card [partner]="partner" />
+        }
+      </div>
 
-    <a class="cta-btn-outline" routerLink="/partners" appReveal [style.--reveal-delay.ms]="200">
-      {{ 'landing_partners_cta' | translate }}
-      <app-icon name="arrow_forward" [size]="15" />
-    </a>
-  </div>
-</section>
+      <a class="cta-btn-outline" routerLink="/partners" appReveal [style.--reveal-delay.ms]="200">
+        {{ 'landing_partners_cta' | translate }}
+        <app-icon name="arrow_forward" [size]="15" />
+      </a>
+    </div>
+  </section>
+}

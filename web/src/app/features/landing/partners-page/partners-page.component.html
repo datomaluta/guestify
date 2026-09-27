@@ -23,11 +23,25 @@
       <p class="sub">{{ 'partners_page_subtitle' | translate }}</p>
     </div>
 
-    <div class="partners-grid">
-      @for (partner of partners; track partner.slug) {
-        <app-partner-card [partner]="partner" />
-      }
-    </div>
+    @if (loading()) {
+      <div class="partners-grid" aria-hidden="true">
+        @for (i of skeletons; track i) {
+          <div class="skeleton-card">
+            <div class="skeleton-photo"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        }
+      </div>
+    } @else if (partners().length === 0) {
+      <p class="empty">{{ 'partners_page_empty' | translate }}</p>
+    } @else {
+      <div class="partners-grid">
+        @for (partner of partners(); track partner.id) {
+          <app-partner-card [partner]="partner" />
+        }
+      </div>
+    }
   </main>
 
   <footer>

@@ -1,6 +1,34 @@
-<div class="partner-card">
-  <div class="partner-logo">
-    <img [src]="partner().logo" [alt]="partner().name" loading="lazy" />
+<article class="partner-card">
+  <div class="partner-photo">
+    @if (partner().image_url; as src) {
+      <img [src]="src" [alt]="partner().name" loading="lazy" />
+    } @else {
+      <app-icon name="hotel" [size]="32" />
+    }
   </div>
-  <p class="partner-name">{{ partner().name }}</p>
-</div>
+
+  <div class="partner-body">
+    <h3 class="partner-name">{{ partner().name }}</h3>
+
+    @if (rating(); as r) {
+      <div class="partner-rating" [attr.aria-label]="'Google ' + r.score + ' / 5'">
+        <span class="rating-score">{{ r.score }}</span>
+        <span class="rating-stars" aria-hidden="true">
+          @for (star of r.stars; track $index) {
+            <span class="star">
+              <app-icon name="star" [size]="14" />
+              @if (star !== 'empty') {
+                <span class="star-fill" [class.is-half]="star === 'half'">
+                  <app-icon name="star" [size]="14" />
+                </span>
+              }
+            </span>
+          }
+        </span>
+        @if (r.count) {
+          <span class="rating-count">({{ r.count }})</span>
+        }
+      </div>
+    }
+  </div>
+</article>

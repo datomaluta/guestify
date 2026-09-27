@@ -86,6 +86,12 @@ export const routes: Routes = [
           )
       },
       {
+        path: 'partners',
+        canActivate: [superadminGuard],
+        loadComponent: () =>
+          import('./features/admin/partners/partners-admin.component').then((m) => m.PartnersAdminComponent)
+      },
+      {
         path: 'content/:hotelId',
         canActivate: [hotelAdminGuard],
         resolve: { hotel: adminHotelResolver },

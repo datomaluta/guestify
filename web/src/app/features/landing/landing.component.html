@@ -6,7 +6,10 @@
        გადაჭიმული და არა მხოლოდ პირველ ეკრანზე, თორემ topbar სქროლვისას ქრებოდა, როგორც კი
        hero-screen-ის ქვედა კიდეს გადავცდებოდით (იხ. landing.component.scss-ის კომენტარი). -->
   <header class="topbar" #topbarRef [class.scrolled]="scrolled()">
-    <div class="scroll-progress" [style.transform]="'scaleX(' + (scrollProgress() / 100) + ')'"></div>
+    <div
+      class="scroll-progress"
+      [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"
+    ></div>
 
     <div class="wrap topbar-inner">
       <a class="brand-mark" href="#top">
@@ -14,10 +17,10 @@
       </a>
 
       <nav class="nav-links">
-        <a href="#how-it-works">{{ 'landing_how_title' | translate }}</a>
-        <a href="#demo">{{ 'landing_nav_demo' | translate }}</a>
-        <a href="#pricing">{{ 'landing_pricing_eyebrow' | translate }}</a>
-        <a href="#faq">{{ 'landing_nav_faq' | translate }}</a>
+        <a href="#how-it-works">{{ "landing_how_title" | translate }}</a>
+        <a href="#demo">{{ "landing_nav_demo" | translate }}</a>
+        <a href="#pricing">{{ "landing_pricing_eyebrow" | translate }}</a>
+        <a href="#faq">{{ "landing_nav_faq" | translate }}</a>
       </nav>
 
       <div class="topbar-actions">
@@ -45,10 +48,18 @@
        შეუძლებელს ხდიდა) — მუდმივად DOM-შია, ხოლო ღია/დახურული მდგომარეობა .open კლასით
        კონტროლდება, opacity/transform transition-ით ორივე მიმართულებით. -->
   <nav class="mobile-menu" [class.open]="mobileMenuOpen()">
-    <a href="#how-it-works" (click)="closeMobileMenu()">{{ 'landing_how_title' | translate }}</a>
-    <a href="#demo" (click)="closeMobileMenu()">{{ 'landing_nav_demo' | translate }}</a>
-    <a href="#pricing" (click)="closeMobileMenu()">{{ 'landing_pricing_eyebrow' | translate }}</a>
-    <a href="#faq" (click)="closeMobileMenu()">{{ 'landing_nav_faq' | translate }}</a>
+    <a href="#how-it-works" (click)="closeMobileMenu()">{{
+      "landing_how_title" | translate
+    }}</a>
+    <a href="#demo" (click)="closeMobileMenu()">{{
+      "landing_nav_demo" | translate
+    }}</a>
+    <a href="#pricing" (click)="closeMobileMenu()">{{
+      "landing_pricing_eyebrow" | translate
+    }}</a>
+    <a href="#faq" (click)="closeMobileMenu()">{{
+      "landing_nav_faq" | translate
+    }}</a>
   </nav>
 
   <div class="hero-screen">
@@ -119,15 +130,15 @@
     </div>
   </section> -->
 
-  <!-- <app-partners-section /> -->
+  <app-partners-section />
 
   <app-faq-section />
 
   <footer>
     <div class="wrap">
       <div>
-        <p class="tag">{{ 'landing_footer_tag' | translate }}</p>
-        <p class="made">{{ 'landing_footer_made' | translate }} · © 2026</p>
+        <p class="tag">{{ "landing_footer_tag" | translate }}</p>
+        <p class="made">{{ "landing_footer_made" | translate }} · © 2026</p>
       </div>
       <a class="mail" href="mailto:hello@checkit.ge">hello&#64;checkit.ge</a>
     </div>
