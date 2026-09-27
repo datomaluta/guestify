@@ -6,13 +6,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  padding: 26px;
   background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  text-align: left;
   box-sizing: border-box;
   transition:
     box-shadow 0.18s ease,
@@ -22,36 +21,88 @@
     &:hover {
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
+
+      img {
+        transform: scale(1.03);
+      }
     }
   }
 }
 
-.partner-logo {
-  width: 100%;
-  height: 162px;
+.partner-photo {
+  aspect-ratio: 4 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  border-radius: 12px;
   background: var(--paper-sunk);
-  box-sizing: border-box;
+  color: var(--ink-faint);
+  overflow: hidden;
 
   img {
     display: block;
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
   }
+}
+
+.partner-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px 18px;
 }
 
 .partner-name {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.3;
   color: var(--ink);
-  text-align: center;
+}
+
+.partner-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.rating-score {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rating-stars {
+  display: inline-flex;
+  gap: 1px;
+  font-variation-settings: "FILL" 1;
+}
+
+.rating-count {
+  color: var(--ink-soft);
+}
+
+// home.component.scss-ის .star/.star-fill-ის იგივე ტექნიკა — ნაცრისფერ ვარსკვლავზე
+// ყვითელი ასლი, ნახევარ ვარსკვლავზე 50% სიგანით მოჭრილი
+.star {
+  position: relative;
+  display: inline-flex;
+  color: color-mix(in srgb, var(--ink) 16%, var(--paper-raised));
+}
+
+.star-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  color: #f5b301;
+
+  &.is-half {
+    width: 50%;
+  }
 }

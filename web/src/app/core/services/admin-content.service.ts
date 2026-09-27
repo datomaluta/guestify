@@ -9,7 +9,8 @@ import {
   HotelRule,
   AiTopic,
   AiTopicTemplate,
-  FeaturedAmenity
+  FeaturedAmenity,
+  Partner
 } from '../models';
 
 type Row = Record<string, any>;
@@ -211,6 +212,47 @@ export class AdminContentService {
 
   async deleteAiTopicTemplate(id: string): Promise<void> {
     const { error } = await this.supabase.client.from('ai_topic_templates').delete().eq('id', id);
+    if (error) throw error;
+  }
+
+  // ---------------------------------------------------------------- partners --
+
+  async listPartners(): Promise<Partner[]> {
+    const { data, error } = await this.supabase.client.from('partners').select('*').order('sort_order');
+    if (error) throw error;
+    return (data ?? []) as Partner[];
+  }
+
+  async savePartner(id: string | null, payload: Row): Promise<Partner> {
+    const query = id
+      ? this.supabase.client.from('partners').update(payload).eq('id', id)
+      : this.supabase.client.from('partners').insert(payload);
+    const { data, error } = await query.select().single();
+    if (error) throw error;
+    return data as Partner;
+  }
+
+  async deletePartner(id: string): Promise<void> {
+    const { error } = await this.supabase.client.from('partners').delete().eq('id', id);
+    if (error) throw error;
+  }
+
+  /** `site-assets` bucket (0021) — საიტის, არა-სასტუმროს ფაილები, მხოლოდ superadmin წერს.
+   * ქარდის ფოტო ~400px სიგანით ჩანს, 1000px 2x ეკრანებსაც ჰყოფნის. */
+  async uploadSiteImage(path: string, file: File, maxDimension = 1000): Promise<string> {
+    const blob = await resizeImage(file, maxDimension, 0.85);
+
+    const { error } = await this.supabase.client.storage
+      .from('site-assets')
+      .upload(path, blob, { upsert: true, contentType: 'image/webp' });
+    if (error) throw error;
+
+    const { data } = this.supabase.client.storage.from('site-assets').getPublicUrl(path);
+    return `${data.publicUrl}?v=${Date.now()}`;
+  }
+
+  async deleteSiteImage(path: string): Promise<void> {
+    const { error } = await this.supabase.client.storage.from('site-assets').remove([path]);
     if (error) throw error;
   }
 

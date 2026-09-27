@@ -1117,6 +1117,11 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     en: 'Hotels that use checkit to elevate their guest experience',
     ru: 'Отели, которые используют checkit для улучшения обслуживания гостей',
   },
+  partners_page_empty: {
+    ka: 'პარტნიორების სია მალე დაემატება',
+    en: 'Our partner list is coming soon',
+    ru: 'Список партнёров скоро появится',
+  },
 
   landing_footer_tag: {
     ka: 'checkit — ციფრული სტუმართა გზამკვლევი სასტუმროებისთვის.',

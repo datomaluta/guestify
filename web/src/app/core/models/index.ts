@@ -7,3 +7,4 @@ export * from './guide-category';
 export * from './hotel-rule.model';
 export * from './ai-topic.model';
 export * from './localized';
+export * from './partner.model';

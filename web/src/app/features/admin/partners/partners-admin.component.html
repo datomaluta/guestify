@@ -1,0 +1,102 @@
+<div class="intro">
+  <h1>პარტნიორები</h1>
+  <p>ლენდინგის Partners სექციაში მხოლოდ "ლენდინგზე" მონიშნულები ჩანს, /partners გვერდზე — ყველა აქტიური. რიგითობა გადათრევით იცვლება.</p>
+</div>
+
+@if (loading()) {
+  <p class="empty">იტვირთება…</p>
+} @else {
+  @if (items().length === 0) {
+    <p class="empty">პარტნიორები ჯერ არ დამატებულა</p>
+  }
+
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (item of items(); track item.id) {
+      <div class="row" [class.editing]="editingId() === item.id" cdkDrag>
+        <div class="drag-handle" cdkDragHandle><app-icon name="drag_indicator" [size]="18" /></div>
+        @if (item.image_url) {
+          <img class="thumb" [src]="item.image_url" alt="" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="info">
+          <p class="t">{{ item.name }}</p>
+          <p class="d">
+            @if (item.google_rating != null) {
+              ★ {{ item.google_rating }}{{ item.google_review_count ? ' (' + item.google_review_count + ')' : '' }}
+            } @else {
+              შეფასების გარეშე
+            }
+          </p>
+        </div>
+        @if (item.featured) {
+          <span class="status-on">ლენდინგზე</span>
+        }
+        @if (!item.is_active) {
+          <span class="status-off">გამორთული</span>
+        }
+        <button type="button" class="link-btn" (click)="edit(item)">რედაქტირება</button>
+        <button type="button" class="link-btn danger" (click)="remove(item)">წაშლა</button>
+      </div>
+    }
+  </div>
+
+  <form class="panel" (ngSubmit)="submit()">
+    <h2>{{ editingId() ? 'პარტნიორის რედაქტირება' : 'ახალი პარტნიორი' }}</h2>
+
+    @if (error()) {
+      <p class="error-banner">{{ error() }}</p>
+    }
+
+    <label>
+      <span>სასტუმროს სახელი *</span>
+      <input name="name" [(ngModel)]="form.name" required />
+    </label>
+
+    <div class="rating-grid">
+      <label>
+        <span>Google შეფასება (1.0–5.0)</span>
+        <input name="google_rating" type="number" min="1" max="5" step="0.1" [(ngModel)]="form.google_rating" placeholder="მაგ. 4.6" />
+      </label>
+      <label>
+        <span>რევიუების რაოდენობა</span>
+        <input name="google_review_count" type="number" min="0" step="1" [(ngModel)]="form.google_review_count" placeholder="მაგ. 1243" />
+      </label>
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox" name="featured" [(ngModel)]="form.featured" />
+      <span>ლენდინგზე გამოჩნდეს</span>
+    </label>
+
+    <label class="checkbox">
+      <input type="checkbox" name="is_active" [(ngModel)]="form.is_active" />
+      <span>აქტიურია</span>
+    </label>
+
+    @if (editingId()) {
+      <div class="image-row">
+        @if (editingImageUrl()) {
+          <img class="preview" [src]="editingImageUrl()" alt="" />
+        }
+        <label class="upload-btn">
+          {{ uploadingImage() ? 'იტვირთება…' : editingImageUrl() ? 'ფოტოს შეცვლა' : 'ფოტოს არჩევა' }}
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="uploadingImage()" hidden />
+        </label>
+        @if (editingImageUrl()) {
+          <button type="button" class="remove-btn" (click)="removeImage()" [disabled]="uploadingImage()">ფოტოს წაშლა</button>
+        }
+      </div>
+      <p class="hint">ქარდზე ფოტო 4:3 პროპორციით ჩანს (კიდეები იჭრება) — სასურველია ჰორიზონტალური ფოტო.</p>
+    } @else {
+      <p class="hint">ფოტო დამატების შემდეგ აიტვირთება — ჯერ შეავსეთ ველები და დააჭირეთ "დამატება".</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'ინახება…' : editingId() ? 'განახლება' : 'დამატება' }}</button>
+      @if (editingId()) {
+        <button type="button" class="ghost" (click)="cancelEdit()">დახურვა</button>
+      }
+    </div>
+  </form>
+}
