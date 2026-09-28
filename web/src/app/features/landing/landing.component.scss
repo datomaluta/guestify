@@ -277,6 +277,86 @@ section {
     radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
 }
 
+/* ---------- coming soon (დროებითი) ---------- */
+@keyframes cs-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cs-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-primary) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+.coming-soon {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+  overflow: hidden;
+  // მხოლოდ წვრილი წერტილოვანი ბადე — ფერადი ნათების გარეშე
+  background: radial-gradient(var(--line) 1px, transparent 1.6px) 0 0 / 24px 24px;
+}
+
+// საწყისად დაპაუზებულია — ეშვება html.app-revealed-ზე (styles.scss), loader-ის მოხსნისას
+.cs-anim {
+  animation: cs-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--cs-delay, 0ms);
+  animation-play-state: paused;
+}
+
+.coming-soon .wordmark {
+  font-size: 48px;
+
+  @media (min-width: 640px) {
+    font-size: 72px;
+  }
+}
+
+.cs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-sm);
+  font-size: 15px;
+
+  @media (min-width: 640px) {
+    padding: 13px 26px;
+    font-size: 17px;
+  }
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--brand-primary);
+    animation: cs-pulse 1.8s ease-out infinite;
+  }
+}
+
 /* ---------- testimonials ---------- */
 .testimonials {
   background: var(--paper-sunk);

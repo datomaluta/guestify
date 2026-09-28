@@ -1112,5 +1112,4 @@ export const TRANSLATIONS: Record<string, Record<AppLanguage, string>> = {
     ka: 'შექმნილია საქართველოში',
     en: 'Made in Georgia',
     ru: 'Сделано в Грузии',
-  },
-};
+  },};
