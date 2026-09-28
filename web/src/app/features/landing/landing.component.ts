@@ -50,6 +50,9 @@ interface Testimonial {
 })
 export class LandingComponent {
 
+  /** დროებით — სრული ლენდინგის მაგივრად "Coming soon" ეკრანი ჩანს. false-ზე სრული ლენდინგი ბრუნდება. */
+  protected readonly comingSoon = true;
+
   protected readonly testimonials: Testimonial[] = [
     { quoteKey: 'landing_testi1_quote', whoKey: 'landing_testi1_who' },
     { quoteKey: 'landing_testi2_quote', whoKey: 'landing_testi2_who' },

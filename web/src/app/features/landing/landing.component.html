@@ -1,3 +1,16 @@
+<!-- დროებითი "Coming soon" ეკრანი — სრული ლენდინგი ქვემოთ @else-შია გათიშული (HTML-კომენტარით
+     ვერ დავაკომენტარებდით, რადგან შიგნით უკვე არსებული კომენტარები ერთმანეთში ვერ ჩაიდგმება).
+     დასაბრუნებლად landing.component.ts-ში comingSoon = false. -->
+@if (comingSoon) {
+<main class="coming-soon">
+  <span class="wordmark cs-anim">check<span class="accent">it</span></span>
+
+  <span class="cs-badge cs-anim" [style.--cs-delay.ms]="150">
+    <span class="dot"></span>
+    Coming soon
+  </span>
+</main>
+} @else {
 <div class="landing" [style.--topbar-h]="topbarHeight() + 'px'">
   <div id="top"></div>
 
@@ -144,3 +157,4 @@
     </div>
   </footer>
 </div>
+}
